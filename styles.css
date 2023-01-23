@@ -223,13 +223,13 @@ h1 {
 
 @media only screen and (min-width:1200px) {
     .slide-content {
-        padding: 0 40px;
+        padding: 0 10px;
     }
 }
 
 .slide-content {
     margin: 0 40px;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
     overflow: hidden;
     border-radius: 25px;
 }
@@ -398,3 +398,9 @@ h1 {
     fill: #FFFFFF;
 }
 
+.navbar-scrolled{
+    background-color: #fff;
+}
+.navbar{
+    transition: all 0.5s;
+}
