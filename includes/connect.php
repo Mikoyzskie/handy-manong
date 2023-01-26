@@ -5,9 +5,9 @@
    $dbname = "handy_manong";
 
    //Creating a connection
-   $con = mysqli_connect($host, $username, $passwd, $dbname);
+   $conn = mysqli_connect($host, $username, $passwd, $dbname);
 
-   if($con){
+   if($conn){
    
    }else{
       print("Connection Failed ");
