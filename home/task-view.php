@@ -12,16 +12,6 @@
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
     </head>
-    <style>
-    .card-text{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* number of lines to show */
-                line-clamp: 2; 
-        -webkit-box-orient: vertical;
-    }
-</style>
     <body>
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -42,7 +32,7 @@
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">Welcome to Service <em>Connection</em>!</h1>
+                    <h1 class="fw-bolder">Try Service <em>Connection</em> instead?</h1>
                     <p class="lead mb-0">Find manual job service provider in your area now!</p>
                     <br>
                     <div class="input-group" style="max-width:500px;margin:auto;">
@@ -58,21 +48,34 @@
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <div class="card mb-4">
+                    <div class="card mb-4 md-4">
                         <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
                         <div class="card-body">
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
-                            <h2 class="card-title">Recent Task</h2>
+                            <h2 class="card-title">Task Title</h2>
                             <hr>
-                            <h2 class="card-title h4 position-relative">Post Title</h2>
-                            <span class="badge rounded-pill bg-warning text-dark mb-3">Pending</span>
-                            <div class="small text-muted">January 1, 2022</div>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">View Task →</a>
+                            <h2 class="card-title h4 position-relative">Category</h2>
+                            <p>by: Handy Manong</p>
+                            Status: <p class="badge rounded-pill bg-warning text-dark">Pending</p>
+                            <p>Date Posted: <span class="small text-muted">January 1, 2022</span></p>
+                            Description:
+                            <p class="card-text ps-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque consectetur vitae tempore pariatur facere eligendi sint. Repudiandae, placeat. Beatae, debitis, eveniet eligendi blanditiis accusamus natus provident quia aspernatur nesciunt tempora placeat veritatis. Id ipsam aliquid ratione reiciendis, accusantium harum sequi aspernatur blanditiis molestiae doloribus inventore libero optio illum fugit, perferendis, vero labore itaque tempora asperiores voluptas magni accusamus amet ducimus maiores. Magnam suscipit laborum itaque ratione sequi repudiandae impedit, minima culpa atque dolor esse perspiciatis soluta quod repellat amet architecto necessitatibus quasi. A officia laudantium ut alias minima rerum repudiandae non, quibusdam libero, nostrum expedita nobis omnis dolorum molestiae veritatis!</p>
+                            <p>Location: Lorem ipsum dolor sit amet consectetur.</p>
+                            <p>Assigned to: <a href="#">Myk Test</a></p>
+                            <a class="btn btn-primary" href="#!">Update</a>
                         </div>
                     </div>
-                    <!-- Nested row for non-featured blog posts-->
-                    <h2 class="card-title">Tasks</h2>
+                    <h2 class="card-title">Related Tasks</h2>
+                            <style>
+                                .card-text.related{
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2; /* number of lines to show */
+                                            line-clamp: 2; 
+                                    -webkit-box-orient: vertical;
+                                }
+                            </style>
                     <div class="row row-cols-1 row-cols-md-2">
                         <div class="col">
                             <!-- Blog post-->
@@ -82,7 +85,7 @@
                                     <div class="small text-muted">January 1, 2022</div>
                                     <h2 class="card-title h4">Post Title</h2>
                                     <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                                    <p class="card-text related">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla aut perferendis culpa voluptas alias sapiente aliquid corporis est eos, inventore earum ea dolor consectetur facere autem laudantium tenetur quam debitis!</p>
                                     <a class="btn btn-primary" href="#!">Read more →</a>
                                 </div>
                             </div>
@@ -95,62 +98,23 @@
                                     <div class="small text-muted">January 1, 2022</div>
                                     <h2 class="card-title h4">Post Title</h2>
                                     <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                                    <p class="card-text related">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sunt est nulla hic reprehenderit recusandae explicabo voluptatem mollitia, accusantium ipsum ut totam quae minus dolorum ex culpa aliquid molestiae dolor?</p>
                                     <a class="btn btn-primary" href="#!">Read more →</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Pagination-->
-                    <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav>
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Find Task</div>
+                        <div class="card-header">Chatter</div>
                         <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, dicta.</p>
+                            <a class="btn btn-secondary" href="#!">View All →</a>
                         </div>
                     </div>
                     <!-- Categories widget-->
@@ -187,7 +151,7 @@
                         <div class="card-header">Can't Decide From Service Connection? &#128549</div>
                         <div class="card-body">Create your own job posting and let service providers bid for your project &#128077
                             <br><br>
-                        <a class="btn btn-success" href="#!">Create Now →</a>
+                        
                         </div>
                         
                     </div>
