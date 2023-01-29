@@ -52,16 +52,25 @@
                         <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
                         <div class="card-body">
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
-                            <h2 class="card-title">Task Title</h2>
-                            <hr>
-                            <h2 class="card-title h4 position-relative">Category</h2>
-                            <p>by: Handy Manong</p>
-                            Status: <p class="badge rounded-pill bg-warning text-dark">Pending</p>
-                            <p>Date Posted: <span class="small text-muted">January 1, 2022</span></p>
-                            Description:
-                            <p class="card-text ps-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque consectetur vitae tempore pariatur facere eligendi sint. Repudiandae, placeat. Beatae, debitis, eveniet eligendi blanditiis accusamus natus provident quia aspernatur nesciunt tempora placeat veritatis. Id ipsam aliquid ratione reiciendis, accusantium harum sequi aspernatur blanditiis molestiae doloribus inventore libero optio illum fugit, perferendis, vero labore itaque tempora asperiores voluptas magni accusamus amet ducimus maiores. Magnam suscipit laborum itaque ratione sequi repudiandae impedit, minima culpa atque dolor esse perspiciatis soluta quod repellat amet architecto necessitatibus quasi. A officia laudantium ut alias minima rerum repudiandae non, quibusdam libero, nostrum expedita nobis omnis dolorum molestiae veritatis!</p>
-                            <p>Location: Lorem ipsum dolor sit amet consectetur.</p>
-                            <p>Assigned to: <a href="#">Myk Test</a></p>
+                            <?php
+                                require_once "../includes/connect.php";
+                                $sql = "SELECT * FROM `tbl_task` WHERE id = 2"; /* add where clause here */
+                                $result = mysqli_query($conn, $sql);
+        
+                                while($row = mysqli_fetch_array($result)){
+                                    echo "<h2 class=\"card-title\">". $row['task_title']."</h2>";
+                                    echo "<hr>";
+                                    echo "<h2 class=\"card-title h4 position-relative\">".$row['task_category']."</h2>";
+                                    echo "<p>by:".$row['task_finder']."</p>"; /* union with table finder to get name */
+                                    echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>"; /* add if else for pill color */
+                                    echo "<p>Date Posted: <span class=\"small text-muted\">".$row['task_date']."</span></p>"; /* fix date format */
+                                    echo "Description:";
+                                    echo "<p class=\"card-text ps-4\">".$row['task_desc']."</p>"; /* fix formating do not remove spacing */
+                                    echo "<p>Location: ".$row['task_location']."</p>";
+                                    echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
+                                }
+                            ?>
+
                             <a class="btn btn-primary" href="#!">Update</a>
                         </div>
                     </div>
@@ -77,32 +86,25 @@
                                 }
                             </style>
                     <div class="row row-cols-1 row-cols-md-2">
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text related">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla aut perferendis culpa voluptas alias sapiente aliquid corporis est eos, inventore earum ea dolor consectetur facere autem laudantium tenetur quam debitis!</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text related">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sunt est nulla hic reprehenderit recusandae explicabo voluptatem mollitia, accusantium ipsum ut totam quae minus dolorum ex culpa aliquid molestiae dolor?</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                            require_once "../includes/connect.php";
+                            $sql = "SELECT * FROM `tbl_task`"; /* add where clause here */
+                            $result = mysqli_query($conn, $sql);
+                            while($row = mysqli_fetch_array($result)){
+                                echo "<div class=\"col\">";
+                                echo "<div class=\"card mb-4\">";
+                                echo "<div class=\"card-body\">";
+                                            echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
+                                            echo "<div class=\"small text-muted\">".$row['task_date']."</div>";
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                            echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                    echo "<a class=\"btn btn-primary\" href=\"#!\">Read more →</a>"; /* add task id to this button to full view */
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        ?>
+                        
                     </div>
                 </div>
                 <!-- Side widgets-->
