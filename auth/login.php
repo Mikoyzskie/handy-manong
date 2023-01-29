@@ -2,33 +2,37 @@
 
 if(isset($_POST['submit'])){
 
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
+    $user = $_POST['email'];
+    $pass = $_POST['password'];
 
-require_once "../includes/connect.php";
+    require_once "../includes/connect.php";
 
-$check="SELECT * FROM tbladmin WHERE user = '$user'";
-$rs = mysqli_query($con,$check);
-$data = mysqli_fetch_array($rs, MYSQLI_NUM);
-if($data[0] = 1) {
-    $hash = $data[2];
+
+    $sql = "SELECT * FROM tbl_finder WHERE finder_email='$user'";
+    $result = mysqli_query($conn, $sql);
+    $num = mysqli_num_rows($result); 
+
+if($num == 1) {
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    /* printf ("%s (%s)\n", $row["finder_email"], $row["finder_password"]); */
    
-    $checkpass = password_verify($pass, $hash);
+    $checkpass = password_verify($pass, $row["finder_password"]);
 
     if($checkpass == true){
-        session_start();
+        /* session_start();
         $_SESSION["id"]=$data[0];
-        header("location: ../");
+        header("location: ../index.php?error=noerror"); */
+        printf("password correct");
     }else{
-        header("location: ../");
+        header("location: signin.php?error=invalidpass");
     }
 }
 else{
-    header("location: ../admin/index.php?error=nouser");
+    header("location: signin.php??error=nouser");
 }
 
 }
 else{
-    header("location: /signin.php");
+    header("location: /signin.php?error=invalid");
 }
 

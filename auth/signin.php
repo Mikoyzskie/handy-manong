@@ -116,11 +116,11 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div> -->
                     <label>Email Address</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
+                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email">
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                      <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password">
                     </div>
                     <div class="d-flex align-items-center">
                       <!-- <div class="form-check form-check-info text-left mb-0">
@@ -132,7 +132,7 @@ if (session_status() == PHP_SESSION_NONE) {
                       <a href="javascript:;" class="text-xs font-weight-bold ms-auto">Forgot password</a>
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-dark w-100 mt-4 mb-3">Sign in</button>
+                      <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="submit">Sign in</button>
                       <!-- <button type="button" class="btn btn-white btn-icon w-100 mb-3">
                         <span class="btn-inner--icon me-1">
                           <img class="w-5" src="../assets/img/logos/google-logo.svg" alt="google-logo" />
