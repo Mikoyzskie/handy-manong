@@ -19,16 +19,16 @@ if($num == 1) {
     $checkpass = password_verify($pass, $row["finder_password"]);
 
     if($checkpass == true){
-        /* session_start();
-        $_SESSION["id"]=$data[0];
-        header("location: ../index.php?error=noerror"); */
-        printf("password correct");
+        session_start();
+        $_SESSION["id"]= $row['finder_id'];
+        header("location: ../home/finder.php");
+        
     }else{
-        header("location: signin.php?error=invalidpass");
+        
     }
 }
 else{
-    header("location: signin.php??error=nouser");
+    header("location: signin.php?error=nouser");
 }
 
 }

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if(empty($_SESSION['id'])){
+    header("location: ../auth/signin.php?error=loginrequired");
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,14 +36,14 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#!">Handy <strong>Manong</strong></a>
+                <a class="navbar-brand" href="#">Handy <strong>Manong</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -64,71 +74,86 @@
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
                             <h2 class="card-title">Recent Task</h2>
                             <hr>
-                            <h2 class="card-title h4 position-relative">Post Title</h2>
-                            <span class="badge rounded-pill bg-warning text-dark mb-3">Pending</span>
-                            <div class="small text-muted">January 1, 2022</div>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">View Task →</a>
+                             <?php
+                                require_once "../includes/connect.php";
+                                $id = $_SESSION["id"];
+                                $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC LIMIT 1 "; /* add where clause here */
+                                $result = mysqli_query($conn, $sql);
+
+                                $num = mysqli_num_rows($result); 
+                                if($num == 0) {
+                                    echo "<i>No related task.</i>";
+                                }else{
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<h2 class=\"card-title h4 position-relative\">".$row['task_title']."</h2>";
+                                        if($row['task_status']=='Pending'){
+                                            echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Assigned'){
+                                            echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Rejected'){
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Done'){
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
+                                        }else{
+                                            header("location: finder.php?error=undefine");
+                                        }
+                                        $date=date_create($row['task_date']);
+                                        echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
+                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">View Task →</a>";
+                                    }
+                                }
+
+                                
+                            ?>
+                            
+                            
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->
-                    <h2 class="card-title">Tasks</h2>
+                    <h2 class="card-title">All Tasks</h2>
                     <div class="row row-cols-1 row-cols-md-2">
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <span class="badge rounded-pill bg-danger">Failed</span>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                            require_once "../includes/connect.php";
+                            $id = $_SESSION["id"];
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id"; /* add where clause here */
+                            $result = mysqli_query($conn, $sql);
+
+                                $num = mysqli_num_rows($result); 
+                                if($num == 0) {
+                                    echo "<i mb-5>No related task to show.</i>";
+                                }else{
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<div class=\"col\">";
+                                        echo "<div class=\"card mb-4\">";
+                                        echo "<div class=\"card-body\">";
+                                        $date=date_create($row['task_date']);
+                                        echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
+                                        echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
+
+                                        if($row['task_status']=='Pending'){
+                                            echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Assigned'){
+                                            echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Rejected'){
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Done'){
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
+                                        }else{
+                                            header("location: finder.php?error=undefine");
+                                        }
+                                                    
+                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
+                                        echo "</div>";
+                                        echo "</div>";
+                                        echo "</div>";
+                                    }
+                                }
+                        ?>
                     </div>
                     <!-- Pagination-->
-                    <nav aria-label="Pagination">
+                    <!-- <nav aria-label="Pagination">
                         <hr class="my-0" />
                         <ul class="pagination justify-content-center my-4">
                             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
@@ -139,7 +164,7 @@
                             <li class="page-item"><a class="page-link" href="#!">15</a></li>
                             <li class="page-item"><a class="page-link" href="#!">Older</a></li>
                         </ul>
-                    </nav>
+                    </nav> -->
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
@@ -187,7 +212,7 @@
                         <div class="card-header">Can't Decide From Service Connection? &#128549</div>
                         <div class="card-body">Create your own job posting and let service providers bid for your project &#128077
                             <br><br>
-                        <a class="btn btn-success" href="#!">Create Now →</a>
+                        <a class="btn btn-success" href="task-create.php">Create Now →</a>
                         </div>
                         
                     </div>
