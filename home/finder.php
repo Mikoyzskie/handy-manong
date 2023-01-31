@@ -116,7 +116,7 @@ if(empty($_SESSION['id'])){
                         <?php
                             require_once "../includes/connect.php";
                             $id = $_SESSION["id"];
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 

@@ -148,7 +148,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
   </div>
-  <style>
+    <style>
         div.alert{
             position: absolute!important;
             top: 20px!important;
@@ -166,7 +166,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
         }
     </style>
-    <?php
+  <?php
     
     if($showAlert) {
     
@@ -204,7 +204,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
        </div> '; 
      }
    
-?>
+  ?>
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">

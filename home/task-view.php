@@ -106,8 +106,9 @@ if(empty($_SESSION['id'])){
                                 }
                                 
                             ?>
-
+                            
                             <a class="btn btn-primary" href="#!">Update</a> <!-- add update function -->
+                            <a class="btn btn-danger" href="#!">Delete</a> <!-- add function if task is assigned, unable to delete unless completed -->
                         </div>
                     </div>
                     <h2 class="card-title">Related Tasks</h2>

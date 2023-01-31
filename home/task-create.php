@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+if(empty($_SESSION['id'])){
+    header("location: ../signin.php?error=loginrequired");
+}
+
+$showAlert = false; 
+$showError = false; 
+$exists=false;
+    
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+      
+    // Include file which makes the
+    // Database Connection.
+    include '../includes/connect.php';   
+    
+    $title = $_POST["title"];
+    $location = $_POST["location"];
+    $description = $_POST["description"];
+    $catArray = $_POST["category"];
+    $category = implode(',',$catArray);
+    $finder = $_SESSION["id"];
+
+
+    if(empty($catArray)){
+        $showError = "Category empty. Please select one.";
+    }else{
+        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`) VALUES ('$finder','$category','$title','$description','$location')";
+        
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            header("Location: ../home/finder.php?error=noerror");
+            die();
+        }else{
+            header("Location: ../home/task-create.php?error=undefined");
+        }
+    }
+
+    
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,87 +59,87 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 <style>
-ul.ks-cboxtags {
-    list-style: none;
-    padding: 20px;
-}
+    ul.ks-cboxtags {
+        list-style: none;
+        padding: 20px;
+    }
 
-ul.ks-cboxtags li {
-    display: inline;
-}
+    ul.ks-cboxtags li {
+        display: inline;
+    }
 
-ul.ks-cboxtags li label {
-    display: inline-block;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(139, 139, 139, 0.3);
-    color: #adadad;
-    border-radius: 25px;
-    white-space: nowrap;
-    margin: 3px 0px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-transition: all .2s;
-    -o-transition: all .2s;
-    transition: all .2s;
-    font-weight: 400;
-}
+    ul.ks-cboxtags li label {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(139, 139, 139, 0.3);
+        color: #adadad;
+        border-radius: 25px;
+        white-space: nowrap;
+        margin: 3px 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+        font-weight: 400;
+    }
 
-ul.ks-cboxtags li label {
-    padding: 8px 12px;
-    cursor: pointer;
-}
+    ul.ks-cboxtags li label {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
 
-ul.ks-cboxtags li label::before {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "FontAwesome";
-    font-weight: 400;
-    font-size: 12px;
-    padding: 2px 6px 2px 2px;
-    content: "\f067";
-    -webkit-transition: -webkit-transform .3s ease-in-out;
-    transition: -webkit-transform .3s ease-in-out;
-    -o-transition: transform .3s ease-in-out;
-    transition: transform .3s ease-in-out;
-    transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
-}
+    ul.ks-cboxtags li label::before {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "FontAwesome";
+        font-weight: 400;
+        font-size: 12px;
+        padding: 2px 6px 2px 2px;
+        content: "\f067";
+        -webkit-transition: -webkit-transform .3s ease-in-out;
+        transition: -webkit-transform .3s ease-in-out;
+        -o-transition: transform .3s ease-in-out;
+        transition: transform .3s ease-in-out;
+        transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+    }
 
-ul.ks-cboxtags li input[type="checkbox"]:checked+label::before {
-    content: "\f00c";
-    -webkit-transform: rotate(-360deg);
-    -ms-transform: rotate(-360deg);
-    transform: rotate(-360deg);
-    -webkit-transition: -webkit-transform .3s ease-in-out;
-    transition: -webkit-transform .3s ease-in-out;
-    -o-transition: transform .3s ease-in-out;
-    transition: transform .3s ease-in-out;
-    transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
-}
+    ul.ks-cboxtags li input[type="checkbox"]:checked+label::before {
+        content: "\f00c";
+        -webkit-transform: rotate(-360deg);
+        -ms-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+        -webkit-transition: -webkit-transform .3s ease-in-out;
+        transition: -webkit-transform .3s ease-in-out;
+        -o-transition: transform .3s ease-in-out;
+        transition: transform .3s ease-in-out;
+        transition: transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+    }
 
-ul.ks-cboxtags li input[type="checkbox"]:checked+label {
-    border: 1px solid #fec771;
-    background-color: #fec771;
-    color: #fff;
-    -webkit-transition: all .2s;
-    -o-transition: all .2s;
-    transition: all .2s;
-}
+    ul.ks-cboxtags li input[type="checkbox"]:checked+label {
+        border: 1px solid #fec771;
+        background-color: #fec771;
+        color: #fff;
+        -webkit-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+    }
 
-ul.ks-cboxtags li input[type="checkbox"] {
-    display: absolute;
-}
+    ul.ks-cboxtags li input[type="checkbox"] {
+        display: absolute;
+    }
 
-ul.ks-cboxtags li input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-}
+    ul.ks-cboxtags li input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+    }
 </style>
     <body>
         <!-- Responsive navbar-->
@@ -127,6 +172,64 @@ ul.ks-cboxtags li input[type="checkbox"] {
             </div>
         </header>
         <!-- Page content-->
+
+    <style>
+        div.alert{
+            position: absolute!important;
+            top: 20px!important;
+            right: 20px!important;
+            z-index: 2000!important;
+        }
+        div.alert.close{
+            display:none;
+        }
+        button.close-danger{
+            border: 2px solid #8C2F25;
+            color: #8C2F25;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+    </style>
+  <?php
+    
+    if($showAlert) {
+    
+        echo ' <div class="alert alert-success 
+            alert-dismissible fade show" role="alert">
+    
+            <strong>Success!</strong> Task successfully created. Check task on homepage.
+            <button type="button">
+            x
+        </button> 
+        </div> '; 
+    }
+    
+    if($showError) {
+    
+        echo ' <div class="alert alert-danger 
+            alert-dismissible fade show" role="alert"> 
+        <strong>Error!</strong> '. $showError.'
+    
+       <button type="button" class="close-danger">
+            x
+        </button>
+     </div> '; 
+   }
+        
+    if($exists) {
+        echo ' <div class="alert alert-danger 
+            alert-dismissible fade show" role="alert">
+    
+        <strong>Error!</strong> '. $exists.'
+        <button type="button" class="close-danger" on>
+            x
+        </button>
+       </div> '; 
+     }
+   
+  ?>
+
         <div class="container">
             <div class="row">
                 <!-- Blog entries-->
@@ -138,22 +241,22 @@ ul.ks-cboxtags li input[type="checkbox"] {
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
                             <h2 class="card-title">Create Task</h2>
                             <hr>
-                            <form>
+                            <form method = "post" action="task-create.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" />
+                                    aria-describedby="emailHelp" name="title" required/>
                                 <div id="emailHelp" class="form-text">
                                     Brief intro about the task. (eg Carpenter & Paintjob)
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Location</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" />
+                                <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Description</label>
-                                <textarea type="text" class="form-control" id="exampleInputPassword1" rows="4"></textarea>
+                                <textarea type="text" class="form-control" id="exampleInputPassword1" rows="4" name="description" required></textarea>
                             </div>
                             <div class="row justify-content-center">
                                 <div>Category</div>
@@ -163,45 +266,45 @@ ul.ks-cboxtags li input[type="checkbox"] {
                                 <div>
                                     <ul class="ks-cboxtags" style="padding-top:0;">
                                         <li>
-                                            <input type="checkbox" id="checkboxOne" value="Carpenter">
+                                            <input type="checkbox" id="checkboxOne" value="Carpenter" name="category[]">
                                             <label for="checkboxOne">Carpenter</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxTwo" value="Plumber">
+                                            <input type="checkbox" id="checkboxTwo" value="Plumber" name="category[]">
                                             <label for="checkboxTwo">Plumber</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxThree" value="Painter">
+                                            <input type="checkbox" id="checkboxThree" value="Painter" name="category[]">
                                             <label for="checkboxThree">Painter</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxFour" value="Electrician">
+                                            <input type="checkbox" id="checkboxFour" value="Electrician" name="category[]">
                                             <label for="checkboxFour">Electrician</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxFive" value="Driver">
+                                            <input type="checkbox" id="checkboxFive" value="Driver" name="category[]">
                                             <label for="checkboxFive">Driver</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxSix" value="Welder">
+                                            <input type="checkbox" id="checkboxSix" value="Welder" name="category[]">
                                             <label for="checkboxSix">Welder</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxSeven" value="House Keeper">
+                                            <input type="checkbox" id="checkboxSeven" value="House Keeper" name="category[]">
                                             <label for="checkboxSeven">House Keeper</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxEight" value="Glass Worker">
+                                            <input type="checkbox" id="checkboxEight" value="Glass Worker" name="category[]">
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxNine" value="Midwife">
+                                            <input type="checkbox" id="checkboxNine" value="Midwife" name="category[]">
                                             <label for="checkboxNine">Midwife</label>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="text-center"><button type="submit" class="btn btn-primary">Submit</button></div>
+                            <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
                         </form>
                         </div>
                     </div>
