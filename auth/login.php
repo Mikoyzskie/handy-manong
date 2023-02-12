@@ -20,11 +20,11 @@ if($num == 1) {
 
     if($checkpass == true){
         session_start();
-        $_SESSION["id"]= $row['finder_id'];
+        $_SESSION["id"]= $row['id'];
         header("location: ../home/finder.php");
         
     }else{
-        
+        header("location: /signin.php?error=incorrectpass");
     }
 }
 else{

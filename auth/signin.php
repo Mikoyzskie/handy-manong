@@ -116,11 +116,11 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div> -->
                     <label>Email Address</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email">
+                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password">
+                      <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password" required>
                     </div>
                     <div class="d-flex align-items-center">
                       <!-- <div class="form-check form-check-info text-left mb-0">

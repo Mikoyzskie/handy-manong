@@ -20,10 +20,11 @@ if($num == 1) {
 
     if($checkpass == true){
         session_start();
-        $_SESSION["id"]= $row['prov_id'];
-        header("location: ../main/timeline.php"); 
-    }else{
+        $_SESSION["id"]= $row['id'];
+        header("location: ../main/timeline.php");
         
+    }else{
+        header("location: ../main/login.php?error=incorrectpass");
     }
 }
 else{

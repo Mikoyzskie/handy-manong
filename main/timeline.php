@@ -2,7 +2,7 @@
 session_start();
 
 if(empty($_SESSION['id'])){
-    header("location: ../main/login.php?error=loginrequired");
+    header("location: login.php?error=loginrequired");
 }
 
 ?>
