@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = mysqli_query($conn, $sql);
         
                 if ($result) {
-                    header("Location: ./login.php");
+                    header("Location: login.php");
                     die();
                 }
             }
@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <title>
-        Sign Up | Handy Manong
+        Provider Sign Up | Handy Manong
     </title>
     <!--     Fonts and icons     -->
     <link

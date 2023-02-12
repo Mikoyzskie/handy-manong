@@ -36,7 +36,7 @@ if(empty($_SESSION['id'])){
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="#">Handy <strong>Manong</strong></a>
+                <a class="navbar-brand" href="finder.php">Handy <strong>Manong</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -68,13 +68,58 @@ if(empty($_SESSION['id'])){
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <div class="card mb-4">
-                        <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
-                        <div class="card-body">
-                            <!-- <div class="small text-muted">January 1, 2022</div> -->
-                            <h2 class="card-title">Recent Task</h2>
-                            <hr>
-                             <?php
+                    <?php
+                    if(isset($_POST["search"])){
+                        echo "<h2 class=\"card-title\">Task</h2>";
+                    echo "<div class=\"row row-cols-1 row-cols-md-2\">";
+                        
+                            require_once "../includes/connect.php";
+                            $id = $_SESSION["id"];
+                            $search = $_POST['search'];
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_bio LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; /* add where clause here */
+                            $result = mysqli_query($conn, $sql);
+
+                                $num = mysqli_num_rows($result); 
+                                if($num == 0) {
+                                    echo "<i mb-5>No related task to show.</i>";
+                                }else{
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo "<div class=\"col\">";
+                                        echo "<div class=\"card mb-4\">";
+                                        echo "<div class=\"card-body\">";
+                                        $date=date_create($row['task_date']);
+                                        echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
+                                        echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
+
+                                        if($row['task_status']=='Pending'){
+                                            echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Assigned'){
+                                            echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Rejected'){
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Done'){
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
+                                        }else{
+                                            header("location: finder.php?error=undefine");
+                                        }
+                                                    
+                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
+                                        echo "</div>";
+                                        echo "</div>";
+                                        echo "</div>";
+                                    }
+                                }
+                        
+                    echo "</div>";
+                    }else{
+                        echo "<div class=\"card mb-4\">";
+                        /* <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> */
+                        echo "<div class=\"card-body\">";
+                            /* <div class="small text-muted">January 1, 2022</div> */
+                            echo "<h2 class=\"card-title\">Recent Task</h2>";
+                            echo "<hr>";
+                             
                                 require_once "../includes/connect.php";
                                 $id = $_SESSION["id"];
                                 $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC LIMIT 1 "; /* add where clause here */
@@ -85,7 +130,7 @@ if(empty($_SESSION['id'])){
                                     echo "<i>No related task.</i>";
                                 }else{
                                     while($row = mysqli_fetch_array($result)){
-                                        echo "<h2 class=\"card-title h4 position-relative\">".$row['task_title']."</h2>";
+                                        echo "<h2 class=\"card-title h4 position-relative\">".stripslashes($row['task_title'])."</h2>";
                                         if($row['task_status']=='Pending'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
@@ -99,21 +144,16 @@ if(empty($_SESSION['id'])){
                                         }
                                         $date=date_create($row['task_date']);
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
-                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<p class=\"card-text related\">".stripslashes($row['task_desc'])."</p>";
                                         echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">View Task →</a>";
                                     }
                                 }
-
-                                
-                            ?>
-                            
-                            
-                        </div>
-                    </div>
-                    <!-- Nested row for non-featured blog posts-->
-                    <h2 class="card-title">All Tasks</h2>
-                    <div class="row row-cols-1 row-cols-md-2">
-                        <?php
+                        echo"</div>";
+                    echo "</div>";
+                    /* Nested row for non-featured blog posts */
+                    echo "<h2 class=\"card-title\">All Tasks</h2>";
+                    echo "<div class=\"row row-cols-1 row-cols-md-2\">";
+                        
                             require_once "../includes/connect.php";
                             $id = $_SESSION["id"];
                             $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC"; /* add where clause here */
@@ -150,8 +190,10 @@ if(empty($_SESSION['id'])){
                                         echo "</div>";
                                     }
                                 }
-                        ?>
-                    </div>
+                        
+                    echo "</div>";
+                    }
+                    ?>
                     <!-- Pagination-->
                     <!-- <nav aria-label="Pagination">
                         <hr class="my-0" />
@@ -172,36 +214,44 @@ if(empty($_SESSION['id'])){
                     <div class="card mb-4">
                         <div class="card-header">Find Task</div>
                         <div class="card-body">
+                        <form role="form" action="finder.php" method="post">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="search" required/>
+                                <button class="btn btn-primary" id="button-search" type="submit" name="submit">Go!</button>
                             </div>
+                        </form>
                         </div>
                     </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Categories</div>
+                        <div class="card-header">Search Providers by Categories</div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Capenter</a></li>
-                                        <li><a href="#!">Plumber</a></li>
-                                        <li><a href="#!">Painter</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Electrician</a></li>
-                                        <li><a href="#!">Driver</a></li>
-                                        <li><a href="#!">Welder</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">House Keeper</a></li>
-                                        <li><a href="#!">Glass Worker</a></li>
-                                        <li><a href="#!">Midwife</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                             </div>

@@ -15,9 +15,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database Connection.
     include '../includes/connect.php';   
     
-    $title = $_POST["title"];
+    $title = addslashes($_POST["title"]);
     $location = $_POST["location"];
-    $description = $_POST["description"];
+    $description = addslashes($_POST["description"]);
     $catArray = $_POST["category"];
     $category = implode(',',$catArray);
     $finder = $_SESSION["id"];

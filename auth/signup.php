@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = mysqli_query($conn, $sql);
     
             if ($result) {
-                header("Location: ../");
+                header("Location: signin.php");
                 die();
             }
         } 
@@ -64,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Sign Up | Handy Manong
+    Finder Sign Up | Handy Manong
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
