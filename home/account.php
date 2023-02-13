@@ -279,7 +279,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                                <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
                                 <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
                             </div>
                             <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
