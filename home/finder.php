@@ -76,7 +76,7 @@ if(empty($_SESSION['id'])){
                             require_once "../includes/connect.php";
                             $id = $_SESSION["id"];
                             $search = $_POST['search'];
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_bio LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
