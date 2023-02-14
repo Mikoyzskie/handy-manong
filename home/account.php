@@ -164,7 +164,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php
                         require_once "../includes/connect.php";
                         $id = $_SESSION["id"];
-                        $sql = "SELECT * FROM tbl_finder WHERE id = $id";
+                        $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
                         $result = mysqli_query($conn, $sql);
 
                         $num = mysqli_num_rows($result);
@@ -264,23 +264,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <form method = "post" action="task-create.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <div class="input-group">
                                 <input type="text" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp" name="title" required/>
-                                <!-- <div id="emailHelp" class="form-text">
-                                    Brief intro about the task. (eg Carpenter & Paintjob)
-                                </div> -->
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
+                                
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="exampleInputPassword1" name="location" required/>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required/>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">New Password</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required/>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required/>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
                             </div>
                             <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
                         </form>

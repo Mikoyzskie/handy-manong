@@ -169,11 +169,15 @@ if(empty($_SESSION['id'])){
                     <!-- Search widget-->
                     <div class="card mb-4">
                         <div class="card-header">Chatter</div>
-                        <div class="card-body">
+                        <div class="card-body" style="overflow-x: hidden;overflow-y: auto;height:300px;">
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
+                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
                             <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
                             <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
                             <p>From <a href="#">Mikoy</a>: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, dicta.</p>
-                            <a class="btn btn-secondary" href="#!">View All →</a>
                         </div>
                     </div>
                     <!-- Categories widget-->
@@ -184,7 +188,7 @@ if(empty($_SESSION['id'])){
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
                                         <li><a href="#!">Capenter</a></li>
-                                        <li><a href="#!">Plumber</a></li>id
+                                        <li><a href="#!">Plumber</a></li>
                                         <li><a href="#!">Painter</a></li>
                                     </ul>
                                 </div>

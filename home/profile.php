@@ -59,7 +59,7 @@ if(empty($_SESSION['id'])){
                     <?php
                         require_once "../includes/connect.php";
                         $id = $_SESSION["id"];
-                        $sql = "SELECT * FROM tbl_finder WHERE id = $id";
+                        $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
                         $result = mysqli_query($conn, $sql);
 
                         $num = mysqli_num_rows($result);
