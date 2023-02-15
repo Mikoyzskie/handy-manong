@@ -170,15 +170,32 @@ if(empty($_SESSION['id'])){
                     <div class="card mb-4">
                         <div class="card-header">Chatter</div>
                         <div class="card-body" style="overflow-x: hidden;overflow-y: auto;height:300px;">
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Interested. Check my profile.</p>
-                            <p>From <a href="#">Mikoy</a>: Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, dicta.</p>
+                        <?php 
+                        require_once "../includes/connect.php";
+                        $id = $_GET['tid'];
+                        $sql = "SELECT * FROM `messaging` INNER JOIN `tbl_provider` ON tbl_provider.id = messaging.user_id WHERE task_id = $id  ORDER BY messaging.id ASC";
+                        $result = mysqli_query($conn, $sql);
+                        $num = mysqli_num_rows($result);
+                        if($num == 0) {
+                            
+                        }else{
+                            while($row = mysqli_fetch_array($result)){
+                                if($row['owner']==$_SESSION['id']){
+                                    echo "<p>From <a href=\"#\">".$_SESSION['name']."</a>: ".$row['msg_content']."</p>";
+                                }
+                                else{
+                                    echo "<p>From <a href=\"#\">".$row['prov_firstname']." ".$row['prov_lastname']."</a>: ".$row['msg_content']."</p>";
+                                }
+                            }
+                        }
+                        ?>
                         </div>
+                        <form role="form" action="messaging.php?error=<?php echo $_GET['tid']?>" method="post">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter Message..." aria-label="Search..." aria-describedby="button-search" name="chat" required autocomplete="off"/>
+                                <button class="btn btn-primary" id="button-search" type="submit" name="send"><img src="../assets/images/paper-plane.png" height="12" alt="" srcset=""></button>
+                            </div>
+                        </form>
                     </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
