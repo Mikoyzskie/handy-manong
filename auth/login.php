@@ -20,7 +20,8 @@ if($num == 1) {
 
     if($checkpass == true){
         session_start();
-        $_SESSION["id"]= $row['id'];
+        $_SESSION["id"]= $row['finder_id'];
+        $_SESSION["name"]=$row['finder_name'];
         header("location: ../home/finder.php");
         
     }else{
