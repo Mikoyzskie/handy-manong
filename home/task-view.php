@@ -29,10 +29,10 @@ if(empty($_SESSION['id'])){
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="finder.php">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -201,26 +201,32 @@ if(empty($_SESSION['id'])){
                     <div class="card mb-4">
                         <div class="card-header">Categories</div>
                         <div class="card-body">
-                            <div class="row">
+                        <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Capenter</a></li>
-                                        <li><a href="#!">Plumber</a></li>
-                                        <li><a href="#!">Painter</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Electrician</a></li>
-                                        <li><a href="#!">Driver</a></li>
-                                        <li><a href="#!">Welder</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">House Keeper</a></li>
-                                        <li><a href="#!">Glass Worker</a></li>
-                                        <li><a href="#!">Midwife</a></li>
+                                    <form action="search.php" method="post">
+                                        <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                    </form>
                                     </ul>
                                 </div>
                             </div>

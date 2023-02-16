@@ -45,8 +45,8 @@ if(empty($_SESSION['id'])){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
                     </ul>
                 </div>
@@ -56,6 +56,33 @@ if(empty($_SESSION['id'])){
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
             <div class="container">
                 <div class="text-center my-5">
+                    <style>
+                        .profile{
+                            height: 120px;
+                            width: 120px;
+                            background-color:#fff;
+                            margin:auto;
+                            border-radius:50%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            position:relative;
+                        }
+                        .profile img{
+                            width:auto;
+                            height:110px;
+                            border-radius:50%;
+                        }
+                        .profile span{
+                            position:absolute;
+                            bottom:0;
+                            right:0;
+                            background-color:#fff;
+                            color:#000;
+                            border-radius:50%;
+                        }
+                    </style>
+                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span>edit</span></div>
                     <?php
                         require_once "../includes/connect.php";
                         $id = $_SESSION["id"];
@@ -71,14 +98,14 @@ if(empty($_SESSION['id'])){
                         
                     ?>
                         
-                    <h1 class="fw-bolder"><?php echo $row["finder_name"]?></h1>
+                    <h3 class="fw-bolder"><?php echo $row["finder_name"]?></h3>
                     <p class="lead mb-0"><?php echo $row["finder_email"]?></p>
-                    <br>
+                    <!-- <br>
                     <div class="input-group" style="max-width:500px;margin:auto;">
                         <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
                         <button class="btn btn-primary" id="button-search" type="button">Go!</button>
                     </div>
-                                <h6 class="mt-2">Service Connection</h6>
+                                <h6 class="mt-2">Service Connection</h6> -->
                     <?php
                             } 
                         };
