@@ -149,7 +149,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link active" href="#">Home</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="providers.php">Providers</a></li>
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
@@ -164,10 +165,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h1 class="fw-bolder">Try Service <em>Connection</em> instead?</h1>
                     <p class="lead mb-0">Find manual job service provider in your area now!</p>
                     <br>
+                    <form action="providers.php" method="post">
                     <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
+                        <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </header>
@@ -331,7 +334,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -340,7 +343,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -349,7 +352,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>

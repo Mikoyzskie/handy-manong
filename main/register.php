@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <!-- <link rel="icon" type="image/png" href="../assets/img/favicon.png"> -->
     <title>
         Provider Sign Up | Handy Manong
     </title>
@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             
                             <ul class="navbar-nav d-lg-block d-none" >
                                 <li class="nav-item">
-                                    <a href="../auth/signin.php"
+                                    <a href="../auth/signup.php"
                                         class="btn btn-sm mb-0 bg-gradient-dark">Finder Sign Up</a>
                                 </li>
                             </ul>

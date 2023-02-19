@@ -25,7 +25,7 @@ if($num == 1) {
         header("location: ../home/finder.php");
         
     }else{
-        header("location: /signin.php?error=incorrectpass");
+        header("location: signin.php?error=incorrectpass");
     }
 }
 else{

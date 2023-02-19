@@ -41,12 +41,11 @@ if(empty($_SESSION['id'])){
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="finder.php">Handy <strong>Manong</strong></a>
+                <a class="navbar-brand" href="timeline.php">Handy <strong>Manong</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <!-- <li class="nav-item"><a class="nav-link active" href="#">Home</a></li> -->
-                        <li class="nav-item"><a class="nav-link" href="providers.php">Providers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tasks.php">Tasks</a></li>
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
@@ -93,7 +92,7 @@ if(empty($_SESSION['id'])){
                     <?php
                         require_once "../includes/connect.php";
                         $id = $_SESSION["id"];
-                        $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
+                        $sql = "SELECT * FROM tbl_provider WHERE id = $id";
                         $result = mysqli_query($conn, $sql);
 
                         $num = mysqli_num_rows($result);
@@ -105,8 +104,11 @@ if(empty($_SESSION['id'])){
                         
                     ?>
                         
-                    <h3 class="fw-bolder"><?php echo $row["finder_name"]?></h3>
-                    <p class="lead mb-0"><?php echo $row["finder_email"]?></p>
+                    <h3 class="fw-bolder"><?php echo $row["prov_firstname"]?> <?php echo $row["prov_lastname"]?></h3>
+                    <p class="lead mb-0"><?php echo $row["prov_email"]?></p>
+                    <p class="lead mb-0"><?php echo $row["prov_category"]?></p>
+                    <p class="lead mb-0"><?php echo $row["prov_bio"]?></p>
+                    
                     <!-- <br>
                     <div class="input-group" style="max-width:500px;margin:auto;">
                         <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
@@ -232,22 +234,22 @@ if(empty($_SESSION['id'])){
                     <div class="card mb-4">
                         <div class="card-header">Find Task</div>
                         <div class="card-body">
-                        <form role="form" action="finder.php" method="post">
+                        <form role="form" action="tasks.php" method="post">
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="search" required/>
-                                <button class="btn btn-primary" id="button-search" type="submit" name="submit">Go!</button>
+                                <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                             </div>
                         </form>
                         </div>
                     </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
-                        <div class="card-header">Search Providers by Categories</div>
+                        <div class="card-header">Connects</div>
                         <div class="card-body">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="providers.php" method="post">
+                                    <form action="tasks.php" method="post">
                                         <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -256,7 +258,7 @@ if(empty($_SESSION['id'])){
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="providers.php" method="post">
+                                    <form action="tasks.php" method="post">
                                         <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -265,32 +267,25 @@ if(empty($_SESSION['id'])){
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="providers.php" method="post">
+                                    <form action="tasks.php" method="post">
                                         <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                     </form>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Can't Decide From Service Connection? &#128549</div>
-                        <div class="card-body">Create your own job posting and let service providers bid for your project &#128077
-                            <br><br>
-                        <a class="btn btn-success" href="task-create.php">Create Now →</a>
-                        </div>
-                        
-                    </div>
+                    
                 </div>
             </div>
         </div>
         <!-- Footer-->
-        <footer class="py-2 bg-dark">
+        <!-- <footer class="py-2 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
-        </footer>
+        </footer> -->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

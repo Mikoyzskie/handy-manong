@@ -17,7 +17,7 @@ if(empty($_SESSION['id'])){
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
@@ -40,7 +40,8 @@ if(empty($_SESSION['id'])){
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link active" href="#">Home</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="providers.php">Providers</a></li>
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
@@ -55,10 +56,12 @@ if(empty($_SESSION['id'])){
                     <h1 class="fw-bolder">Welcome to Service <em>Connection</em>!</h1>
                     <p class="lead mb-0">Find manual job service provider in your area now!</p>
                     <br>
+                    <form action="providers.php" method="post">
                     <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
+                        <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </header>
@@ -152,7 +155,7 @@ if(empty($_SESSION['id'])){
                     echo "</div>";
                     /* Nested row for non-featured blog posts */
                     echo "<h2 class=\"card-title\">All Tasks</h2>";
-                    echo "<div class=\"row row-cols-1 row-cols-md-2\">";
+                    echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\" style=\"overflow-x: hidden;overflow-y: auto;height:600px;\">";
                         
                             require_once "../includes/connect.php";
                             $id = $_SESSION["id"];
@@ -229,7 +232,7 @@ if(empty($_SESSION['id'])){
                             <div class="row">
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -238,7 +241,7 @@ if(empty($_SESSION['id'])){
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
@@ -247,7 +250,7 @@ if(empty($_SESSION['id'])){
                                 </div>
                                 <div class="col-sm-4">
                                     <ul class="list-unstyled mb-0">
-                                    <form action="search.php" method="post">
+                                    <form action="providers.php" method="post">
                                         <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>

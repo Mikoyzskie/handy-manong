@@ -29,7 +29,8 @@ if(empty($_SESSION['id'])){
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link active" href="#">Home</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="providers.php">Providers</a></li>
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
@@ -44,10 +45,12 @@ if(empty($_SESSION['id'])){
                     <h1 class="fw-bolder">Try Service <em>Connection</em> instead?</h1>
                     <p class="lead mb-0">Find manual job service provider in your area now!</p>
                     <br>
+                    <form action="providers.php" method="post">
                     <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
+                        <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </header>
@@ -103,12 +106,13 @@ if(empty($_SESSION['id'])){
                                         echo "<p>Location: ".$row['task_location']."</p>";
                                         echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
                                     }
+                                    echo "<a class=\"btn btn-primary\" href=\"#!\">Update</a>"; /* add update function */
+                                    echo "<a class=\"btn btn-danger\" href=\"delete.php?tid=$id\">Delete</a>";  /* add function if task is assigned, unable to delete unless completed */
                                 }
                                 
                             ?>
                             
-                            <a class="btn btn-primary" href="#!">Update</a> <!-- add update function -->
-                            <a class="btn btn-danger" href="#!">Delete</a> <!-- add function if task is assigned, unable to delete unless completed -->
+                            
                         </div>
                     </div>
                     <h2 class="card-title">Related Tasks</h2>
@@ -190,7 +194,7 @@ if(empty($_SESSION['id'])){
                         }
                         ?>
                         </div>
-                        <form role="form" action="messaging.php?error=<?php echo $_GET['tid']?>" method="post">
+                        <form role="form" method="post">
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="Enter Message..." aria-label="Search..." aria-describedby="button-search" name="chat" required autocomplete="off"/>
                                 <button class="btn btn-primary" id="button-search" type="submit" name="send"><img src="../assets/images/paper-plane.png" height="12" alt="" srcset=""></button>
