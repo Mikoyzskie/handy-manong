@@ -20,7 +20,7 @@ if($num == 1) {
 
     if($checkpass == true){
         session_start();
-        $_SESSION["id"]= $row['id'];
+        $_SESSION["id"] = $row['id'];
         $_SESSION["category"]= $row['prov_category'];
         header("location: ../main/timeline.php");
         

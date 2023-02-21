@@ -103,7 +103,16 @@ if(empty($_SESSION['id'])){
                                         echo "<p>Location: ".$row['task_location']."</p>";
                                         echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
                                     }
-                                    echo "<a class=\"btn btn-success\" href=\"#!\">Apply</a>"; /* add update function */
+                                    $user = $_SESSION['id'];
+                                    $query = "SELECT * FROM request WHERE prov_id = $user AND task_id = $id";
+                                    $result = mysqli_query($conn, $query);
+                                    $num = mysqli_num_rows($result);
+                                    if($num == 0){
+                                        echo "<a class=\"btn btn-success\" href=\"request.php?tid=$id\">Apply</a>";
+                                    }else{
+                                        echo "<a class=\"btn btn-success disabled\" href=\"#\">Applied</a>"; /* add update function */
+                                    }
+                                    
                                     
                                 }
                                 

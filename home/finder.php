@@ -69,17 +69,38 @@ if(empty($_SESSION['id'])){
         <div class="container">
             <div class="row">
                 <!-- Blog entries-->
-                <div class="col-lg-8">
+                
                     <!-- Featured blog post-->
                     <?php
                     if(isset($_POST["search"])){
-                        echo "<h2 class=\"card-title\">Task</h2>";
+                    echo "<div class='col-lg-8'>";
+                    echo "<h2 class=\"card-title\">Task</h2>";
                     echo "<div class=\"row row-cols-1 row-cols-md-2\">";
                         
                             require_once "../includes/connect.php";
+
+                            if (isset($_GET['pages_no']) && $_GET['pages_no']!="") {
+                                $page_no = $_GET['pages_no'];
+                            }else {
+                                $page_no = 1;
+                            }
                             $id = $_SESSION["id"];
                             $search = $_POST['search'];
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; /* add where clause here */
+                            $total_records_per_page = 6;
+                            $offset = ($page_no-1) * $total_records_per_page;
+                            $previous_page = $page_no - 1;
+                            $next_page = $page_no + 1;
+                            $adjacents = "2"; 
+    
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id");
+                            $total_records = mysqli_fetch_array($result_count);
+                            $total_records = $total_records['total_records'];
+                            $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                            $second_last = $total_no_of_pages - 1; // total page minus 1
+
+                            $id = $_SESSION["id"];
+                            $search = $_POST['search'];
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -115,7 +136,84 @@ if(empty($_SESSION['id'])){
                                 }
                         
                     echo "</div>";
+                    ?>
+
+                <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                    <ul class="pagination justify-content-center my-4">
+    
+                        <li class='page-item' <?php if($page_no <= 1){ echo "class='page-item disabled'"; } ?>>
+                            <a class='page-link'<?php if($page_no > 1){ echo "href='?pages_no=$previous_page'"; } ?>>Previous</a>
+                        </li>
+                        
+                        <?php 
+                            if ($total_no_of_pages <= 10){  	 
+                                for ($counter = 1; $counter <= $total_no_of_pages; $counter++){
+                                    if ($counter == $page_no) {
+                                echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                        }else{
+                                echo "<li class='page-item'><a class='page-link' href='?pages_no=$counter'>$counter</a></li>";
+                                        }
+                                }
+                            }
+                        elseif($total_no_of_pages > 10){
+                            
+                        if($page_no <= 4) {			
+                            for ($counter = 1; $counter < 8; $counter++){		 
+                                if ($counter == $page_no) {
+                                    echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                }else{
+                                    echo "<li class='page-item'><a class='page-link' href='?pages_no=$counter'>$counter</a></li>";
+                                }
+                            }
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=$second_last'>$second_last</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                        }elseif($page_no > 4 && $page_no < $total_no_of_pages - 4) {		 
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=1'>1</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=2'>2</a></li>";
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                            for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {			
+                            if ($counter == $page_no) {
+                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                    }else{
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=$counter'>$counter</a></li>";
+                                    }                  
+                        }
+                        echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                        echo "<li class='page-item'><a class='page-link' href='?pages_no=$second_last'>$second_last</a></li>";
+                        echo "<li class='page-item'><a class='page-link' href='?pages_no=$total_no_of_pages'>$total_no_of_pages</a></li>";      
+                                }
+                            
+                            else {
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=1'>1</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=2'>2</a></li>";
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                    
+                            for ($counter = $total_no_of_pages - 6; $counter <= $total_no_of_pages; $counter++) {
+                            if ($counter == $page_no) {
+                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                    }else{
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=$counter'>$counter</a></li>";
+                                    }                   
+                                    }
+                                }
+                        }
+                    ?>
+                        
+                        <li class='page-item' <?php if($page_no >= $total_no_of_pages){ echo "class='disabled'"; } ?>>
+                        <a class='page-link' <?php if($page_no < $total_no_of_pages) { echo "href='?pages_no=$next_page'"; } ?>>Next</a>
+                        </li>
+                        <?php if($page_no < $total_no_of_pages){
+                            echo "<li class='page-item'><a class='page-link' href='?pages_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                            } ?>
+                    </ul>
+                </nav>
+
+                    <?php
+                    echo "</div>";
                     }else{
+                        echo "<div class='col-lg-8'>";
                         echo "<div class=\"card mb-4\">";
                         /* <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> */
                         echo "<div class=\"card-body\">";
@@ -152,12 +250,12 @@ if(empty($_SESSION['id'])){
                                     }
                                 }
                         echo"</div>";
-                    echo "</div>";
-                    /* Nested row for non-featured blog posts */
-                    echo "<h2 class=\"card-title\">All Tasks</h2>";
-                    echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\">";
-                        
-                    require_once "../includes/connect.php";
+                        echo "</div>";
+                        /* Nested row for non-featured blog posts */
+                        echo "<h2 class=\"card-title\">All Tasks</h2>";
+                        echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\">";
+                            
+                        require_once "../includes/connect.php";
                     
                         if (isset($_GET['page_no']) && $_GET['page_no']!="") {
                             $page_no = $_GET['page_no'];
@@ -213,19 +311,11 @@ if(empty($_SESSION['id'])){
                                         echo "</div>";
                                     }
                                 }
-                        
-                    echo "</div>";
-                    }
-                    ?>
-                    <!-- <div class="mb-5">
-                        <strong>Page <?php echo $page_no." of ".$total_no_of_pages; ?></strong>
-                    </div> -->
-                    <!-- Pagination-->
-                    <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        
-                    </nav>
+                                echo "</div>";
+                            ?>
 
+                <nav aria-label="Pagination">
+                        <hr class="my-0" />
                     <ul class="pagination justify-content-center my-4">
     
                         <li class='page-item' <?php if($page_no <= 1){ echo "class='page-item disabled'"; } ?>>
@@ -293,11 +383,23 @@ if(empty($_SESSION['id'])){
                         <?php if($page_no < $total_no_of_pages){
                             echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
                             } ?>
-                </ul>
+                    </ul>
+                </nav>
 
 
+                         <?php       
+                                echo "</div>";
+                        }
+                                
+                    
+                    ?>
+                    
+                    
+                    
+                    
+                
 
-                </div>
+                
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->

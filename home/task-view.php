@@ -107,7 +107,7 @@ if(empty($_SESSION['id'])){
                                         echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
                                     }
                                     echo "<a class=\"btn btn-primary\" href=\"#!\">Update</a>"; /* add update function */
-                                    echo "<a class=\"btn btn-danger\" href=\"delete.php?tid=$id\">Delete</a>";  /* add function if task is assigned, unable to delete unless completed */
+                                    echo "<a class=\"btn btn-danger mx-2\" href=\"delete.php?tid=$id\">Delete</a>";  /* add function if task is assigned, unable to delete unless completed */
                                 }
                                 
                             ?>
@@ -200,6 +200,32 @@ if(empty($_SESSION['id'])){
                                 <button class="btn btn-primary" id="button-search" type="submit" name="send"><img src="../assets/images/paper-plane.png" height="12" alt="" srcset=""></button>
                             </div>
                         </form>
+                    </div>
+                    <!-- Side widget-->
+                    <style>
+                        .avatar{
+                            display: flex;
+                            flex-direction:row;
+                            justify-content:space-between;
+                            align-items:center;
+                        }
+                        div.avatar img{
+                            border-radius:50%;
+                        }
+                    </style>
+                    <div class="card mb-4">
+                        <div class="card-header">Connects</div>
+                        <div class="card-body">
+                            <div class="avatar"><img src="../assets/images/team-1.jpg" alt="" height="50" width="50"><h5 class="name">Sample User</h5>
+                            <br>
+                        
+                        <div class="btn-wrap">
+                        <a class="btn btn-success" href="#">Accept</a>
+                        <a class="btn btn-secondary" href="#">Reject</a>
+                        </div>
+                        </div>
+                        </div>
+                        
                     </div>
                     <!-- Categories widget-->
                     <div class="card mb-4">
