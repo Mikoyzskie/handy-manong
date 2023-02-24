@@ -160,10 +160,30 @@ if(empty($_SESSION['id'])){
                     echo "<h2 class=\"card-title\">All Tasks</h2>";
                     echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\" style=\"overflow-x: hidden;overflow-y: auto;height:600px;\">";
                         
-                            require_once "../includes/connect.php";
+                    require_once "../includes/connect.php";
+                    
+                    if (isset($_GET['page_no']) && $_GET['page_no']!="") {
+                        $page_no = $_GET['page_no'];
+                    }else {
+                        $page_no = 1;
+                    }
+                        
+                    $total_records_per_page = 4;
+                    $offset = ($page_no-1) * $total_records_per_page;
+                    $previous_page = $page_no - 1;
+                    $next_page = $page_no + 1;
+                    $adjacents = "2"; 
+
+                    $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task");
+                    $total_records = mysqli_fetch_array($result_count);
+                    $total_records = $total_records['total_records'];
+                    $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                    $second_last = $total_no_of_pages - 1; // total page minus 1
+
+
                             $id = $_SESSION["id"];
                             $category = $_SESSION["category"];
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' AND task_provider = $id ORDER BY id DESC"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' AND task_provider = $id ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -202,18 +222,77 @@ if(empty($_SESSION['id'])){
                     }
                     ?>
                     <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination">
+                    <nav aria-label="Pagination">
                         <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav> -->
+                    <ul class="pagination justify-content-center my-4">
+    
+                        <li class='page-item' <?php if($page_no <= 1){ echo "class='page-item disabled'"; } ?>>
+                            <a class='page-link'<?php if($page_no > 1){ echo "href='?page_no=$previous_page'"; } ?>>Previous</a>
+                        </li>
+                        
+                        <?php 
+                            if ($total_no_of_pages <= 10){  	 
+                                for ($counter = 1; $counter <= $total_no_of_pages; $counter++){
+                                    if ($counter == $page_no) {
+                                echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                        }else{
+                                echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                        }
+                                }
+                            }
+                        elseif($total_no_of_pages > 10){
+                            
+                        if($page_no <= 4) {			
+                            for ($counter = 1; $counter < 8; $counter++){		 
+                                if ($counter == $page_no) {
+                                    echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                }else{
+                                    echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                }
+                            }
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";
+                        }elseif($page_no > 4 && $page_no < $total_no_of_pages - 4) {		 
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                            for ($counter = $page_no - $adjacents; $counter <= $page_no + $adjacents; $counter++) {			
+                            if ($counter == $page_no) {
+                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                    }else{
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                    }                  
+                        }
+                        echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                        echo "<li class='page-item'><a class='page-link' href='?page_no=$second_last'>$second_last</a></li>";
+                        echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>$total_no_of_pages</a></li>";      
+                                }
+                            
+                            else {
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=1'>1</a></li>";
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=2'>2</a></li>";
+                            echo "<li class='page-item'><a class='page-link'>...</a></li>";
+                    
+                            for ($counter = $total_no_of_pages - 6; $counter <= $total_no_of_pages; $counter++) {
+                            if ($counter == $page_no) {
+                            echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";	
+                                    }else{
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$counter'>$counter</a></li>";
+                                    }                   
+                                    }
+                                }
+                        }
+                    ?>
+                        
+                        <li class='page-item' <?php if($page_no >= $total_no_of_pages){ echo "class='disabled'"; } ?>>
+                        <a class='page-link' <?php if($page_no < $total_no_of_pages) { echo "href='?page_no=$next_page'"; } ?>>Next</a>
+                        </li>
+                        <?php if($page_no < $total_no_of_pages){
+                            echo "<li class='page-item'><a class='page-link' href='?page_no=$total_no_of_pages'>Last &rsaquo;&rsaquo;</a></li>";
+                            } ?>
+                    </ul>
+                </nav>
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
@@ -261,7 +340,7 @@ if(empty($_SESSION['id'])){
         </div>
         <!-- Footer-->
         <footer class="py-2 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Handy <strong>Manong</strong> 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

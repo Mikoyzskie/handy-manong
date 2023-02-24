@@ -131,7 +131,7 @@ if(empty($_SESSION['id'])){
                             require_once "../includes/connect.php";
                             $id = $_GET['tid'];
                             $category = $_GET['category'];
-                            $sql = "SELECT * FROM `tbl_task` WHERE id <> $id AND `task_finder` = ".$_SESSION['id']." AND `task_category`= '".$category."'";
+                            $sql = "SELECT * FROM `tbl_task` WHERE id <> $id AND `task_finder` = ".$_SESSION['id']." AND `task_category`= '".$category."' LIMIT 4";
                             $result = mysqli_query($conn, $sql);
                             $num = mysqli_num_rows($result); 
 
@@ -276,7 +276,7 @@ if(empty($_SESSION['id'])){
         </div>
         <!-- Footer-->
         <footer class="py-2 bg-dark mt-5">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Handy <strong>Manong</strong> 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
