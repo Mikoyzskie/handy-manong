@@ -6,11 +6,11 @@ if(isset($_POST['send'])){
     
     $chat = $_POST["chat"];
     $task = $_GET["tid"];
-    $sql = "INSERT INTO `messaging`(`user_id`, `msg_content`, `task_id`, `user_type`) VALUES ('$user','$chat','$task','finder')";
+    $sql = "INSERT INTO `messaging`(`user_id`, `msg_content`, `task_id`, `user_type`) VALUES ('$user','$chat','$task','provider')";
     $result = mysqli_query($conn, $sql);
     
     if ($result) {
-        header("Location: finder.php");
+        header("Location: timeline.php");
         die();
     }
 }
