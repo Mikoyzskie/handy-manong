@@ -198,8 +198,8 @@ if(empty($_SESSION['id'])){
                                 else{
                                     $provider = $row['user_id'];
                                     $query = "SELECT * FROM tbl_provider WHERE id = $provider";
-                                    $result = mysqli_query($conn, $query);
-                                    $rows = mysqli_fetch_array($result);
+                                    $results = mysqli_query($conn, $query);
+                                    $rows = mysqli_fetch_array($results);
                                     echo "<p>From <a href=\"#\">".$rows['prov_firstname']." ".$rows['prov_lastname']."</a>: ".$row['msg_content']."</p>";
                                 }
                             }

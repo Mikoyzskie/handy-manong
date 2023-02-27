@@ -192,8 +192,8 @@ if(empty($_SESSION['id'])){
                                 else{
                                     $provider = $row['user_id'];
                                     $query = "SELECT * FROM tbl_provider WHERE id = $provider";
-                                    $result = mysqli_query($conn, $query);
-                                    $rows = mysqli_fetch_array($result);
+                                    $results = mysqli_query($conn, $query);
+                                    $rows = mysqli_fetch_array($results);
                                     echo "<p>From <a href=\"#\">".$rows['prov_firstname']." ".$rows['prov_lastname']."</a>: ".$row['msg_content']."</p>";
                                 }
                             }
@@ -222,14 +222,32 @@ if(empty($_SESSION['id'])){
                     <div class="card mb-4">
                         <div class="card-header">Connects</div>
                         <div class="card-body">
-                            <div class="avatar"><img src="../assets/images/team-1.jpg" alt="" height="50" width="50"><h5 class="name">Sample User</h5>
-                            <br>
-                        
-                        <div class="btn-wrap">
-                        <a class="btn btn-success" href="#">Accept</a>
-                        <a class="btn btn-secondary" href="#">Reject</a>
-                        </div>
-                        </div>
+                                <?php
+                                    $id = $_GET["tid"];
+                                    $sql = "SELECT * FROM request JOIN tbl_provider ON request.prov_id = tbl_provider.id WHERE task_id = $id";
+                                    $result = mysqli_query($conn, $sql);
+                                    $num = mysqli_num_rows($result);
+                                    if($num == 0) {
+
+                                    }else{
+
+                                        while($row = mysqli_fetch_array($result)){
+                                ?>
+                            <div class="my-2">
+                                
+                                <div class="avatar"><img src="../assets/images/team-1.jpg" alt="" height="50" width="50"><h5 class="name"><?php echo $row['prov_firstname']." ".$row['prov_lastname']?></h5>
+                                <br>
+                            
+                                <div class="btn-wrap">
+                                    <a class="btn btn-success" href="#">Accept</a>
+                                    <a class="btn btn-secondary" href="#">Reject</a>
+                                </div>
+                                </div>
+                            </div>
+                            <?php
+                                        }
+                                    }
+                                ?>
                         </div>
                         
                     </div>
