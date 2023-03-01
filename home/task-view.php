@@ -224,7 +224,7 @@ if(empty($_SESSION['id'])){
                         <div class="card-body">
                                 <?php
                                     $id = $_GET["tid"];
-                                    $sql = "SELECT * FROM request JOIN tbl_provider ON request.prov_id = tbl_provider.id WHERE task_id = $id";
+                                    $sql = "SELECT * FROM request JOIN tbl_provider ON request.prov_id = tbl_provider.id WHERE task_id = $id AND `status` = 'Pending';";
                                     $result = mysqli_query($conn, $sql);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0) {
@@ -239,7 +239,8 @@ if(empty($_SESSION['id'])){
                                 <br>
                             
                                 <div class="btn-wrap">
-                                    <a class="btn btn-success" href="#">Accept</a>
+                                    <?php $id = $_GET["tid"];?>
+                                    <a class="btn btn-success" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>">Accept</a>
                                     <a class="btn btn-secondary" href="#">Reject</a>
                                 </div>
                                 </div>
