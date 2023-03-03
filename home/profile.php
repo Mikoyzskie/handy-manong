@@ -89,11 +89,29 @@ if(empty($_SESSION['id'])){
                             align-items: center;
                         }
                     </style>
-                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span><i class="fa-solid fa-pen"></i></span></div>
+                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset="">
+                        <?php
+                            if(empty($_GET['uid'])){
+                        ?>
+                        <a href="account.php">
+                            <span><i class="fa-solid fa-pen"></i></span>
+                        </a>
+                        <?php
+                            }else{
+
+                            }
+                        ?>
+                    </div>
                     <?php
                         require_once "../includes/connect.php";
-                        $id = $_SESSION["id"];
-                        $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
+                        
+                        if(empty($_GET['uid'])){
+                            $id = $_SESSION["id"];
+                            $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
+                        }else{
+                            $id = $_GET['uid'];
+                            $sql = "SELECT * FROM tbl_provider WHERE id = $id";
+                        }
                         $result = mysqli_query($conn, $sql);
 
                         $num = mysqli_num_rows($result);
@@ -105,8 +123,24 @@ if(empty($_SESSION['id'])){
                         
                     ?>
                         
-                    <h3 class="fw-bolder"><?php echo $row["finder_name"]?></h3>
-                    <p class="lead mb-0"><?php echo $row["finder_email"]?></p>
+                    <h3 class="fw-bolder">
+                        <?php 
+                            if(empty($_GET['uid'])){
+                                echo $row["finder_name"];
+                            }else{
+                                echo $row["prov_firstname"]." ".$row["prov_lastname"];
+                            }
+                        ?>
+                    </h3>
+                    <p class="lead mb-0">
+                        <?php 
+                            if(empty($_GET['uid'])){
+                                echo $row["finder_email"];
+                            }else{
+                                echo $row["prov_email"];
+                            }
+                        ?>
+                    </p>
                     <!-- <br>
                     <div class="input-group" style="max-width:500px;margin:auto;">
                         <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
@@ -289,7 +323,7 @@ if(empty($_SESSION['id'])){
         </div>
         <!-- Footer-->
         <footer class="py-2 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Handy <strong>Manong</strong> 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

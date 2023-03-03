@@ -108,9 +108,10 @@ if(empty($_SESSION['id'])){
                                     $result = mysqli_query($conn, $query);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0){
-                                        echo "<a class=\"btn btn-success\" href=\"request.php?tid=$id\">Apply</a>";
+                                        echo "<a class='btn btn-success' href='request.php?action=apply&tid=$id'>Apply</a>";
+                                        
                                     }else{
-                                        echo "<a class=\"btn btn-success disabled\" href=\"#\">Applied</a>"; /* add update function */
+                                        echo "<a class=\"btn btn-danger\" href='request.php?action=cancel&tid=$id'>Cancel</a>";
                                     }
                                     
                                     

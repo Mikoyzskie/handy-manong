@@ -88,7 +88,11 @@ if(empty($_SESSION['id'])){
                             align-items: center;
                         }
                     </style>
-                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span><i class="fa-solid fa-pen"></i></span></div>
+                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset="">
+                        <a href="account.php">
+                            <span><i class="fa-solid fa-pen"></i></span>
+                        </a>
+                    </div>
                     <?php
                         require_once "../includes/connect.php";
                         $id = $_SESSION["id"];

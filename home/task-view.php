@@ -65,7 +65,7 @@ if(empty($_SESSION['id'])){
                         <div class="card-body">
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
                             <?php
-                                require_once "../includes/connect.php";
+                                include "../includes/connect.php";
                                 $uid = $_GET["uid"];
                                 $id = $_GET["tid"];
                                 if($uid != $_SESSION["id"]){
@@ -104,10 +104,25 @@ if(empty($_SESSION['id'])){
                                         echo "Description:";
                                         echo "<p class=\"card-text ps-4\">".nl2br($row['task_desc'])."</p>"; /* fix formating do not remove spacing */
                                         echo "<p>Location: ".$row['task_location']."</p>";
-                                        echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
+                                        $prov = $row['task_provider'];
+                                        if(empty($prov)){
+
+                                        }else{
+                                            $userselect = "SELECT * FROM tbl_provider WHERE id = $prov";
+                                            $results = mysqli_query($conn, $userselect);
+                                            $rows = mysqli_fetch_array($results);
+                                            echo "<p>Assigned to: <a href='profile.php?uid=$prov'>".$rows['prov_firstname']." ".$rows['prov_lastname']."</a></p>";
+                                        }
+                                        
+                                        if($row['task_status']=='Assigned'){
+                                            
+                                        }else{
+                                            echo "<a class=\"btn btn-primary\" href=\"#!\">Update</a>"; /* add update function */
+                                            echo "<a class=\"btn btn-danger mx-2\" href=\"delete.php?tid=$id\">Delete</a>";
+                                        }
                                     }
-                                    echo "<a class=\"btn btn-primary\" href=\"#!\">Update</a>"; /* add update function */
-                                    echo "<a class=\"btn btn-danger mx-2\" href=\"delete.php?tid=$id\">Delete</a>";  /* add function if task is assigned, unable to delete unless completed */
+
+                                    
                                 }
                                 
                             ?>
