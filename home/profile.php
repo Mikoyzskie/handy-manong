@@ -132,7 +132,7 @@ if(empty($_SESSION['id'])){
                             }
                         ?>
                     </h3>
-                    <p class="lead mb-0">
+                    <p class="lead mb-3">
                         <?php 
                             if(empty($_GET['uid'])){
                                 echo $row["finder_email"];
@@ -141,6 +141,11 @@ if(empty($_SESSION['id'])){
                             }
                         ?>
                     </p>
+                    <?php
+                        if(!empty($_GET['uid'])){
+                            echo "<a href='task-create.php?assign=".$row['id']."' class='btn btn-success'>Apply</a>";
+                        }
+                    ?>
                     <!-- <br>
                     <div class="input-group" style="max-width:500px;margin:auto;">
                         <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>

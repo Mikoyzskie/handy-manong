@@ -139,7 +139,7 @@ if(empty($_SESSION['id'])){
                                             
                                             echo "<h2 class=\"card-title h4\">".$row['prov_firstname']." ".$row['prov_lastname']."</h2>";
                                             echo "<p class=\"card-text related\">".$row['prov_bio']."</p>";
-                                            echo "<a class=\"btn btn-primary\" href=\"#\">Learn more →</a>"; /* add task id to this button to full view */
+                                            echo "<a class=\"btn btn-primary\" href='profile.php?uid=".$row['id']."'>Learn more →</a>"; /* add task id to this button to full view */
                                             echo "</div>";
                                             echo "</div>";
                                             echo "</div>";

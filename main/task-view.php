@@ -109,12 +109,16 @@ if(empty($_SESSION['id'])){
                                     $num = mysqli_num_rows($result);
                                     if($num == 0){
                                         echo "<a class='btn btn-success' href='request.php?action=apply&tid=$id'>Apply</a>";
-                                        
                                     }else{
-                                        echo "<a class=\"btn btn-danger\" href='request.php?action=cancel&tid=$id'>Cancel</a>";
+                                        $row = mysqli_fetch_array($result);
+                                        if($row['status']=='Assigned'){
+                                            echo "<a class='btn btn-warning' href='#'>In Progress</a>";
+                                        }elseif($row['status']=='Rejected'){
+                                            echo "<a class='btn btn-secondary' href='#' disabled>Application Denied</a>";
+                                        }else{
+                                            echo "<a class=\"btn btn-danger\" href='request.php?action=cancel&tid=$id'>Cancel</a>";
+                                        }
                                     }
-                                    
-                                    
                                 }
                                 
                             ?>

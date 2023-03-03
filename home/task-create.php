@@ -26,7 +26,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($catArray)){
         $showError = "Category empty. Please select one.";
     }else{
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`) VALUES ('$finder','$category','$title','$description','$location')";
+        $id = $_GET['assign'];
+        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`) VALUES ('$finder','$category','$title','$description','$location','$id')";
         
         $result = mysqli_query($conn, $sql);
 
@@ -242,7 +243,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!-- <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> -->
                         <div class="card-body">
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
-                            <h2 class="card-title">Create Task</h2>
+                            <?php
+                                if(empty($_GET['assign'])){
+                                    echo "<h2 class='card-title'>Create Task</h2>";
+                                }else{
+                                    include '../includes/connect.php';
+                                    $id = $_GET['assign'];
+                                    $sql = "SELECT * FROM tbl_provider WHERE id = $id";
+                                    $result = mysqli_query($conn, $sql);
+                                    $num = mysqli_num_rows($result);
+                                    if(empty($num)){
+
+                                    }else{
+                                        $row = mysqli_fetch_array($result);
+                                        echo "<h2 class='card-title'>Request: ".$row['prov_firstname']." ".$row['prov_lastname']."</h2>";
+                                    }
+                                }
+                            ?>
+                            
                             <hr>
                             <form method = "post" action="task-create.php">
                             <div class="mb-3">
@@ -368,12 +386,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <!-- Footer-->
         <footer class="py-2 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Handy <strong>Manong</strong> 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        
-
     </body>
 </html>

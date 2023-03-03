@@ -245,7 +245,6 @@ if(empty($_SESSION['id'])){
                                     if($num == 0) {
 
                                     }else{
-
                                         while($row = mysqli_fetch_array($result)){
                                 ?>
                             <div class="my-2">
@@ -255,8 +254,8 @@ if(empty($_SESSION['id'])){
                             
                                 <div class="btn-wrap">
                                     <?php $id = $_GET["tid"];?>
-                                    <a class="btn btn-success" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>">Accept</a>
-                                    <a class="btn btn-secondary" href="#">Reject</a>
+                                    <a class="btn btn-success" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=assign">Accept</a>
+                                    <a class="btn btn-secondary" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=reject">Reject</a>
                                 </div>
                                 </div>
                             </div>
