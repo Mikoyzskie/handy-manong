@@ -1,8 +1,8 @@
 header{
     background-image:url(../assets/images/finder_hero.jpg)!important;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    background-position: 50% 40%!important;
 }
 
 ul.ks-cboxtags {
