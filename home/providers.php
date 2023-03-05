@@ -70,7 +70,13 @@ if(empty($_SESSION['id'])){
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
-                    
+                    <style>
+                        .card .card-img-top{
+                            height: 250px;
+                            object-fit:cover;
+                            object-position:center;
+                        }
+                    </style>
                     <!-- Nested row for non-featured blog posts-->
                     <!-- <h2 class="card-title">Providers</h2> -->
                     <div class="row row-cols-1 row-cols-md-2 mb-5" style="overflow-x: hidden;overflow-y: auto;height:600px;">
@@ -134,7 +140,12 @@ if(empty($_SESSION['id'])){
                                         while($row = mysqli_fetch_array($result)){
                                             echo "<div class=\"col\">";
                                             echo "<div class=\"card mb-4\">";
-                                            echo "<a href=\"#!\"><img class=\"card-img-top\" src=\"https://dummyimage.com/700x350/dee2e6/6c757d.jpg\" alt=\"...\" /></a>";
+                                            if(empty($row['avatar'])){
+                                                echo "<a href=\"#!\"><img class=\"card-img-top\" src='../assets/images/avatar.jpg' alt=\"...\" /></a>";
+                                            }else{
+                                                echo "<a href=\"#!\"><img class=\"card-img-top\" src='../assets/images/uploads/".$row['avatar']."' alt=\"...\" /></a>";
+                                            }
+                                            
                                             echo "<div class=\"card-body\">";
                                             
                                             echo "<h2 class=\"card-title h4\">".$row['prov_firstname']." ".$row['prov_lastname']."</h2>";

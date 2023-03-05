@@ -22,6 +22,7 @@ if($num == 1) {
         session_start();
         $_SESSION["id"] = $row['finder_id'];
         $_SESSION["name"]=$row['finder_name'];
+        $_SESSION["avatar"]=$row['avatar'];
         header("location: ../home/finder.php");
         
     }else{

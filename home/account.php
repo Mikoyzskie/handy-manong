@@ -8,38 +8,6 @@ if(empty($_SESSION['id'])){
 $showAlert = false; 
 $showError = false; 
 $exists=false;
-    
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-      
-    // Include file which makes the
-    // Database Connection.
-    include '../includes/connect.php';   
-    
-    $title = addslashes($_POST["title"]);
-    $location = $_POST["location"];
-    $description = addslashes($_POST["description"]);
-    $catArray = $_POST["category"];
-    $category = implode(',',$catArray);
-    $finder = $_SESSION["id"];
-
-
-    if(empty($catArray)){
-        $showError = "Category empty. Please select one.";
-    }else{
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`) VALUES ('$finder','$category','$title','$description','$location')";
-        
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            header("Location: ../home/finder.php?error=noerror");
-            die();
-        }else{
-            header("Location: ../home/task-create.php?error=undefined");
-        }
-    }
-
-    
-}
 
 ?>
 
@@ -243,7 +211,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         .profile{
                             height: 120px;
                             width: 120px;
-                            background-color:#000;
+                            background-color:#212529;
                             margin:auto;
                             border-radius:50%;
                             display:flex;
@@ -269,12 +237,69 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            background-color:#000;
+                            background-color:#212529;
                             color:#fff;
                         }
+                        .custom-file-upload:hover{
+                            cursor:pointer;
+                        }
+                        input[type="file"] {
+                            display: none;
+                        }
+                        .profile-form{
+                            display:flex;
+                            flex-direction:column;
+                            justify-content:center;
+                        }
+                        .profile-form button{
+                            width: fit-content;
+                            align-self: center;
+                        }
                     </style>
-                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span><i class="fa-solid fa-pen"></i></span></div>
-                            <form method = "post" action="task-create.php">
+                    <form name="avatarForm" class="profile-form" action="update.php" method="post" enctype="multipart/form-data">
+                        <div class="profile">
+                        <?php
+                            require_once "../includes/connect.php";
+                            
+                            if(empty($_GET['uid'])){
+                                $id = $_SESSION["id"];
+                                $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
+                            }else{
+                                $id = $_GET['uid'];
+                                $sql = "SELECT * FROM tbl_provider WHERE id = $id";
+                            }
+                            $result = mysqli_query($conn, $sql);
+
+                            $num = mysqli_num_rows($result);
+                            if(empty($num)){
+                                header("location: ../auth/signin.php?error=loginrequired");
+                            }
+                            else{
+                                $row = mysqli_fetch_array($result);
+                                if(empty($row['avatar'])):
+                            
+                        ?>
+                            
+                                <img id="preview" src="../assets/images/avatar.jpg" alt="Preview Image" srcset="">
+                            <?php
+                                else:
+                            ?>
+                                <img id="preview" src="../assets/images/uploads/<?php echo $row['avatar']?>" alt="Preview Image" srcset="">
+                            <?php
+                                endif;
+                            ?>
+                            <span>
+                                <label class="custom-file-upload"><i class="fa-solid fa-pen"></i><label>
+                                <input id="file-upload" name="image" type="file" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)" required/>
+                            </span>
+                        <?php
+                                }
+                        ?>
+                        </div>
+                        <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
+                    </form>
+                    
+                        <form method = "post" action="task-create.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
                                 <div class="input-group">
@@ -310,10 +335,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
                         </form>
-                        </div>
                     </div>
-
                 </div>
+            </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
                     <!-- Search widget-->
@@ -374,7 +398,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        
+        <script>
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function(){
+                    var output = document.getElementById('preview');
+                    output.src = reader.result;
+                    output.style.display = 'block';
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        </script>
 
     </body>
 </html>

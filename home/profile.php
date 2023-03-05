@@ -55,6 +55,14 @@ if(empty($_SESSION['id'])){
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
+        <style>
+            header{
+                background-image:url(../assets/images/profile_hero.png)!important;
+                background-repeat: no-repeat!important;
+                background-size: cover!important;
+                background-position: 50% 70%!important;
+            }
+        </style>
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
             <div class="container">
                 <div class="text-center my-5">
@@ -89,19 +97,8 @@ if(empty($_SESSION['id'])){
                             align-items: center;
                         }
                     </style>
-                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset="">
-                        <?php
-                            if(empty($_GET['uid'])){
-                        ?>
-                        <a href="account.php">
-                            <span><i class="fa-solid fa-pen"></i></span>
-                        </a>
-                        <?php
-                            }else{
 
-                            }
-                        ?>
-                    </div>
+                    <div class="profile">
                     <?php
                         require_once "../includes/connect.php";
                         
@@ -122,6 +119,28 @@ if(empty($_SESSION['id'])){
                             while($row = mysqli_fetch_array($result)){
                         
                     ?>
+                    
+                        <?php
+                            if(empty($row['avatar'])):
+                        ?>
+                        <img src="../assets/images/avatar.jpg" alt="" srcset="">
+                        <?php else:?>
+                            <img src="../assets/images/uploads/<?php echo $row['avatar']?>" alt="" srcset="">
+                        <?php endif;?>
+                    
+                        <?php
+                            if(empty($_GET['uid'])){
+                        ?>
+                        <a href="account.php">
+                            <span><i class="fa-solid fa-pen"></i></span>
+                        </a>
+                        <?php
+                            }else{
+                                /* This hides edit button */
+                            }
+                        ?>
+                    </div>
+                    
                         
                     <h3 class="fw-bolder">
                         <?php 

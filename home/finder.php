@@ -50,15 +50,24 @@ if(empty($_SESSION['id'])){
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
+        <style>
+            header{
+                background-image:url(../assets/images/finder_hero.png)!important;
+                background-repeat: no-repeat!important;
+                background-size: cover!important;
+                background-position: 50% 40%!important;
+            }
+
+        </style>
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">Welcome to Service <em>Connection</em>!</h1>
+                    <h1 class="fw-bolder">Welcome to Service <em>Connections</em>!</h1>
                     <p class="lead mb-0">Find manual job service provider in your area now!</p>
                     <br>
                     <form action="providers.php" method="post">
                     <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
+                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.7);color:#fff;"/>
                         <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
                     </div>
                     </form>
@@ -463,7 +472,7 @@ if(empty($_SESSION['id'])){
         </div>
         <!-- Footer-->
         <footer class="py-2 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Handy <strong>Manong</strong> 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
