@@ -52,7 +52,7 @@ if(empty($_SESSION['id'])){
         <!-- Page header with logo and tagline-->
         <style>
             header{
-                background-image:url(../assets/images/finder_hero.png)!important;
+                background-image:url(../assets/images/finder_hero.jpg)!important;
                 background-repeat: no-repeat!important;
                 background-size: cover!important;
                 background-position: 50% 40%!important;
