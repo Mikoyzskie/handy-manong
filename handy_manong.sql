@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2023 at 07:09 PM
+-- Generation Time: Mar 06, 2023 at 08:18 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -82,18 +82,19 @@ CREATE TABLE `tbl_finder` (
   `finder_id` int(128) NOT NULL,
   `finder_name` varchar(128) NOT NULL,
   `finder_email` varchar(128) NOT NULL,
-  `finder_password` varchar(128) NOT NULL
+  `finder_password` varchar(128) NOT NULL,
+  `avatar` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_finder`
 --
 
-INSERT INTO `tbl_finder` (`finder_id`, `finder_name`, `finder_email`, `finder_password`) VALUES
-(1, 'Myk', 'caipower09@gmail.com', '$2y$10$KW.8tCEPy.w6SwHh/03Mq.JzOsLHV2Rqg9M6s1YSXI2yh1q31T.HC'),
-(2, 'Myk', 'rapidstrike13@gmail.com', '$2y$10$jTufZC60BR9fpeGYQrTev.oV/cMOOzX4fLXyqRti6d5sQ71yV45ma'),
-(3, 'Test Finder', 'mali@gmail.com', '$2y$10$Cf57wNZGQpiV2iy.4VrMX.DkX9.0cvGkq0nUcW8MQseeUMpzHc83O'),
-(4, 'Mark', 'markescala69@gmail.com', '$2y$10$ih8LcoCIKS3oDG9G7vG3/ua1xn2pPTGyZJDMKQd4P9ZPc8MEE0xJi');
+INSERT INTO `tbl_finder` (`finder_id`, `finder_name`, `finder_email`, `finder_password`, `avatar`) VALUES
+(1, 'Myk', 'caipower09@gmail.com', '$2y$10$KW.8tCEPy.w6SwHh/03Mq.JzOsLHV2Rqg9M6s1YSXI2yh1q31T.HC', 'team-1.jpg'),
+(2, 'Myk', 'rapidstrike13@gmail.com', '$2y$10$jTufZC60BR9fpeGYQrTev.oV/cMOOzX4fLXyqRti6d5sQ71yV45ma', NULL),
+(3, 'Test Finder', 'mali@gmail.com', '$2y$10$Cf57wNZGQpiV2iy.4VrMX.DkX9.0cvGkq0nUcW8MQseeUMpzHc83O', NULL),
+(4, 'Mark', 'markescala69@gmail.com', '$2y$10$ih8LcoCIKS3oDG9G7vG3/ua1xn2pPTGyZJDMKQd4P9ZPc8MEE0xJi', NULL);
 
 -- --------------------------------------------------------
 
@@ -108,16 +109,17 @@ CREATE TABLE `tbl_provider` (
   `prov_bio` varchar(128) NOT NULL DEFAULT 'No bio.',
   `prov_category` varchar(128) NOT NULL,
   `prov_password` varchar(128) NOT NULL,
-  `prov_email` varchar(128) NOT NULL
+  `prov_email` varchar(128) NOT NULL,
+  `avatar` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_provider`
 --
 
-INSERT INTO `tbl_provider` (`id`, `prov_firstname`, `prov_lastname`, `prov_bio`, `prov_category`, `prov_password`, `prov_email`) VALUES
-(2, 'test', 'Burgos', 'No bio.', 'Carpenter', '$2y$10$2zkffBwll4.Yp4EPK1H4RO2EO6VTQe4enxxqktcRRrhnO20rV9Lq.', 'escalamykkenneth@gmail.com'),
-(3, 'Liza', 'Soberano', 'No bio.', 'Carpenter', '$2y$10$1/xT9k84KBDfhhIGxiyWle9ErrX7XiHGpXCpSVkN1vjLeCtwCz9UG', 'liza@gmail.com');
+INSERT INTO `tbl_provider` (`id`, `prov_firstname`, `prov_lastname`, `prov_bio`, `prov_category`, `prov_password`, `prov_email`, `avatar`) VALUES
+(2, 'test', 'Burgos', 'No bio.', 'Carpenter', '$2y$10$2zkffBwll4.Yp4EPK1H4RO2EO6VTQe4enxxqktcRRrhnO20rV9Lq.', 'escalamykkenneth@gmail.com', 'team-1.jpg'),
+(3, 'Liza', 'Soberano', 'No bio.', 'Carpenter', '$2y$10$1/xT9k84KBDfhhIGxiyWle9ErrX7XiHGpXCpSVkN1vjLeCtwCz9UG', 'liza@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
