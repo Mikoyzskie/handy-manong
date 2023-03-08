@@ -292,9 +292,7 @@ $exists=false;
                                 <label class="custom-file-upload"><i class="fa-solid fa-pen"></i><label>
                                 <input id="file-upload" name="image" type="file" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)" required/>
                             </span>
-                        <?php
-                                }
-                        ?>
+                        
                         </div>
                         <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
                     </form>
@@ -303,38 +301,52 @@ $exists=false;
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                <input type="text" class="form-control" id="name_input"
+                                    aria-describedby="emailHelp" name="title" required value="<?php echo $row['finder_name']?>" disabled/>
+                                    <button class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
+                                    <button style="display:none;" class="btn btn-primary" id="name_submit" type="button" onclick="toggleName()">Submit</button>
                                 </div>
                                 
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                <input type="text" class="form-control" id="email_input"
+                                    aria-describedby="emailHelp" name="title" required value="<?php echo $row['finder_email']?>" disabled/>
+                                    <button class="btn btn-primary" id="email" type="button" onclick="toggleEmail()">Edit</button>
+                                    <button style="display:none;" class="btn btn-primary" id="email_submit" type="button" onclick="toggleEmail()">Submit</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Old Password</label>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="password_input"
+                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
+                                    
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">New Password</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                <input type="text" class="form-control" id="new_password"
+                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                <input type="text" class="form-control" id="confirm_password"
+                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    
                                 </div>
                             </div>
-                            <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
+                            <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="submit" onclick="togglePassword()">Submit</button></div>
                         </form>
+                        <?php
+                                }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -407,6 +419,39 @@ $exists=false;
                     output.style.display = 'block';
                 };
                 reader.readAsDataURL(event.target.files[0]);
+            }
+            function toggleName() {
+                const x = document.getElementById("name");
+                const y = document.getElementById("name_submit");
+                const z = document.getElementById("name_input");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+            }
+
+            function toggleEmail() {
+                const x = document.getElementById("email");
+                const y = document.getElementById("email_submit");
+                const z = document.getElementById("email_input");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+            }
+
+            function togglePassword() {
+                const x = document.getElementById("password");
+                const y = document.getElementById("password_submit");
+                const z = document.getElementById("password_input");
+                const a = document.getElementById("new_password");
+                const b = document.getElementById("confirm_password");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+                a.disabled = !a.disabled;
+                b.disabled = !b.disabled;
             }
         </script>
 
