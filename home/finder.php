@@ -81,7 +81,7 @@ if(empty($_SESSION['id'])){
                 
                     <!-- Featured blog post-->
                     <?php
-                    if(isset($_POST["search"])){
+                    if(isset($_POST["search"]) || !empty($_GET['pages_no'])){
                     echo "<div class='col-lg-8'>";
                     echo "<h2 class=\"card-title\">Task</h2>";
                     echo "<div class=\"row row-cols-1 row-cols-md-2\">";
@@ -90,25 +90,27 @@ if(empty($_SESSION['id'])){
 
                             if (isset($_GET['pages_no']) && $_GET['pages_no']!="") {
                                 $page_no = $_GET['pages_no'];
+                                $search = null;
                             }else {
                                 $page_no = 1;
+                                $search = $_POST['search'];
                             }
                             $id = $_SESSION["id"];
-                            $search = $_POST['search'];
+                            
                             $total_records_per_page = 6;
                             $offset = ($page_no-1) * $total_records_per_page;
                             $previous_page = $page_no - 1;
                             $next_page = $page_no + 1;
                             $adjacents = "2"; 
     
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id");
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task WHERE task_title LIKE '%$search%' OR task_desc LIKE '%$search%' OR task_category LIKE '%$search%' AND task_finder = $id");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
                             $second_last = $total_no_of_pages - 1; // total page minus 1
 
                             $id = $_SESSION["id"];
-                            $search = $_POST['search'];
+                           
                             $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
@@ -124,7 +126,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -136,7 +138,7 @@ if(empty($_SESSION['id'])){
                                             header("location: finder.php?error=undefine");
                                         }
                                                     
-                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
                                         echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
                                         echo "</div>";
                                         echo "</div>";
@@ -241,7 +243,7 @@ if(empty($_SESSION['id'])){
                                 }else{
                                     while($row = mysqli_fetch_array($result)){
                                         echo "<h2 class=\"card-title h4 position-relative\">".stripslashes($row['task_title'])."</h2>";
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -254,7 +256,7 @@ if(empty($_SESSION['id'])){
                                         }
                                         $date=date_create($row['task_date']);
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
-                                        echo "<p class=\"card-text related\">".stripslashes($row['task_desc'])."</p>";
+                                        echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
                                         echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">View Task →</a>";
                                     }
                                 }
@@ -272,13 +274,13 @@ if(empty($_SESSION['id'])){
                             $page_no = 1;
                         }
                             
-                        $total_records_per_page = 4;
+                        $total_records_per_page = 6;
                         $offset = ($page_no-1) * $total_records_per_page;
                         $previous_page = $page_no - 1;
                         $next_page = $page_no + 1;
                         $adjacents = "2"; 
 
-                        $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task");
+                        $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM tbl_task WHERE task_finder = $id");
                         $total_records = mysqli_fetch_array($result_count);
                         $total_records = $total_records['total_records'];
                         $total_no_of_pages = ceil($total_records / $total_records_per_page);
@@ -301,7 +303,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -313,7 +315,7 @@ if(empty($_SESSION['id'])){
                                             header("location: finder.php?error=undefine");
                                         }
                                                     
-                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
+                                        echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
                                         echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
                                         echo "</div>";
                                         echo "</div>";

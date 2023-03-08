@@ -83,7 +83,7 @@ if(empty($_SESSION['id'])){
                                         echo "<hr>";
                                         echo "<h2 class=\"card-title h4 position-relative\">".$row['task_category']."</h2>";
                                         echo "<p>by: ".$row['finder_name']."</p>"; /* union with table finder to get name */
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
@@ -101,7 +101,12 @@ if(empty($_SESSION['id'])){
                                         echo "Description:";
                                         echo "<p class=\"card-text ps-4\">".nl2br($row['task_desc'])."</p>"; /* fix formating do not remove spacing */
                                         echo "<p>Location: ".$row['task_location']."</p>";
-                                        echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
+                                        if($row['task_provider']==0){
+
+                                        }else{
+                                            echo "<p>Assigned to: <a href=\"#\">".$row['task_provider']."</a></p>"; /* add functiona link of the profile + provider proper name + function if empty */
+                                        }
+                                        
                                     }
                                     $user = $_SESSION['id'];
                                     $query = "SELECT * FROM request WHERE prov_id = $user AND task_id = $id";
@@ -157,7 +162,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";

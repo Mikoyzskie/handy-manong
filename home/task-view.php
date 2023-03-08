@@ -74,7 +74,7 @@ if(empty($_SESSION['id'])){
                                 elseif(empty($id)){
                                     header("location: finder.php?error=notask");
                                 }else{
-                                    $sql = "SELECT `id`, `task_date`, `task_finder`, `task_category`, `task_status`, `task_title`, `task_desc`, `task_location`, `task_provider`,`finder_name` FROM `tbl_task` INNER JOIN `tbl_finder` ON tbl_task.task_finder = tbl_finder.finder_id WHERE id = $id"; /* add where clause here */
+                                    $sql = "SELECT * FROM `tbl_task` INNER JOIN `tbl_finder` ON tbl_task.task_finder = tbl_finder.finder_id WHERE id = $id"; /* add where clause here */
                                     $result = mysqli_query($conn, $sql);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0){
@@ -86,7 +86,7 @@ if(empty($_SESSION['id'])){
                                         echo "<hr>";
                                         echo "<h2 class=\"card-title h4 position-relative\">".$row['task_category']."</h2>";
                                         echo "<p>by: ".$row['finder_name']."</p>"; /* union with table finder to get name */
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
@@ -104,6 +104,7 @@ if(empty($_SESSION['id'])){
                                         echo "Description:";
                                         echo "<p class=\"card-text ps-4\">".nl2br($row['task_desc'])."</p>"; /* fix formating do not remove spacing */
                                         echo "<p>Location: ".$row['task_location']."</p>";
+                                        echo "<p>Salary Rate: Php ".$row['rate']."</p>";
                                         $prov = $row['task_provider'];
                                         if(empty($prov)){
 
@@ -161,7 +162,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -239,26 +240,30 @@ if(empty($_SESSION['id'])){
                         <div class="card-body">
                                 <?php
                                     $id = $_GET["tid"];
-                                    $sql = "SELECT * FROM request JOIN tbl_provider ON request.prov_id = tbl_provider.id WHERE task_id = $id AND `status` = 'Pending';";
+                                    $sql = "SELECT * FROM request WHERE task_id = $id AND `status` = 'Available';";
                                     $result = mysqli_query($conn, $sql);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0) {
 
                                     }else{
                                         while($row = mysqli_fetch_array($result)){
+                                            $user_id = $row['prov_id'];
+                                            $query = "SELECT * FROM tbl_provider WHERE id = $user_id";
+                                            $results = mysqli_query($conn, $query);
+                                            $rows = mysqli_fetch_array($results)
                                 ?>
-                            <div class="my-2">
-                                
-                                <div class="avatar"><img src="../assets/images/team-1.jpg" alt="" height="50" width="50"><h5 class="name"><?php echo $row['prov_firstname']." ".$row['prov_lastname']?></h5>
-                                <br>
-                            
-                                <div class="btn-wrap">
-                                    <?php $id = $_GET["tid"];?>
-                                    <a class="btn btn-success" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=assign">Accept</a>
-                                    <a class="btn btn-secondary" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=reject">Reject</a>
-                                </div>
-                                </div>
-                            </div>
+                                    <div class="my-2">
+                                        
+                                        <div class="avatar"><img src="../assets/images/team-1.jpg" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['prov_firstname']." ".$rows['prov_lastname']?></h5>
+                                        <br>
+                                    
+                                        <div class="btn-wrap">
+                                            <?php $id = $_GET["tid"];?>
+                                            <a class="btn btn-success" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=assign">Accept</a>
+                                            <a class="btn btn-secondary" href="assign.php?tid=<?php echo $id?>&uid=<?php echo $row['prov_id']?>&action=reject">Reject</a>
+                                        </div>
+                                        </div>
+                                    </div>
                             <?php
                                         }
                                     }

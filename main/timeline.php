@@ -96,7 +96,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -137,7 +137,7 @@ if(empty($_SESSION['id'])){
                                 }else{
                                     while($row = mysqli_fetch_array($result)){
                                         echo "<h2 class=\"card-title h4 position-relative\">".stripslashes($row['task_title'])."</h2>";
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
@@ -198,7 +198,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
 
-                                        if($row['task_status']=='Pending'){
+                                        if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";

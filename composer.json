@@ -1,0 +1,16 @@
+{
+    "name": "vendor/handy-manong",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\HandyManong\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Handy Manong"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
+}

@@ -18,6 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = addslashes($_POST["title"]);
     $location = $_POST["location"];
     $description = addslashes($_POST["description"]);
+    $rate = addslashes($_POST["rate"]);
     $catArray = $_POST["category"];
     $category = implode(',',$catArray);
     $finder = $_SESSION["id"];
@@ -26,8 +27,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($catArray)){
         $showError = "Category empty. Please select one.";
     }else{
-        $id = $_GET['assign'];
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`) VALUES ('$finder','$category','$title','$description','$location','$id')";
+        if(empty($_GET['assign'])){
+            $id = null;
+        }else{
+            $id = $_GET['assign'];
+        }
+        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`, `rate`) VALUES ('$finder','$category','$title','$description','$location','$id','$rate')";
         
         $result = mysqli_query($conn, $sql);
 
@@ -274,6 +279,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Location</label>
                                 <input type="text" class="form-control" id="exampleInputPassword1" name="location" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Salary Rate(Php)</label>
+                                <input type="number" class="form-control" id="exampleInputPassword1" name="rate" required/>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Description</label>

@@ -1,5 +1,9 @@
 <?php
-    
+// Import PHPMailer classes into the global namespace
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
 $showAlert = false; 
 $showError = false; 
 $exists=false;
@@ -14,7 +18,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $finder_email = $_POST["email"];
     $password = $_POST["password"]; 
     $cpassword = $_POST["cpassword"];
-            
     
     $sql = "Select * from tbl_finder where finder_email='$finder_email'";
     
@@ -27,11 +30,58 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // or not in our Database
     if($num == 0) {
         if(($password == $cpassword) && $exists==false) {
-    
-            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+          
+
+          // Generate a confirmation code
+          /* $code = uniqid();
+
+          $link = "localhost/handy%20manong/handy-manong/confirm.php?code=$code";
+          $subject = "Confirm your email address";
+          $message = "Please click on the following link to confirm your email address: $link";
+          $headers = "From: escalamykkenneth@gmail.com\r\n";
+          mail($email, $subject, $message, $headers);
+
+          $showError = "An email has been sent to $email with instructions on how to confirm your email address."; */
+          
+
+
+          // Load Composer's autoloader
+          require '../vendor/autoload.php';
+          
+          // Create a new PHPMailer instance
+          $mail = new PHPMailer(true);
+          
+          try {
+              // SMTP configuration
+              $mail->isSMTP();
+              $mail->Host       = 'smtp.gmail.com';
+              $mail->SMTPAuth   = true;
+              $mail->Username   = 'caipower09@gmail.com';
+              /* $mail->Password   = 'fesglngeazbhipvc'; */
+              $mail->SMTPSecure = 'ssl';
+              $mail->Port       = 465;
+          
+              // Recipients
+              $mail->setFrom('caipower09@gmail.com', 'Handy Manong');
+              $email = filter_var($finder_email, FILTER_SANITIZE_EMAIL);
+              $mail->addAddress($email, 'Finder');
+          
+              // Content
+              $mail->isHTML(true);
+              $mail->Subject = 'Confirmation Email';
+              $mail->Body    = 'Thank you for your order . Your order has been confirmed.';
+          
+              $mail->send();
+              $showError = 'Confirmation email has been sent';
+          } catch (Exception $e) {
+            $showError = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+          }
+
+            /* $hash = password_hash($password, PASSWORD_DEFAULT); */
                 
             // Password Hashing is used here. 
-            $sql = "INSERT INTO `tbl_finder` ( `finder_name`, 
+            /* $sql = "INSERT INTO `tbl_finder` ( `finder_name`, 
                 `finder_email`, `finder_password`) VALUES ('$finder_name','$finder_email','$hash')";
     
             $result = mysqli_query($conn, $sql);
@@ -39,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 header("Location: signin.php");
                 die();
-            }
+            } */
         } 
         else { 
             $showError = "Passwords do not match"; 
