@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+
+if (isset($_SESSION["password_input_value"])) {
+    $password_input_value = $_SESSION["password_input_value"];
+    unset($_SESSION["password_input_value"]);
+} else {
+    $password_input_value = "";
+}
+
 if(empty($_SESSION['id'])){
     header("location: ../signin.php?error=loginrequired");
 }
@@ -297,17 +305,17 @@ $exists=false;
                         <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
                     </form>
                     
-                        <form method = "post" action="task-create.php">
+                        <form method = "post" action="update.php">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="name_input"
+                                <input type="text" class="form-control" name="name" id="name_input"
                                     aria-describedby="emailHelp" name="title" required value="<?php echo $row['finder_name']?>" disabled/>
                                     <button class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
-                                    <button style="display:none;" class="btn btn-primary" id="name_submit" type="button" onclick="toggleName()">Submit</button>
+                                    <button style="display:none;" class="btn btn-primary" id="name_submit" name="name_submit" type="submit">Submit</button>
                                 </div>
-                                
                             </div>
+                        </form>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
                                 <div class="input-group">
@@ -317,11 +325,12 @@ $exists=false;
                                     <button style="display:none;" class="btn btn-primary" id="email_submit" type="button" onclick="toggleEmail()">Submit</button>
                                 </div>
                             </div>
+                        <form method = "post" action="update.php">
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Old Password</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="password_input"
-                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    aria-describedby="emailHelp" name="old_pass" required disabled/>
                                     <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
                                     
                                 </div>
@@ -330,7 +339,7 @@ $exists=false;
                                 <label for="exampleInputPassword1" class="form-label">New Password</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="new_password"
-                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    aria-describedby="emailHelp" name="new_pass" required disabled/>
                                     
                                 </div>
                             </div>
@@ -338,11 +347,12 @@ $exists=false;
                                 <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="confirm_password"
-                                    aria-describedby="emailHelp" name="title" required disabled/>
+                                    aria-describedby="emailHelp" name="confirm_pass" required disabled/>
                                     
                                 </div>
                             </div>
-                            <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="submit" onclick="togglePassword()">Submit</button></div>
+                            <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="password_submit">Submit</button></div>
+                            
                         </form>
                         <?php
                                 }
