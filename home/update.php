@@ -99,8 +99,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password_submit'])) {
             }
         }else{
             $_SESSION["old_input_value"] = $pass;
-            $_SESSION["new_input_value"] = $pass;
-            $_SESSION["confirm_input_value"] = $pass;
+            $_SESSION["new_input_value"] = $password;
+            $_SESSION["confirm_input_value"] = $cpassword;
             header( "location: account.php?error=incorrectpass");
         }
     }

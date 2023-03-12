@@ -2,12 +2,19 @@
 session_start();
 
 
-if (isset($_SESSION["password_input_value"])) {
-    $password_input_value = $_SESSION["password_input_value"];
-    unset($_SESSION["password_input_value"]);
-} else {
-    $password_input_value = "";
-}
+                if (isset($_SESSION["old_input_value"])) {
+                    $password_input_value = $_SESSION["old_input_value"];
+                    unset($_SESSION["old_input_value"]);
+                    $password_new_value = $_SESSION["new_input_value"];
+                    unset($_SESSION["new_input_value"]);
+                    $password_confirm_value = $_SESSION["confirm_input_value"];
+                    unset($_SESSION["confirm_input_value"]);
+                } else {
+                    $password_input_value = "";
+                    $password_new_value = "";
+                    $password_confirm_value = "";
+                }
+        
 
 if(empty($_SESSION['id'])){
     header("location: ../signin.php?error=loginrequired");
@@ -34,6 +41,9 @@ $exists=false;
         <link href="main.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://kit.fontawesome.com/1b7409057b.js" crossorigin="anonymous"></script>
+        <script>
+            
+        </script>
     </head>
 <style>
     ul.ks-cboxtags {
@@ -172,7 +182,7 @@ $exists=false;
         echo ' <div class="alert alert-success 
             alert-dismissible fade show" role="alert">
     
-            <strong>Success!</strong> Task successfully created. Check task on homepage.
+            <strong>Success!</strong> Profile Updated.
             <button type="button">
             x
         </button> 
@@ -329,8 +339,8 @@ $exists=false;
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Old Password</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="password_input"
-                                    aria-describedby="emailHelp" name="old_pass" required disabled/>
+                                <input type="password" class="form-control" id="password_input"
+                                    aria-describedby="emailHelp" name="old_pass" value="<?php echo $password_input_value?>" required disabled/>
                                     <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
                                     
                                 </div>
@@ -338,16 +348,16 @@ $exists=false;
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">New Password</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="new_password"
-                                    aria-describedby="emailHelp" name="new_pass" required disabled/>
+                                <input type="password" class="form-control" id="new_password"
+                                    aria-describedby="emailHelp" name="new_pass" value="<?php echo $password_new_value?>" required disabled/>
                                     
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" id="confirm_password"
-                                    aria-describedby="emailHelp" name="confirm_pass" required disabled/>
+                                <input type="password" class="form-control" id="confirm_password"
+                                    aria-describedby="emailHelp" name="confirm_pass" value="<?php echo $password_confirm_value?>" required disabled/>
                                     
                                 </div>
                             </div>
@@ -463,6 +473,18 @@ $exists=false;
                 a.disabled = !a.disabled;
                 b.disabled = !b.disabled;
             }
+
+            <?php
+                if (!empty($password_input_value)) {
+                   
+                    echo "togglePassword();";
+                } else {
+                    $password_input_value = "";
+                }
+            ?>
+            
+            
+        
         </script>
 
     </body>
