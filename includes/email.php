@@ -139,7 +139,6 @@ $email = '
                                     </tr>
                                     <tr>
                                         <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:0;word-break:break-word;">
-
                                             <div style="font-family:Helvetica Neue,Arial,sans-serif;font-size:16px;line-height:22px;text-align:center;color:#555;">
                                                 Or verify using this link:
                                             </div>
@@ -147,9 +146,8 @@ $email = '
                                     </tr>
                                     <tr>
                                         <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
-
                                             <div style="font-family:Helvetica Neue,Arial,sans-serif;font-size:16px;line-height:22px;text-align:center;color:#555;">
-                                                <a href="http://localhost/handy%20manong/handy-manong/auth/signup.php" target="_blank"" style="color:#2F67F6">Verification</a>
+                                                <a href="http://localhost/handy-manong/auth/signup.php" target="_blank"" style="color:#2F67F6">Verification</a>
                                             </div>
                                         </td>
                                     </tr>
