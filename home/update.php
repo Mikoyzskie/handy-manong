@@ -85,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['password_submit'])) {
         if($checkpass == true){
             if($password == $cpassword){
                 $hash = password_hash($password, PASSWORD_DEFAULT);
-                $query = "UPDATE tbl_finder SET `finder_password` = '$password' WHERE finder_id = $id";
+                $query = "UPDATE tbl_finder SET `finder_password` = '$hash' WHERE finder_id = $id";
                 $results = mysqli_query($conn, $query);
                 if ($results) {
                     header("Location: profile.php");

@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               $mail->Host       = 'smtp.gmail.com';
               $mail->SMTPAuth   = true;
               $mail->Username   = 'caipower09@gmail.com';
-              /* $mail->Password   = 'fesglngeazbhipvc'; */
+              $mail->Password   = 'fesglngeazbhipvc';
               $mail->SMTPSecure = 'ssl';
               $mail->Port       = 465;
           
@@ -70,7 +70,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               // Content
               $mail->isHTML(true);
               $mail->Subject = 'Confirmation Email';
-              $mail->Body    = 'Thank you for your order . Your order has been confirmed.';
+
+              include '../includes/email.php';
+              
+              $mail->Body    = $email;
           
               $mail->send();
               $showError = 'Confirmation email has been sent';
