@@ -31,8 +31,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if($num == 0) {
         if(($password == $cpassword) && $exists==false) {
 
-          
-
           // Generate a confirmation code
           /* $code = uniqid();
 
@@ -76,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               $mail->Body    = $email;
           
               $mail->send();
-              $showError = 'Confirmation email has been sent';
+              $showAlert = true;
           } catch (Exception $e) {
             $showError = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
           }
@@ -104,6 +102,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $exists="Email already exist. Sign-in instead."; 
    } 
     
+}else{
+    $finder_name = "";
+    $finder_email = "";
+    $password = ""; 
+    $cpassword = "";
 }//end if   
     
 ?>
@@ -174,6 +177,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-left: 40px;
             border-radius: 5px;
         }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
     </style>
   <?php
     
@@ -182,9 +192,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         echo ' <div class="alert alert-success 
             alert-dismissible fade show" role="alert">
     
-            <strong>Success!</strong> Your account is 
-            now created and you can login. 
-            <button type="button">
+            <strong>Success!</strong> Email Verification Sent! 
+            <button type="button" class="close-success">
             x
         </button> 
         </div> '; 
@@ -242,19 +251,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                   <form role="form" method="post" action="signup.php">
                     <label>Name</label>
                     <div class="mb-3">
-                      <input type="text" class="form-control" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
+                      <input type="text" class="form-control" value="<?php echo $finder_name?>" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
                     </div>
                     <label>Email Address</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
+                      <input type="email" class="form-control" value="<?php echo $finder_email?>" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="password" class="form-control" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <input type="password" class="form-control" value="<?php echo $password?>" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
                     </div>
                     <label>Confirm Password</label>
                     <div class="mb-3">
-                      <input type="password" class="form-control" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
+                      <input type="password" class="form-control" value="<?php echo $cpassword?>" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
                     </div>
                     <!-- <div class="form-check form-check-info text-left mb-0">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -298,10 +307,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <script>
     const button = document.querySelector('.close-danger');
     button.addEventListener('click', closeAlert, false);
+    const success = document.querySelector('.close-sucess');
+    success.addEventListener('click', closeAlert, false);
     function closeAlert(){
         const closeDanger = document.querySelector('.alert');
         closeDanger.classList.add('close');
     }
+    
+    
   </script>
 </body>
 

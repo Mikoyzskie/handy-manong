@@ -1,6 +1,28 @@
-<?php 
-if (session_status() == PHP_SESSION_NONE) {
-   
+<?php
+session_start();
+if (empty($_SESSION["id"])) {
+  $showAlert = false; 
+  $showError = false; 
+  $exists=false;
+  
+  if(!empty($_GET['error']) && ($_GET['error']=="incorrectpass")){
+    $showError = "Email or password incorrect.";
+  }
+  if(!empty($_GET['error']) && ($_GET['error']=="nouser")){
+    $showError = "User does not exist. Signup instead.";
+  }
+  if(isset($_SESSION["password_login_failed"])) {
+    $password_login_value = $_SESSION["password_login_failed"];
+    unset($_SESSION["password_login_failed"]);
+    $email_login_value = $_SESSION["email_login_failed"];
+    unset($_SESSION["email_login_failed"]);
+  } else {
+    $password_login_value = "";
+    $email_login_value = "";
+  }
+
+}else{
+  
 }
 ?>
 
@@ -40,7 +62,6 @@ if (session_status() == PHP_SESSION_NONE) {
             </a>
             
             <div class="collapse navbar-collapse" id="navigation" style="justify-content:flex-end;">
-              
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
                   <a href="../main/login.php" class="btn btn-sm mb-0 bg-gradient-dark">Provider Login</a>
@@ -53,6 +74,53 @@ if (session_status() == PHP_SESSION_NONE) {
       </div>
     </div>
   </div>
+
+  <style>
+        div.alert{
+            position: absolute!important;
+            top: 20px!important;
+            right: 20px!important;
+            z-index: 2000!important;
+        }
+        div.alert.close{
+            display:none;
+        }
+        button.close-danger{
+            border: 2px solid #8C2F25;
+            color: #8C2F25;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+    </style>
+  <?php
+    
+    if($showAlert) {
+    
+        echo ' <div class="alert alert-success 
+            alert-dismissible fade show" role="alert">
+    
+            <strong>Success!</strong> Your account is 
+            now created and you can login. 
+            <button type="button">
+            x
+        </button> 
+        </div> '; 
+    }
+    
+    if($showError) {
+    
+        echo ' <div class="alert alert-danger 
+            alert-dismissible fade show" role="alert"> 
+        <strong>Error!</strong> '. $showError.'
+    
+       <button type="button" class="close-danger">
+            x
+        </button>
+     </div> '; 
+   }
+   ?>
+
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">
@@ -72,11 +140,10 @@ if (session_status() == PHP_SESSION_NONE) {
                     </div> -->
                     <label>Email Address</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
+                      <input type="email" value="<?php echo $email_login_value?>" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required/>
                     </div>
                     <label>Password</label>
-                    
-  
+                  
                     <div class="d-flex mb-3">
                       <style>
                         
@@ -100,7 +167,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         
                         }
                       </style>
-                      <input type="password" id="myInput" class="form-control pass-input" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <input type="password" id="myInput" value="<?php echo $password_login_value?>" class="form-control pass-input" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password" required>
                       <button class="btn pass-btn btn-outline-secondary toggle-password mb-0" type="button" onclick="myFunction()">
                         <i class="bi bi-eye"></i>
                       </button>
@@ -184,6 +251,14 @@ if (session_status() == PHP_SESSION_NONE) {
       } else {
         x.type = "password";
       }
+    }
+  </script>
+  <script>
+    const button = document.querySelector('.close-danger');
+    button.addEventListener('click', closeAlert, false);
+    function closeAlert(){
+        const closeDanger = document.querySelector('.alert');
+        closeDanger.classList.add('close');
     }
   </script>
 </body>

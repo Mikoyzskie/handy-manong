@@ -7,7 +7,6 @@ if(isset($_POST['submit'])){
 
     require_once "../includes/connect.php";
 
-
     $sql = "SELECT * FROM tbl_finder WHERE finder_email='$user'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result); 
@@ -26,10 +25,17 @@ if($num == 1) {
         header("location: ../home/finder.php");
         
     }else{
+        session_start();
+        $_SESSION["email_login_failed"] = $user;
+        $_SESSION["password_login_failed"] = $pass;
         header("location: signin.php?error=incorrectpass");
     }
 }
 else{
+    session_start();
+    $_SESSION["email_login_failed"] = $user;
+    $_SESSION["password_login_failed"] = $pass;
+    header("location: signin.php?error=incorrectpass");
     header("location: signin.php?error=nouser");
 }
 

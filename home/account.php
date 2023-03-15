@@ -2,18 +2,18 @@
 session_start();
 
 
-                if (isset($_SESSION["old_input_value"])) {
-                    $password_input_value = $_SESSION["old_input_value"];
-                    unset($_SESSION["old_input_value"]);
-                    $password_new_value = $_SESSION["new_input_value"];
-                    unset($_SESSION["new_input_value"]);
-                    $password_confirm_value = $_SESSION["confirm_input_value"];
-                    unset($_SESSION["confirm_input_value"]);
-                } else {
-                    $password_input_value = "";
-                    $password_new_value = "";
-                    $password_confirm_value = "";
-                }
+    if (isset($_SESSION["old_input_value"])) {
+        $password_input_value = $_SESSION["old_input_value"];
+        unset($_SESSION["old_input_value"]);
+        $password_new_value = $_SESSION["new_input_value"];
+        unset($_SESSION["new_input_value"]);
+        $password_confirm_value = $_SESSION["confirm_input_value"];
+        unset($_SESSION["confirm_input_value"]);
+    } else {
+        $password_input_value = "";
+        $password_new_value = "";
+        $password_confirm_value = "";
+    }
         
 
 if(empty($_SESSION['id'])){
@@ -476,7 +476,6 @@ $exists=false;
 
             <?php
                 if (!empty($password_input_value)) {
-                   
                     echo "togglePassword();";
                 } else {
                     $password_input_value = "";
