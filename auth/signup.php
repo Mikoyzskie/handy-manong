@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-$showAlert = false; 
+$showAlert = true; 
 $showError = false; 
 $exists=false;
     
@@ -75,6 +75,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           
               $mail->send();
               $showAlert = true;
+              $finder_name = "";
+              $finder_email = "";
+              $password = ""; 
+              $cpassword = "";
           } catch (Exception $e) {
             $showError = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
           }
@@ -170,6 +174,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         div.alert.close{
             display:none;
         }
+        div.alert-success.close{
+            display:none;
+        }
         button.close-danger{
             border: 2px solid #8C2F25;
             color: #8C2F25;
@@ -193,7 +200,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             alert-dismissible fade show" role="alert">
     
             <strong>Success!</strong> Email Verification Sent! 
-            <button type="button" class="close-success">
+            <button type="button" onclick = "closeAlert();" class="close-success">
             x
         </button> 
         </div> '; 
@@ -307,8 +314,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <script>
     const button = document.querySelector('.close-danger');
     button.addEventListener('click', closeAlert, false);
-    const success = document.querySelector('.close-sucess');
-    success.addEventListener('click', closeAlert, false);
+
+    const close = document.querySelector('.close-success');
+    close.addEventListener('click', closeAlert, false)
+    
     function closeAlert(){
         const closeDanger = document.querySelector('.alert');
         closeDanger.classList.add('close');
