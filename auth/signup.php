@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-$showAlert = true; 
+$showAlert = false; 
 $showError = false; 
 $exists=false;
     
@@ -70,8 +70,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
               $mail->Subject = 'Confirmation Email';
 
               include '../includes/email.php';
-              
-              $mail->Body    = $email;
+              $code = uniqid();
+              $mail->Body    = email($code);
           
               $mail->send();
               $showAlert = true;
