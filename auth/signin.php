@@ -1,12 +1,19 @@
 <?php
 session_start();
-if (empty($_SESSION["id"])) {
   $showAlert = false; 
   $showError = false; 
   $exists=false;
-  
+  $password_login_value = "";
+  $email_login_value = "";
+if (empty($_SESSION["id"])) {
   if(!empty($_GET['error']) && ($_GET['error']=="incorrectpass")){
     $showError = "Email or password incorrect.";
+  }
+  if(!empty($_GET['error']) && ($_GET['error']=="verify")){
+    $showError = "Please verify first.";
+  }
+  if(!empty($_GET['notif']) && ($_GET['notif']=="verified")){
+    $showAlert = true; 
   }
   if(!empty($_GET['error']) && ($_GET['error']=="nouser")){
     $showError = "User does not exist. Signup instead.";
@@ -20,7 +27,6 @@ if (empty($_SESSION["id"])) {
     $password_login_value = "";
     $email_login_value = "";
   }
-
 }else{
   
 }
@@ -179,7 +185,7 @@ if (empty($_SESSION["id"])) {
                           Remember for 14 days
                         </label>
                       </div> -->
-                      <a href="javascript:;" class="text-xs font-weight-bold ms-auto">Forgot password</a>
+                      <a href="forgot.php" class=" text-dark text-xs font-weight-bold ms-auto">Forgot password</a>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="submit">Sign in</button>

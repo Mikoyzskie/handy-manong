@@ -9,5 +9,5 @@ if ($result) {
     die();
 }
 else{
-    header("Location: finder.php?errro=invalid");
+    header("Location: finder.php?error=invalid");
 }

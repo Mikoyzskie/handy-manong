@@ -14,10 +14,17 @@ if(isset($_POST['submit'])){
 if($num == 1) {
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
     /* printf ("%s (%s)\n", $row["finder_email"], $row["finder_password"]); */
+
+    if($row['unicode'] !== 'verified'){
+        session_start();
+        $_SESSION["email_login_failed"] = $user;
+        $_SESSION["password_login_failed"] = $pass;
+        header("location: signin.php?error=verify");
+    }
    
     $checkpass = password_verify($pass, $row["finder_password"]);
 
-    if($checkpass == true){
+    if(($checkpass == true) && $row['unicode'] == 'verified'){
         session_start();
         $_SESSION["id"] = $row['finder_id'];
         $_SESSION["name"]=$row['finder_name'];
