@@ -86,7 +86,7 @@ if(isset($_POST['submit'])){
                       
                     </div>
                   </form>
-                  <?else:?>
+                  <?php else:?>
                     <form role="form" method="post" action="forgot.php">
                     <!-- <label>Name</label>
                     <div class="mb-3">

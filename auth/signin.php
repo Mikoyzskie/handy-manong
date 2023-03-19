@@ -98,6 +98,13 @@ if (empty($_SESSION["id"])) {
             margin-left: 40px;
             border-radius: 5px;
         }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
     </style>
   <?php
     
@@ -106,9 +113,8 @@ if (empty($_SESSION["id"])) {
         echo ' <div class="alert alert-success 
             alert-dismissible fade show" role="alert">
     
-            <strong>Success!</strong> Your account is 
-            now created and you can login. 
-            <button type="button">
+            <strong>Success!</strong> Account Created & Verified. 
+            <button type="button" class="close-success">
             x
         </button> 
         </div> '; 
