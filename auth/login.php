@@ -25,6 +25,10 @@ if($num == 1) {
     $checkpass = password_verify($pass, $row["finder_password"]);
 
     if(($checkpass == true) && $row['unicode'] == 'verified'){
+        $id = $row['finder_id'];
+        $query = "UPDATE tbl_finder SET `forgot_unicode` = null WHERE finder_id = $id";
+        $results = mysqli_query($conn, $query);
+
         session_start();
         $_SESSION["id"] = $row['finder_id'];
         $_SESSION["name"]=$row['finder_name'];
