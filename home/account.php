@@ -320,21 +320,23 @@ $exists=false;
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" name="name" id="name_input"
-                                    aria-describedby="emailHelp" name="title" required value="<?php echo $row['finder_name']?>" disabled/>
+                                    aria-describedby="emailHelp" required value="<?php echo $row['finder_name']?>" disabled/>
                                     <button class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
                                     <button style="display:none;" class="btn btn-primary" id="name_submit" name="name_submit" type="submit">Submit</button>
                                 </div>
                             </div>
                         </form>
+                        <form method = "post" action="update.php">
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="email_input"
-                                    aria-describedby="emailHelp" name="title" required value="<?php echo $row['finder_email']?>" disabled/>
+                                    aria-describedby="emailHelp" name="email" required value="<?php echo $row['finder_email']?>" disabled/>
                                     <button class="btn btn-primary" id="email" type="button" onclick="toggleEmail()">Edit</button>
-                                    <button style="display:none;" class="btn btn-primary" id="email_submit" type="button" onclick="toggleEmail()">Submit</button>
+                                    <button style="display:none;" class="btn btn-primary" id="email_submit" name="email_submit" type="submit">Submit</button>
                                 </div>
                             </div>
+                        </form>
                         <form method = "post" action="update.php">
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Old Password</label>

@@ -33,6 +33,7 @@ if($num == 1) {
         $_SESSION["id"] = $row['finder_id'];
         $_SESSION["name"]=$row['finder_name'];
         $_SESSION["avatar"]=$row['avatar'];
+        $_SESSION["email"]=$row['finder_email'];
         header("location: ../home/finder.php");
         
     }else{
