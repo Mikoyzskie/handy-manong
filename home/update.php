@@ -114,19 +114,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email_submit'])){
     if($email == $_SESSION['email']){
         header("location: account.php?status=emailduplicate");
     }else{
-        $query = "SELECT * FROM tbl_finder WHERE finder_email = '$email'";
+        $query = "SELECT * FROM tbl_finder WHERE finder_email = '$email' OR update_email = '$email'";
         $result = mysqli_query($conn, $query);
         $num = mysqli_num_rows($result);
         if($num > 0){
             header("location: account.php?status=emailpresent");
         }else{
             $email_content = updateEmail($code,$email);
-            $result = composeEmail($finder_email,$email_subject,$email_content);
+            $result = composeEmail($email,$email_subject,$email_content);
             if (strpos($result, 'Mailer Error') !== false) {
                 header("location: account.php?mailer=error");
             } else { 
                 $old_email = $_SESSION['email'];  
-                $query = "UPDATE tbl_finder SET `update_code` = '$new_name',`update_email` = '$new_name' WHERE finder_email = $old_email";
+                $query = "UPDATE tbl_finder SET `update_code` = '$code',`update_email` = '$email' WHERE finder_email = '$old_email'";
         
                 $result = mysqli_query($conn, $query);
         
@@ -138,7 +138,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email_submit'])){
             }
         }
     }
+}
 
-    
+if(!empty($_GET['unicode']) || !empty($_GET['userid'])){
+    $email = $_GET['userid'];
+    $code = $_GET['unicode'];
 
+    $query = "UPDATE tbl_finder SET `update_code` = NULL,`update_email` = NULL,finder_email = '$email'  WHERE update_code = '$code' AND update_email = '$email'";
+        
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        header("location: account.php?status=success");
+    }else{
+        header("location: account.php?status=invalid");
+    }
 }
