@@ -36,6 +36,15 @@ if(empty($_SESSION['id'])){
         display:flex;
         flex-direction:column;
     }
+    div.stats-container{
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+    p.stats-item{
+        display: flex;
+        flex-direction: column;
+    }
 </style>
     <body>
         <!-- Responsive navbar-->
@@ -184,15 +193,58 @@ if(empty($_SESSION['id'])){
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <?php
-                    if(isset($_POST["search"])){
-                        echo "<h2 class=\"card-title\">Task</h2>";
-                    echo "<div class=\"row row-cols-1 row-cols-md-2\">";
-                        
+                    <?php if(isset($_POST["search"])):?>
+                        <h2 class="card-title">Task Highlights</h2>
+                    <?php else:?>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Task Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks Created</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks Completed</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Service Connection Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Provider Requests</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Total Transactions</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks Created</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-title">Recent Completed Tasks</h2>
+                        <hr>
+                        <div class="row row-cols-1 row-cols-md-2 mb-5">
+                            
+                        <?php 
                             require_once "../includes/connect.php";
+
                             $id = $_SESSION["id"];
-                            $search = $_POST['search'];
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; 
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC LIMIT 4"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -219,57 +271,19 @@ if(empty($_SESSION['id'])){
                                             header("location: finder.php?error=undefine");
                                         }
                                                     
-                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
-                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; 
+                                        echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
+                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
                                         echo "</div>";
                                         echo "</div>";
                                         echo "</div>";
                                     }
                                 }
                         
-                    echo "</div>";
-                    }else{
-                        echo "<div class=\"card mb-4\">";
-                        /* <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> */
-                        echo "<div class=\"card-body\">";
-                            /* <div class="small text-muted">January 1, 2022</div> */
-                            echo "<h2 class=\"card-title\">Recent Task</h2>";
-                            echo "<hr>";
-                             
-                                require_once "../includes/connect.php";
-                                $id = $_SESSION["id"];
-                                $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC"; /* add where clause here */
-                                $result = mysqli_query($conn, $sql);
-
-                                $num = mysqli_num_rows($result); 
-                                if($num == 0) {
-                                    echo "<i>No related task.</i>";
-                                }else{
-                                    while($row = mysqli_fetch_array($result)){
-                                        
-                                       echo "<div class=\"prof_tasks\">";
-                                       echo "<h2 class=\"card-title h4 position-relative\">".stripslashes($row['task_title'])."</h2>";
-                                       /* if($row['task_status']=='Pending'){
-                                           echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Assigned'){
-                                           echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Rejected'){
-                                           echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Done'){
-                                           echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
-                                       }else{
-                                           header("location: finder.php?error=undefine");
-                                       }
-                                       echo "<a class=\"btn btn-primary mb-5\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">View Task →</a>"; */
-                                       echo "</div>";
-                                       echo "<hr/>";
-                                    }
-                                }
-                        echo"</div>";
-                    echo "</div>";
-                    
-                    }
-                    ?>
+                        ?>
+                            
+                        </div>
+                        
+                    <?php endif;?>
                     <!-- Pagination-->
                     <!-- <nav aria-label="Pagination">
                         <hr class="my-0" />

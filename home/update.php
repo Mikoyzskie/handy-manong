@@ -144,7 +144,7 @@ if(!empty($_GET['unicode']) || !empty($_GET['userid'])){
     $email = $_GET['userid'];
     $code = $_GET['unicode'];
 
-    $query = "UPDATE tbl_finder SET `update_code` = NULL,`update_email` = NULL,finder_email = '$email'  WHERE update_code = '$code' AND update_email = '$email'";
+    $query = "UPDATE tbl_finder SET `update_code` = NULL,`update_email` = NULL, finder_email = '$email'  WHERE update_code = '$code' AND update_email = '$email'";
         
     $result = mysqli_query($conn, $query);
 
