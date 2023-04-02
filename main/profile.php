@@ -36,6 +36,15 @@ if(empty($_SESSION['id'])){
         display:flex;
         flex-direction:column;
     }
+    div.stats-container{
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+    p.stats-item{
+        display: flex;
+        flex-direction: column;
+    }
 </style>
     <body>
         <!-- Responsive navbar-->
@@ -132,105 +141,118 @@ if(empty($_SESSION['id'])){
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <?php
-                    if(isset($_POST["search"])){
-                        echo "<h2 class=\"card-title\">Task</h2>";
-                    echo "<div class=\"row row-cols-1 row-cols-md-2\">";
-                        
-                            require_once "../includes/connect.php";
-                            $id = $_SESSION["id"];
-                            $search = $_POST['search'];
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_finder = $id ORDER BY id DESC"; 
-                            $result = mysqli_query($conn, $sql);
-
-                                $num = mysqli_num_rows($result); 
-                                if($num == 0) {
-                                    echo "<i mb-5>No related task to show.</i>";
-                                }else{
-                                    while($row = mysqli_fetch_array($result)){
-                                        echo "<div class=\"col\">";
-                                        echo "<div class=\"card mb-4\">";
-                                        echo "<div class=\"card-body\">";
-                                        $date=date_create($row['task_date']);
-                                        echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
-                                        echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
-
-                                        if($row['task_status']=='Available'){
-                                            echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Assigned'){
-                                            echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Rejected'){
-                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Done'){
-                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
-                                        }else{
-                                            header("location: finder.php?error=undefine");
-                                        }
-                                                    
-                                        echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
-                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; 
-                                        echo "</div>";
-                                        echo "</div>";
-                                        echo "</div>";
-                                    }
-                                }
-                        
-                    echo "</div>";
-                    }else{
-                        echo "<div class=\"card mb-4\">";
-                        /* <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a> */
-                        echo "<div class=\"card-body\">";
-                            /* <div class="small text-muted">January 1, 2022</div> */
-                            echo "<h2 class=\"card-title\">Recent Task</h2>";
-                            echo "<hr>";
-                             
-                                require_once "../includes/connect.php";
-                                $id = $_SESSION["id"];
-                                $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC"; /* add where clause here */
-                                $result = mysqli_query($conn, $sql);
-
-                                $num = mysqli_num_rows($result); 
-                                if($num == 0) {
-                                    echo "<i>No related task.</i>";
-                                }else{
-                                    while($row = mysqli_fetch_array($result)){
-                                        
-                                       echo "<div class=\"prof_tasks\">";
-                                       echo "<h2 class=\"card-title h4 position-relative\">".stripslashes($row['task_title'])."</h2>";
-                                       /* if($row['task_status']=='Pending'){
-                                           echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Assigned'){
-                                           echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Rejected'){
-                                           echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
-                                       }elseif($row['task_status']=='Done'){
-                                           echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
-                                       }else{
-                                           header("location: finder.php?error=undefine");
-                                       }
-                                       echo "<a class=\"btn btn-primary mb-5\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">View Task →</a>"; */
-                                       echo "</div>";
-                                       echo "<hr/>";
-                                    }
-                                }
-                        echo"</div>";
-                    echo "</div>";
                     
-                    }
-                    ?>
-                    <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav> -->
+                        <?php
+                            
+                            require_once "../includes/connect.php";
+
+                            // Tasks Requested
+                            $id = $_SESSION["id"];
+                            $sql = "SELECT * FROM `request` WHERE prov_id = $id";
+                            $result = mysqli_query($conn, $sql);
+                            $num = mysqli_num_rows($result);
+
+
+                            // Tasks Completed
+                            $total_task = "SELECT * FROM tbl_task WHERE task_provider = $id AND task_status = 'Done'";
+                            $result_total = mysqli_query($conn, $total_task);
+                            $total = mysqli_num_rows($result_total);
+                        ?>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Task Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $num?></h2>
+                                        <p class="stats-description">Tasks Requested</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $total;?></h2>
+                                        <p class="stats-description">Tasks Completed</p>
+                                    </div>
+                                    <!-- <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks </p>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                            //Finder/s Connected
+                            $total_finders = "SELECT DISTINCT('task_finder') FROM tbl_task WHERE task_provider = $id";
+                            $result_finders = mysqli_query($conn, $total_finders);
+                            $finders = mysqli_num_rows($result_finders);
+
+                            //Total Transactions
+                            $transactions_total = "SELECT * FROM tbl_task WHERE task_provider = $id";
+                            $result_transactions = mysqli_query($conn, $transactions_total);
+                            $transactions = mysqli_num_rows($result_transactions);
+
+                            //Finder Requests
+                            $all_requests = "SELECT * FROM finder_request WHERE assign = $id";
+                            $results_all_requests = mysqli_query($conn, $all_requests);
+                            $requests = mysqli_num_rows($results_all_requests);
+                            
+                        ?>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Service Connection Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $finders?></h2>
+                                        <p class="stats-description">Finder/s Connected</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $transactions?></h2>
+                                        <p class="stats-description">Total Transactions</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $requests?></h2>
+                                        <p class="stats-description">Finder Task Request/s</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-title">Recent Completed Tasks</h2>
+                        <hr>
+                        <div class="row row-cols-1 row-cols-md-2 mb-5">
+                            
+                        <?php if($total == 0):?>
+                                <i mb-5>No related task to show.</i>
+                        <?php else:
+                            $i = 0;
+                            while($row = mysqli_fetch_array($result_total)){
+                                if($i == 4){
+                                    break;
+                                }
+
+                            ?>
+
+                                <div class="col">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                        
+                                            <h2 class="card-title h4"><?php echo $row['task_title']?></h2>
+                                            <div class="small text-muted"><?php echo $row['task_desc']?></div>                           
+                                        </div>
+                                    </div>
+                                </div>
+                                        
+                        
+                            <?php
+                                $i = $i + 1;
+                            } 
+                    
+                            endif;
+                            ?>
+                            
+                        </div>
+                    
+                    
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">

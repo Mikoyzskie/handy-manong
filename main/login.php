@@ -1,6 +1,34 @@
-<?php 
-if (session_status() == PHP_SESSION_NONE) {
-   
+<?php
+session_start();
+  $showAlert = false; 
+  $showError = false; 
+  $exists=false;
+  $password_login_value = "";
+  $email_login_value = "";
+if (empty($_SESSION["id"])) {
+  if(!empty($_GET['error']) && ($_GET['error']=="incorrectpass")){
+    $showError = "Email or password incorrect.";
+  }
+  if(!empty($_GET['error']) && ($_GET['error']=="verify")){
+    $showError = "Please verify first.";
+  }
+  if(!empty($_GET['notif']) && ($_GET['notif']=="verified")){
+    $showAlert = true; 
+  }
+  if(!empty($_GET['error']) && ($_GET['error']=="nouser")){
+    $showError = "User does not exist. Signup instead.";
+  }
+  if(isset($_SESSION["password_login_failed"])) {
+    $password_login_value = $_SESSION["password_login_failed"];
+    unset($_SESSION["password_login_failed"]);
+    $email_login_value = $_SESSION["email_login_failed"];
+    unset($_SESSION["email_login_failed"]);
+  } else {
+    $password_login_value = "";
+    $email_login_value = "";
+  }
+}else{
+  
 }
 ?>
 
@@ -25,6 +53,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/corporate-ui-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
 <body class="">
@@ -51,6 +80,57 @@ if (session_status() == PHP_SESSION_NONE) {
       </div>
     </div>
   </div>
+  <style>
+        div.alert{
+            position: absolute!important;
+            top: 20px!important;
+            right: 20px!important;
+            z-index: 2000!important;
+        }
+        div.alert.close{
+            display:none;
+        }
+        button.close-danger{
+            border: 2px solid #8C2F25;
+            color: #8C2F25;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+    </style>
+  <?php
+    
+    if($showAlert) {
+    
+        echo ' <div class="alert alert-success 
+            alert-dismissible fade show" role="alert">
+    
+            <strong>Success!</strong> Account Created & Verified. 
+            <button type="button" class="close-success">
+            x
+        </button> 
+        </div> '; 
+    }
+    
+    if($showError) {
+    
+        echo ' <div class="alert alert-danger 
+            alert-dismissible fade show" role="alert"> 
+        <strong>Error!</strong> '. $showError.'
+    
+       <button type="button" class="close-danger">
+            x
+        </button>
+     </div> '; 
+   }
+   ?>
   <main class="main-content  mt-0">
     <section>
       <div class="page-header min-vh-100">
@@ -73,8 +153,33 @@ if (session_status() == PHP_SESSION_NONE) {
                       <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
                     </div>
                     <label>Password</label>
-                    <div class="mb-3">
-                      <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                    <div class="d-flex mb-3">
+                      <style>
+                        
+                        #password {
+                        -webkit-text-security: disc;
+                        -moz-text-security: disc;
+                        text-security: disc;
+                        }
+                        .pass-input{
+                          border-top-right-radius:0;
+                          border-bottom-right-radius:0;
+                        }
+                        .pass-btn{
+                          border-top-left-radius:0;
+                          border-bottom-left-radius:0;
+                        }
+                        #password.show-password {
+                        -webkit-text-security: none;
+                        -moz-text-security: none;
+                        text-security: none;
+                        
+                        }
+                      </style>
+                      <input type="password" id="myInput" value="" class="form-control pass-input" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <button class="btn pass-btn btn-outline-secondary toggle-password mb-0" type="button" onclick="myFunction()">
+                        <i class="bi bi-eye"></i>
+                      </button>
                     </div>
                     <div class="d-flex align-items-center">
                       <!-- <div class="form-check form-check-info text-left mb-0">
@@ -83,7 +188,7 @@ if (session_status() == PHP_SESSION_NONE) {
                           Remember for 14 days
                         </label>
                       </div> -->
-                      <a href="javascript:;" class="text-xs font-weight-bold ms-auto">Forgot password</a>
+                      <a href="forgot.php" class="text-xs font-weight-bold ms-auto">Forgot password</a>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="submit">Sign in</button>
@@ -137,6 +242,34 @@ if (session_status() == PHP_SESSION_NONE) {
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Corporate UI Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/corporate-ui-dashboard.min.js?v=1.0.0"></script>
+
+  <script>
+    const togglePassword = document.querySelector('.toggle-password');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+      /* const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type); */
+      this.querySelector('i').classList.toggle('bi-eye');
+      this.querySelector('i').classList.toggle('bi-eye-slash');
+    });
+    function myFunction() {
+      var x = document.getElementById("myInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
+  <script>
+    const button = document.querySelector('.close-danger');
+    button.addEventListener('click', closeAlert, false);
+    function closeAlert(){
+        const closeDanger = document.querySelector('.alert');
+        closeDanger.classList.add('close');
+    }
+  </script>
 </body>
 
 </html>

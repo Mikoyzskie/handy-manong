@@ -9,34 +9,39 @@ if(!empty($_GET['email']) && $_GET['email']=='sent'){
   $showAlert = false;
 }
 
+if(!empty($_GET['error']) && $_GET['error']=='passwordnotmatch'){
+  $showError = 'Password does not match';
+}else{
+  $showError = false; 
+}
+
 // if(empty($_GET['email']) && empty($_GET['unicode'])){
 //   header('location: forgot.php?actio=submit');
 // }
 
 
-$showError = false; 
 if(isset($_POST['pass'])){
     include "../includes/connect.php";
     $email = $_POST["email"];
-    $sql = "Select * from tbl_finder where finder_email='$email'";
+    $sql = "SELECT * FROM tbl_provider WHERE prov_email='$email'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result); 
 
     if($num == 0){
-        header("location: signin.php?error=nouser");
+        header("location: login.php?error=nouser");
     }else{
         include "../includes/email.php";
         $email_subject = 'Reset Password';
         $code = uniqid();
-        $folder = 'auth';
+        $folder = 'main';
         $email_content = forgot($code,$email,$folder);
-        $finder_email = $email;
-        $result = composeEmail($finder_email,$email_subject,$email_content);
+        $prov_email = $email;
+        $result = composeEmail($prov_email,$email_subject,$email_content);
           if (strpos($result, 'Mailer Error') !== false) {
               echo "Test passed: exception was caught";
           } else {
           include "../includes/connect.php";
-          $query = "UPDATE tbl_finder SET `forgot_unicode` = '$code' WHERE finder_email = '$email'";
+          $query = "UPDATE tbl_provider SET `forgot_unicode` = '$code' WHERE prov_email = '$email'";
           $results = mysqli_query($conn, $query);
           if($results){
             header("location: forgot.php?email=sent");
@@ -51,7 +56,7 @@ if(isset($_POST['reset'])){
   $passCode = $_POST['code'];
   
   include "../includes/connect.php";
-  $sql = "SELECT * FROM tbl_finder WHERE finder_email='$email' AND forgot_unicode = '$passCode'";
+  $sql = "SELECT * FROM tbl_provider WHERE prov_email='$email' AND forgot_unicode = '$passCode'";
   $result = mysqli_query($conn, $sql);
   $num = mysqli_num_rows($result); 
 
@@ -63,13 +68,15 @@ if(isset($_POST['reset'])){
 
       if($password == $cpassword){
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $query = "UPDATE tbl_finder SET `forgot_unicode` = null,finder_password = '$hash' WHERE finder_email = '$email'";
+        $query = "UPDATE tbl_provider SET `forgot_unicode` = null,prov_password = '$hash' WHERE prov_email = '$email'";
         $results = mysqli_query($conn, $query);
           if($result){
             header("location: forgot.php?password=reset");
           }
       }else{
-        $showError = "Password does not match.";
+        
+        header("location: forgot.php?action=reset&unicode=$passCode&email=$email&error=passwordnotmatch");
+        
       }
     }
 }
@@ -146,7 +153,7 @@ if(isset($_POST['reset'])){
     
         echo ' <div class="alert alert-danger 
             alert-dismissible fade show" role="alert"> 
-        <strong>Error!</strong> '. $showError.'
+        <strong>Error!</strong> '.$showError.'
     
        <button type="button" class="close-danger">
             x
@@ -179,7 +186,7 @@ if(isset($_POST['reset'])){
                     </div>
                    
                     <div class="d-flex align-items-center">
-                      <a href="signin.php" class="text-xs font-weight-bold ms-auto">Sign In Instead</a>
+                      <a href="login.php" class="text-xs font-weight-bold ms-auto">Sign In Instead</a>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="pass">Submit</button>
@@ -206,7 +213,7 @@ if(isset($_POST['reset'])){
                     </div>
                    
                     <div class="d-flex align-items-center">
-                      <a href="signin.php" class="text-xs font-weight-bold ms-auto">Sign In Instead?</a>
+                      <a href="login.php" class="text-xs font-weight-bold ms-auto">Sign In Instead?</a>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="reset">Reset</button>
