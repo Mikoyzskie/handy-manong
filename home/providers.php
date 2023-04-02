@@ -18,7 +18,7 @@ if(empty($_SESSION['id'])){
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
@@ -32,6 +32,15 @@ if(empty($_SESSION['id'])){
                 line-clamp: 2; 
         -webkit-box-orient: vertical;
     }
+
+    
+    header{
+        background-image:url(../assets/images/provider_banner.jpg)!important;
+        background-repeat: no-repeat!important;
+        background-size: cover!important;
+        background-position: 50% 40%!important;
+    }
+        
 </style>
     <body>
         <!-- Responsive navbar-->
@@ -51,7 +60,7 @@ if(empty($_SESSION['id'])){
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
-        <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
+        <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white providers">
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Providers Service Connection</h1>

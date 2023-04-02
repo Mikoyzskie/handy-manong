@@ -8,6 +8,8 @@ if(empty($_SESSION['id'])){
 $showAlert = false; 
 $showError = false; 
 $exists=false;
+
+
     
 if($_SERVER["REQUEST_METHOD"] == "POST") {
       
@@ -28,19 +30,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $showError = "Category empty. Please select one.";
     }else{
         if(empty($_GET['assign'])){
-            $id = null;
+            $id = NULL;
         }else{
             $id = $_GET['assign'];
         }
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`, `rate`) VALUES ('$finder','$category','$title','$description','$location','$id','$rate')";
-        
+        $finder = $_SESSION["id"];
+        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`, `rate`) VALUES ('$finder','$category','$title','$description','$location','$id',$rate)";
         $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            header("Location: ../home/finder.php?error=noerror");
-            die();
-        }else{
-            header("Location: ../home/task-create.php?error=undefined");
+        $inserted_row = $conn->insert_id;
+        if(!empty($_GET['assign'])){
+            $requested = "INSERT INTO finder_request (finder, task, assign) VALUES ($finder,$inserted_row,$id)";
+            $request = mysqli_query($conn, $requested);
+            if(!$request){
+                header("location: task-create.php?error=invalid-arg");
+            }
+        }
+        if($result){
+            $showAlert = true; 
         }
     }
 
@@ -58,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
@@ -199,6 +205,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-left: 40px;
             border-radius: 5px;
         }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+        div.alert-success.close{
+            display:none;
+        }
     </style>
   <?php
     
@@ -208,7 +224,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             alert-dismissible fade show" role="alert">
     
             <strong>Success!</strong> Task successfully created. Check task on homepage.
-            <button type="button">
+            <button class="close-success" type="button" onclick="closeSuccess();">
             x
         </button> 
         </div> '; 
@@ -267,7 +283,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                             
                             <hr>
-                            <form method = "post" action="task-create.php">
+                            <form method = "post" action="task-create.php?assign=<?php echo $_GET['assign']?>">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1"
@@ -400,5 +416,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
+        <script>
+            const button = document.querySelector('.close-danger');
+            button.addEventListener('click', closeAlert, false);
+
+            const close = document.querySelector('.close-success');
+            close.addEventListener('click', closeAlert, false)
+            
+            function closeAlert(){
+                const closeDanger = document.querySelector('.alert');
+                closeDanger.classList.add('close');
+            }
+            function closeSuccess(){
+                const success = document.querySelector('.alert');
+                success.classList.add('close');
+            }
+  </script>
     </body>
 </html>

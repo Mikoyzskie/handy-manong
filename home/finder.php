@@ -4,7 +4,6 @@ session_start();
 if(empty($_SESSION['id'])){
     header("location: ../auth/signin.php?error=loginrequired");
 }
-
 ?>
 
 
@@ -17,7 +16,7 @@ if(empty($_SESSION['id'])){
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <!-- <link rel="icon" type="image/x-icon" href="assets/favicon.ico" /> -->
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />

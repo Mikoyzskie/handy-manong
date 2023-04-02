@@ -17,7 +17,7 @@ if(empty($_SESSION['id'])){
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
@@ -193,45 +193,78 @@ if(empty($_SESSION['id'])){
                 <!-- Blog entries-->
                 <div class="col-lg-8">
                     <!-- Featured blog post-->
-                    <?php if(isset($_POST["search"])):?>
-                        <h2 class="card-title">Task Highlights</h2>
-                    <?php else:?>
+                    <?php if(!empty($_GET['uid'])):?>
+                        <?php
+                            
+                            require_once "../includes/connect.php";
+
+                            // Tasks Requested
+                            $id = $_GET['uid'];
+                            $sql = "SELECT * FROM `request` WHERE prov_id = $id";
+                            $result = mysqli_query($conn, $sql);
+                            $num = mysqli_num_rows($result);
+
+
+                            // Tasks Completed
+                            $total_task = "SELECT * FROM tbl_task WHERE task_provider = $id AND task_status = 'Done'";
+                            $result_total = mysqli_query($conn, $total_task);
+                            $total = mysqli_num_rows($result_total);
+                        ?>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h2 class="card-title">Task Highlights</h2>
                                 <hr>
                                 <div class="stats-container">
                                     <div class="stats-item">
-                                        <h2 class="stats-count">12</h2>
-                                        <p class="stats-description">Tasks Created</p>
+                                        <h2 class="stats-count"><?php echo $num?></h2>
+                                        <p class="stats-description">Tasks Requested</p>
                                     </div>
                                     <div class="stats-item">
-                                        <h2 class="stats-count">12</h2>
+                                        <h2 class="stats-count"><?php echo $total;?></h2>
                                         <p class="stats-description">Tasks Completed</p>
                                     </div>
-                                    <div class="stats-item">
+                                    <!-- <div class="stats-item">
                                         <h2 class="stats-count">12</h2>
                                         <p class="stats-description">Tasks </p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
+
+                        <?php
+                            //Finder/s Connected
+                            $total_finders = "SELECT DISTINCT('task_finder') FROM tbl_task WHERE task_provider = $id";
+                            $result_finders = mysqli_query($conn, $total_finders);
+                            $finders = mysqli_num_rows($result_finders);
+
+                            //Total Transactions
+                            $transactions_total = "SELECT * FROM tbl_task WHERE task_provider = $id";
+                            $result_transactions = mysqli_query($conn, $transactions_total);
+                            $transactions = mysqli_num_rows($result_transactions);
+
+                            //Finder Requests
+                            $all_requests = "SELECT * FROM finder_request WHERE assign = $id";
+                            $results_all_requests = mysqli_query($conn, $all_requests);
+                            $requests = mysqli_num_rows($results_all_requests);
+                            
+                        ?>
+
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h2 class="card-title">Service Connection Highlights</h2>
                                 <hr>
                                 <div class="stats-container">
                                     <div class="stats-item">
-                                        <h2 class="stats-count">12</h2>
-                                        <p class="stats-description">Provider Requests</p>
+                                        <h2 class="stats-count"><?php echo $finders?></h2>
+                                        <p class="stats-description">Finder/s Connected</p>
                                     </div>
                                     <div class="stats-item">
-                                        <h2 class="stats-count">12</h2>
+                                        <h2 class="stats-count"><?php echo $transactions?></h2>
                                         <p class="stats-description">Total Transactions</p>
                                     </div>
                                     <div class="stats-item">
-                                        <h2 class="stats-count">12</h2>
-                                        <p class="stats-description">Tasks Created</p>
+                                        <h2 class="stats-count"><?php echo $requests?></h2>
+                                        <p class="stats-description">Finder Task Request/s</p>
                                     </div>
                                 </div>
                             </div>
@@ -240,63 +273,172 @@ if(empty($_SESSION['id'])){
                         <hr>
                         <div class="row row-cols-1 row-cols-md-2 mb-5">
                             
-                        <?php 
+                        <?php if($total == 0):?>
+                                <i mb-5>No related task to show.</i>
+                        <?php else:
+                            $i = 0;
+                            while($row = mysqli_fetch_array($result_total)){
+                                if($i == 4){
+                                    break;
+                                }
+
+                            ?>
+
+                                <div class="col">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                        
+                                            <h2 class="card-title h4"><?php echo $row['task_title']?></h2>
+                                            <div class="small text-muted"><?php echo $row['task_desc']?></div>                           
+                                        </div>
+                                    </div>
+                                </div>
+                                        
+                        
+                            <?php
+                                $i = $i + 1;
+                            } 
+                    
+                            endif;
+                            ?>
+                            
+                        </div>
+                    <?php else:?>
+
+                        <?php
+                            
                             require_once "../includes/connect.php";
 
                             $id = $_SESSION["id"];
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id ORDER BY id DESC LIMIT 4"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_finder = $id AND task_status = 'Done' AND task_provider != 0 OR task_provider != NULL ORDER BY id DESC"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
+                            $num = mysqli_num_rows($result);
 
-                                $num = mysqli_num_rows($result); 
-                                if($num == 0) {
-                                    echo "<i mb-5>No related task to show.</i>";
-                                }else{
-                                    while($row = mysqli_fetch_array($result)){
-                                        echo "<div class=\"col\">";
-                                        echo "<div class=\"card mb-4\">";
-                                        echo "<div class=\"card-body\">";
-                                        $date=date_create($row['task_date']);
-                                        echo "<h2 class=\"card-title h4\">".$row['task_title']."</h2>";
-                                        echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
+                            $total_task = "SELECT * FROM tbl_task WHERE task_finder = $id";
+                            $result_total = mysqli_query($conn, $total_task);
+                            $total = mysqli_num_rows($result_total);
 
-                                        if($row['task_status']=='Available'){
-                                            echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Assigned'){
-                                            echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Rejected'){
-                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
-                                        }elseif($row['task_status']=='Done'){
-                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
-                                        }else{
-                                            header("location: finder.php?error=undefine");
-                                        }
-                                                    
-                                        echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
-                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?uid=".$_SESSION["id"]."&tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
-                                        echo "</div>";
-                                        echo "</div>";
-                                        echo "</div>";
-                                    }
-                                }
-                        
+                            
+
                         ?>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Task Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $total?></h2>
+                                        <p class="stats-description">Tasks Created</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $num?></h2>
+                                        <p class="stats-description">Tasks Completed</p>
+                                    </div>
+                                    <!-- <div class="stats-item">
+                                        <h2 class="stats-count">12</h2>
+                                        <p class="stats-description">Tasks </p>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                            $rates_total = "SELECT `rate` FROM `tbl_task` WHERE task_finder = $id";
+
+                            /* AND task_status = 'Done' */
+                            $result_rates = mysqli_query($conn, $rates_total);
+                            $rates = mysqli_num_rows($result_rates);
+                            $sum_rate = 0;
+
+                            function format_number($num) {
+                                if ($num >= 1000000) {
+                                  return round($num / 1000000, 1) . 'M';
+                                } else if ($num >= 1000) {
+                                  return round($num / 1000, 1) . 'K';
+                                } else {
+                                  return $num;
+                                }
+                              }
+                            while($rate = mysqli_fetch_array($result_rates)){
+                                $i = $rate['rate'];
+                                $sum_rate =+ $i;
+                            }
+                            
+                            $connects_total = "SELECT COUNT(DISTINCT `task_provider`) AS 'count' FROM `tbl_task` WHERE `task_finder`= $id AND `task_provider` != 0";
+                            $result_connects = mysqli_query($conn, $connects_total);
+                            $connects = mysqli_fetch_array($result_connects);
+
+                            $transactions_total = "SELECT COUNT(*) AS 'transactions' FROM `tbl_task` WHERE task_finder = $id AND task_status != 'Available'";
+                            $result_transactions = mysqli_query($conn, $transactions_total);
+                            $transactions = mysqli_fetch_array($result_transactions);
+                            
+                        ?>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">Service Connection Highlights</h2>
+                                <hr>
+                                <div class="stats-container">
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $connects['count']?></h2>
+                                        <p class="stats-description">Provider/s Connected</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count"><?php echo $transactions['transactions']?></h2>
+                                        <p class="stats-description">Total Transactions</p>
+                                    </div>
+                                    <div class="stats-item">
+                                        <h2 class="stats-count">&#8369;<?php echo format_number($sum_rate);?></h2>
+                                        <p class="stats-description">Total Payout</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="card-title">Recent Completed Tasks</h2>
+                        <hr>
+                        <div class="row row-cols-1 row-cols-md-2 mb-5">
+                            
+                        <?php if($num == 0):?>
+                                <i mb-5>No related task to show.</i>
+                        <?php else:
+                            $i = 0;
+                            while($row = mysqli_fetch_array($result)){
+                                if($i == 4){
+                                    break;
+                                }
+                                $user = $row['task_provider'];
+                                $query = "SELECT * FROM `tbl_provider` WHERE id = $user";
+                                $provider = mysqli_query($conn, $query);
+                            ?>
+
+                                <div class="col">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                        
+                                            <h2 class="card-title h4"><?php echo $row['task_title']?></h2>
+                                            <div class="small text-muted"><?php echo $row['task_desc']?></div>
+
+                                        
+                                            <?php $select = mysqli_fetch_array($provider);?>
+
+                                            <p class="card-text related"><strong>Provider: </strong><?php echo $select['prov_firstname']?> <?php echo $select['prov_lastname']?></p>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                        
+                        
+                            <?php
+                                $i = $i + 1;
+                            } 
+                    
+                            endif;
+                            ?>
                             
                         </div>
                         
                     <?php endif;?>
-                    <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav> -->
+                    
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
