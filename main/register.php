@@ -6,8 +6,6 @@ $exists=false;
     
 if($_SERVER["REQUEST_METHOD"] == "POST") {
       
-    // Include file which makes the
-    // Database Connection.
     include '../includes/connect.php';   
     
     $prov_fname = $_POST["fname"];
@@ -18,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $catArray = $_POST["category"];
     $category = implode(',',$catArray);      
     
-    $sql = "Select * from tbl_provider where prov_email='$prov_email'";
+    $sql = "SELECT * FROM tbl_provider WHERE prov_email='$prov_email'";
     
     $result = mysqli_query($conn, $sql);
     
@@ -29,20 +27,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // or not in our Database
     if($num == 0) {
         if(($password == $cpassword) && $exists==false) {
-    
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-                
             if(empty($catArray)){
                 $showError = "Checkbox category empty.";
             }else{
-                // Password Hashing is used here. 
-                $sql = "INSERT INTO `tbl_provider`(`prov_firstname`, `prov_lastname`, `prov_category`, `prov_password`, `prov_email`) VALUES ('$prov_fname','$prov_lname','$category','$hash','$prov_email')";
-        
-                $result = mysqli_query($conn, $sql);
-        
-                if ($result) {
-                    header("Location: login.php");
-                    die();
+
+                include '../includes/email.php';
+                $email_subject = 'Confirmation Email';
+                $code = uniqid();
+                $email = $prov_email;
+                $folder = "main";
+                $email_content = email($code,$email,$folder);
+                $result = composeEmail($email,$email_subject,$email_content);
+                if (strpos($result, 'Mailer Error') !== false) {
+                    $showError = $result;
+                } else {
+
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+                        
+                    // Password Hashing is used here.
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO `tbl_provider`(`prov_firstname`, `prov_lastname`, `prov_category`, `prov_password`, `prov_email`,`code`) 
+                    VALUES ('$prov_fname','$prov_lname','$category','$hash','$prov_email','$code')";
+                    $results = mysqli_query($conn, $sql);
+
+                    if ($results) {
+                        $showAlert = true;
+                        $prov_fname = "";
+                        $prov_lname = "";
+                        $prov_email = "";
+                        $password = "";
+                        $cpassword = "";
+                        $catArray = "";
+                        
+                    }
                 }
             }
         } 
@@ -57,7 +74,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
    }
    
     
-}//end if   
+}else{
+    $prov_fname = "";
+    $prov_lname = "";
+    $prov_email = "";
+    $password = "";
+    $cpassword = "";
+    $catArray = "";
+}
     
 ?>
 
@@ -115,20 +139,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <style>
-        div.alert {
-            position: absolute !important;
-            top: 20px !important;
-            right: 20px !important;
-            z-index: 2000 !important;
+        div.alert{
+            position: absolute!important;
+            top: 20px!important;
+            right: 20px!important;
+            z-index: 2000!important;
         }
-
-        div.alert.close {
-            display: none;
+        div.alert.close{
+            display:none;
         }
-
-        button.close-danger {
+        div.alert-success.close{
+            display:none;
+        }
+        button.close-danger{
             border: 2px solid #8C2F25;
             color: #8C2F25;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
             background: transparent;
             margin-left: 40px;
             border-radius: 5px;
@@ -141,9 +173,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         echo ' <div class="alert alert-success 
             alert-dismissible fade show" role="alert">
     
-            <strong>Success!</strong> Your account is 
-            now created and you can login. 
-            <button type="button">
+            <strong>Success!</strong> Email Verification Sent! 
+            <button type="button" onclick = "closeAlert();" class="close-success">
             x
         </button> 
         </div> '; 
@@ -203,30 +234,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <label>First Name</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control" placeholder="Enter your name"
-                                                aria-label="Name" aria-describedby="name-addon" name="fname" required>
+                                                aria-label="Name" aria-describedby="name-addon" name="fname" required value="<?php echo $prov_fname?>">
                                         </div>
                                         <label>Last Name</label>
                                         <div class="mb-3">
                                             <input type="text" class="form-control" placeholder="Enter your name" aria-label="Name"
-                                                aria-describedby="name-addon" name="lname" required>
+                                                aria-describedby="name-addon" name="lname" required value="<?php echo $prov_lname?>">
                                         </div>
                                         <label>Email Address</label>
                                         <div class="mb-3">
                                             <input type="email" class="form-control"
                                                 placeholder="Enter your email address" aria-label="Email"
-                                                aria-describedby="email-addon" name="email" required>
+                                                aria-describedby="email-addon" name="email" required value="<?php echo $prov_email?>">
                                         </div>
                                         <label>Password</label>
                                         <div class="mb-3">
                                             <input type="password" class="form-control" placeholder="Create a password"
                                                 aria-label="Password" aria-describedby="password-addon" name="password"
-                                                required>
+                                                required value="<?php echo $password?>">
                                         </div>
                                         <label>Confirm Password</label>
                                         <div class="mb-3">
                                             <input type="password" class="form-control"
                                                 placeholder="Confirm your password" aria-label="Password"
-                                                aria-describedby="password-addon" name="cpassword" required>
+                                                aria-describedby="password-addon" name="cpassword" required value="<?php echo $cpassword?>">
                                         </div>
                                         <div class="row justify-content-center">
                                             <label>I am a...</label>
@@ -236,39 +267,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div>
                                                 <ul class="ks-cboxtags" style="padding-top:0;margin-bottom:0;">
                                                     <li>
-                                                        <input type="checkbox" id="checkboxOne" value="Carpenter" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxOne" value="Carpenter" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxOne">Carpenter</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxTwo" value="Plumber" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxTwo" value="Plumber" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxTwo">Plumber</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxThree" value="Painter" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxThree" value="Painter" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxThree">Painter</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxFour" value="Electrician" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxFour" value="Electrician" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxFour">Electrician</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxFive" value="Driver" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxFive" value="Driver" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxFive">Driver</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxSix" value="Welder" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxSix" value="Welder" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxSix">Welder</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxSeven" value="House Keeper" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxSeven" value="House Keeper" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxSeven">House Keeper</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxEight" value="Glass Worker" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxEight" value="Glass Worker" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxEight">Glass Worker</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" id="checkboxNine" value="Midwife" name="category[]">
+                                                        <input type="checkbox" class="acb" id="checkboxNine" value="Midwife" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxNine">Midwife</label>
                                                     </li>
                                                 </ul>
@@ -321,6 +352,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             closeDanger.classList.add('close');
         }
     </script>
+    <script>
+            function deRequire(elClass) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                    atLeastOneChecked = true;
+                    console.log('true');
+                }
+            }
+
+            if (atLeastOneChecked === true) {
+                    for (i = 0; i < el.length; i++) {
+                        el[i].required = false;
+                    }
+                } else {
+                    for (i = 0; i < el.length; i++) {
+                    el[i].required = true;
+                    }
+                }
+            }
+        </script>
 </body>
 
 </html>

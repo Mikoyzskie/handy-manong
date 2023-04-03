@@ -275,7 +275,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span><i class="fa-solid fa-pen"></i></span></div>
                             <form method = "post">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <label for="exampleInputEmail1" class="form-label">First Name</label>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required/>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
+                                
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Last Name</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp" name="title" required/>
@@ -285,6 +294,62 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
+                                <div class="input-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required/>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Bio</label>
+                                <div class="input-group">
+                                <textarea type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" name="title" required></textarea>
+                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
+                                </div>
+                            </div>
+                            <div>
+                                    <ul class="ks-cboxtags" style="padding-top:0;">
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxOne" value="Carpenter" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxOne">Carpenter</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxTwo" value="Plumber" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxTwo">Plumber</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxThree" value="Painter" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxThree">Painter</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxFour" value="Electrician" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxFour">Electrician</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxFive" value="Driver" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxFive">Driver</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxSix" value="Welder" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxSix">Welder</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxSeven" value="House Keeper" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxSeven">House Keeper</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxEight">Glass Worker</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxNine" value="Midwife" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxNine">Midwife</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Old Password</label>
                                 <div class="input-group">
                                 <input type="text" class="form-control" id="exampleInputEmail1"
                                     aria-describedby="emailHelp" name="title" required/>
@@ -373,7 +438,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        
+        <script>
+            function deRequire(elClass) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                atLeastOneChecked = true;
+                }
+            }
+
+            if (atLeastOneChecked === true) {
+                for (i = 0; i < el.length; i++) {
+                el[i].required = false;
+                }
+            } else {
+                for (i = 0; i < el.length; i++) {
+                el[i].required = true;
+                }
+            }
+            }
+        </script>
 
     </body>
 </html>

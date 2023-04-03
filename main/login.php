@@ -188,7 +188,7 @@ if (empty($_SESSION["id"])) {
                           Remember for 14 days
                         </label>
                       </div> -->
-                      <a href="forgot.php" class="text-xs font-weight-bold ms-auto">Forgot password</a>
+                      <a href="forgot.php" class="text-xs font-weight-bold ms-auto text-dark">Forgot password</a>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" name="submit">Sign in</button>

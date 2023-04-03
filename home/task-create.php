@@ -283,7 +283,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                             
                             <hr>
-                            <form method = "post" action="task-create.php?assign=<?php echo $_GET['assign']?>">
+                            <form method = "post" action="task-create.php?assign=<?php if(!empty($_GET['assign'])){echo $_GET['assign'];}?>">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1"
@@ -312,39 +312,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div>
                                     <ul class="ks-cboxtags" style="padding-top:0;">
                                         <li>
-                                            <input type="checkbox" id="checkboxOne" value="Carpenter" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxOne" value="Carpenter" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxOne">Carpenter</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxTwo" value="Plumber" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxTwo" value="Plumber" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxTwo">Plumber</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxThree" value="Painter" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxThree" value="Painter" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxThree">Painter</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxFour" value="Electrician" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxFour" value="Electrician" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxFour">Electrician</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxFive" value="Driver" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxFive" value="Driver" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxFive">Driver</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxSix" value="Welder" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxSix" value="Welder" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxSix">Welder</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxSeven" value="House Keeper" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxSeven" value="House Keeper" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxSeven">House Keeper</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxEight" value="Glass Worker" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" id="checkboxNine" value="Midwife" name="category[]">
+                                            <input type="checkbox" class='acb' id="checkboxNine" value="Midwife" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxNine">Midwife</label>
                                         </li>
                                     </ul>
@@ -431,6 +431,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 const success = document.querySelector('.alert');
                 success.classList.add('close');
             }
-  </script>
+        </script>
+        <script>
+            function deRequire(elClass) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                atLeastOneChecked = true;
+                }
+            }
+
+            if (atLeastOneChecked === true) {
+                for (i = 0; i < el.length; i++) {
+                el[i].required = false;
+                }
+            } else {
+                for (i = 0; i < el.length; i++) {
+                el[i].required = true;
+                }
+            }
+            }
+        </script>
     </body>
 </html>

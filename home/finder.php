@@ -81,18 +81,20 @@ if(empty($_SESSION['id'])){
                     <!-- Featured blog post-->
                     <?php
                     if(isset($_POST["search"]) || !empty($_GET['pages_no'])){
+
+                        
                     echo "<div class='col-lg-8'>";
                     echo "<h2 class=\"card-title\">Task</h2>";
                     echo "<div class=\"row row-cols-1 row-cols-md-2\">";
                         
                             require_once "../includes/connect.php";
-
+                            $search  = $_SESSION['searching'];
                             if (isset($_GET['pages_no']) && $_GET['pages_no']!="") {
                                 $page_no = $_GET['pages_no'];
-                                $search = null;
+                                
                             }else {
                                 $page_no = 1;
-                                $search = $_POST['search'];
+                                $_SESSION['searching'] = $_POST["query"];
                             }
                             $id = $_SESSION["id"];
                             
@@ -418,8 +420,8 @@ if(empty($_SESSION['id'])){
                         <div class="card-body">
                         <form role="form" action="finder.php" method="post">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="search" required/>
-                                <button class="btn btn-primary" id="button-search" type="submit" name="submit">Go!</button>
+                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="query" required/>
+                                <button class="btn btn-primary" id="button-search" type="submit" name="search">Go!</button>
                             </div>
                         </form>
                         </div>

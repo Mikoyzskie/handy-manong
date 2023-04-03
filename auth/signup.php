@@ -37,7 +37,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           $email_subject = 'Confirmation Email';
           $code = uniqid();
           $email = $finder_email;
-          $email_content = email($code,$email);
+          $folder = "auth";
+          $email_content = email($code,$email,$folder);
           $result = composeEmail($finder_email,$email_subject,$email_content);
           if (strpos($result, 'Mailer Error') !== false) {
             $showError = $result;
