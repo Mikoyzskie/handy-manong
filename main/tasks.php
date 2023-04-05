@@ -57,7 +57,7 @@ if(empty($_SESSION['id'])){
                     <br>
                     <form action="tasks.php" method="post">
                     <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" name="search" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
+                        <input class="form-control" type="text" name="query" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
                         <button class="btn btn-primary" id="button-search" name="submit" type="submit">Go!</button>
                     </div>
                     </form>
@@ -77,13 +77,15 @@ if(empty($_SESSION['id'])){
                         
                             require_once "../includes/connect.php";
 
-                            $search  = $_SESSION['searching'];
+                            
                             if (isset($_GET['pages_no']) && $_GET['pages_no']!="") {
                                 $page_no = $_GET['pages_no'];
+                                $search  = $_SESSION['searching'];
                                 
                             }else {
                                 $page_no = 1;
                                 $_SESSION['searching'] = $_POST["query"];
+                                $search  = $_SESSION['searching'];
                             }
                             
                             $id = $_SESSION["id"];
@@ -94,13 +96,13 @@ if(empty($_SESSION['id'])){
                             $next_page = $page_no + 1;
                             $adjacents = "2"; 
                             $category = $_SESSION["category"];
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$category%' ORDER BY id DESC");
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
                             $second_last = $total_no_of_pages - 1; // total page minus 1
 
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$category%' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -230,7 +232,7 @@ if(empty($_SESSION['id'])){
                             $next_page = $page_no + 1;
                             $adjacents = "2"; 
     
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_category like '%$category%' ORDER BY id DESC");
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
@@ -238,7 +240,7 @@ if(empty($_SESSION['id'])){
 
                             $id = $_SESSION["id"];
                             
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 

@@ -71,7 +71,7 @@ if(empty($_SESSION['id'])){
                                 if(empty($id)){
                                     header("location: finder.php?error=notask");
                                 }else{
-                                    $sql = "SELECT `id`, `task_date`, `task_finder`, `task_category`, `task_status`, `task_title`, `task_desc`, `task_location`, `task_provider`,`finder_name` FROM `tbl_task` INNER JOIN `tbl_finder` ON tbl_task.task_finder = tbl_finder.finder_id WHERE id = $id"; /* add where clause here */
+                                    $sql = "SELECT `id`, `task_date`, `task_finder`, `task_category`, `task_status`, `task_title`, `task_desc`, `task_location`, `task_provider`,`finder_name`,`finder_id` FROM `tbl_task` INNER JOIN `tbl_finder` ON tbl_task.task_finder = tbl_finder.finder_id WHERE id = $id"; /* add where clause here */
                                     $result = mysqli_query($conn, $sql);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0){
@@ -82,7 +82,7 @@ if(empty($_SESSION['id'])){
                                         echo "<h2 class=\"card-title\">". $row['task_title']."</h2>";
                                         echo "<hr>";
                                         echo "<h2 class=\"card-title h4 position-relative\">".$row['task_category']."</h2>";
-                                        echo "<p>by: ".$row['finder_name']."</p>"; /* union with table finder to get name */
+                                        echo "<p>by: <a href='profile.php?uid=".$row['finder_id']."'>".$row['finder_name']."</a></p>"; /* union with table finder to get name */
                                         if($row['task_status']=='Available'){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){

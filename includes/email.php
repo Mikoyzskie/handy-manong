@@ -450,7 +450,7 @@ function composeEmail($finder_email,$email_subject,$email_content){
     }
 }
 
-function updateEmail($code,$email){
+function updateEmail($code,$email,$folder){
     return '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
     <head>
         <title></title>
@@ -579,7 +579,7 @@ function updateEmail($code,$email){
                                                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                                     <tr>
                                                         <td align="center" bgcolor="#2F67F6" role="presentation" style="border:none;border-radius:3px;color:#ffffff;cursor:auto;padding:15px 25px;" valign="middle">
-                                                            <a href="http://localhost/handy-manong/home/update.php?unicode='.$code.'&userid='.$email.'" style="background:#2F67F6;color:#ffffff;font-family:Helvetica Neue,Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
+                                                            <a href="http://localhost/handy-manong/'.$folder.'/update.php?unicode='.$code.'&userid='.$email.'" style="background:#2F67F6;color:#ffffff;font-family:Helvetica Neue,Arial,sans-serif;font-size:15px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;">
                                                                 Confirm Your Email
                                                             </a>
                                                         </td>
@@ -597,7 +597,7 @@ function updateEmail($code,$email){
                                         <tr>
                                             <td align="center" style="font-size:0px;padding:10px 25px;padding-bottom:40px;word-break:break-word;">
                                                 <div style="font-family:Helvetica Neue,Arial,sans-serif;font-size:16px;line-height:22px;text-align:center;color:#555;">
-                                                    <a href="http://localhost/handy-manong/home/update.php?unicode='.$code.'&userid='.$email.'" target="_blank"" style="color:#2F67F6">Verification</a>
+                                                    <a href="http://localhost/handy-manong/'.$folder.'/update.php?unicode='.$code.'&userid='.$email.'" target="_blank"" style="color:#2F67F6">Verification</a>
                                                 </div>
                                             </td>
                                         </tr>

@@ -1,6 +1,19 @@
 <?php
 session_start();
 
+if (isset($_SESSION["old_input_value"])) {
+    $password_input_value = $_SESSION["old_input_value"];
+    unset($_SESSION["old_input_value"]);
+    $password_new_value = $_SESSION["new_input_value"];
+    unset($_SESSION["new_input_value"]);
+    $password_confirm_value = $_SESSION["confirm_input_value"];
+    unset($_SESSION["confirm_input_value"]);
+} else {
+    $password_input_value = "";
+    $password_new_value = "";
+    $password_confirm_value = "";
+}
+
 if(empty($_SESSION['id'])){
     header("location: ../signin.php?error=loginrequired");
 }
@@ -9,38 +22,15 @@ $showAlert = false;
 $showError = false; 
 $exists=false;
     
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-      
-    // Include file which makes the
-    // Database Connection.
-    include '../includes/connect.php';   
-    
-    $title = addslashes($_POST["title"]);
-    $location = $_POST["location"];
-    $description = addslashes($_POST["description"]);
-    $catArray = $_POST["category"];
-    $category = implode(',',$catArray);
-    $finder = $_SESSION["id"];
-
-
-    if(empty($catArray)){
-        $showError = "Category empty. Please select one.";
-    }else{
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`) VALUES ('$finder','$category','$title','$description','$location')";
-        
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            header("Location: ../home/finder.php?error=noerror");
-            die();
-        }else{
-            header("Location: ../home/task-create.php?error=undefined");
-        }
-    }
-
-    
+if(!empty($_GET['status']) && $_GET['status']== 'emailpresent'){
+    $exists = "Email already used.";
 }
-
+if(!empty($_GET['error']) && $_GET['error']== 'incorrectpass'){
+    $exists = "Old Password is Incorrect.";
+}
+if(!empty($_GET['error']) && $_GET['error']== 'passnotmatch'){
+    $exists = "Password does not match.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -242,7 +232,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         .profile{
                             height: 120px;
                             width: 120px;
-                            background-color:#000;
+                            background-color:#212529;
                             margin:auto;
                             border-radius:50%;
                             display:flex;
@@ -268,112 +258,138 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            background-color:#000;
+                            background-color:#212529;
                             color:#fff;
                         }
+                        .custom-file-upload:hover{
+                            cursor:pointer;
+                        }
+                        input[type="file"] {
+                            display: none;
+                        }
+                        .profile-form{
+                            display:flex;
+                            flex-direction:column;
+                            justify-content:center;
+                        }
+                        .profile-form button{
+                            width: fit-content;
+                            align-self: center;
+                        }
                     </style>
-                    <div class="profile"><img src="../assets/images/team-6.jpg" alt="" srcset=""><span><i class="fa-solid fa-pen"></i></span></div>
-                            <form method = "post">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">First Name</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                    <form name="avatarForm" class="profile-form" action="update.php" method="post" enctype="multipart/form-data">
+                        <div class="profile">
+                        <?php
+                            require_once "../includes/connect.php";
+                            $id = $_SESSION["id"];
+                            $sql = "SELECT * FROM tbl_provider WHERE id = $id";
+                            $result = mysqli_query($conn, $sql);
+                            $num = mysqli_num_rows($result);
+                            if(empty($num)){
+                                header("location: account.php?error=invalid");
+                            }
+                            else{
+                                $row = mysqli_fetch_array($result);
+                                if(empty($row['avatar'])):
+                            
+                        ?>
+                            
+                                <img id="preview" src="../assets/images/avatar.jpg" alt="Preview Image" srcset="">
+                            <?php
+                                else:
+                            ?>
+                                <img id="preview" src="../assets/images/uploads/<?php echo $row['avatar']?>" alt="Preview Image" srcset="">
+                            <?php
+                                endif;
+                            ?>
+                            <span>
+                                <label class="custom-file-upload"><i class="fa-solid fa-pen"></i><label>
+                                <input id="file-upload" name="image" type="file" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)" required/>
+                            </span>
+                        
+                        </div>
+                        <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
+                    </form>
+                    
+                    <form method = "post" action="update.php">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Name</label>
+                            <div class="input-group">
+                            
+                            <input  type="text" class="form-control" name="fname" id="fname_input"
+                            aria-describedby="emailHelp" required value="<?php echo $row['prov_firstname']?>" disabled placeholder="First Name"/>
+                            
+                                
                                 
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                            
+                            <input  type="text" class="form-control" name="lname" id="lname_input"
+                            aria-describedby="emailHelp" required value="<?php echo $row['prov_lastname']?>" disabled placeholder="Last Name"/>
+                            
+                                
                                 
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Email</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                        <button style="display:block; margin: auto;" class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
+                        <button style="display:none; margin: auto;" class="btn btn-primary" id="name_submit" name="name_submit" type="submit">Submit</button>
+
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Bio</label>
+                            <div class="input-group">
+                            <textarea type="text" class="form-control" name="bio" id="bio_input"
+                                aria-describedby="emailHelp" disabled><?php echo $row['prov_bio']?></textarea>
+                                <button class="btn btn-primary" id="bio" type="button" onclick="toggleBio()">Edit</button>
+                                <button style="display:none;" class="btn btn-primary" id="bio_submit" name="bio_submit" type="submit">Submit</button>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Bio</label>
-                                <div class="input-group">
-                                <textarea type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required></textarea>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                    </form>
+                    <form method = "post" action="update.php">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Email</label>
+                            <div class="input-group">
+                            <input type="text" class="form-control" id="email_input"
+                                aria-describedby="emailHelp" name="email" required value="<?php echo $row['prov_email']?>" disabled/>
+                                <button class="btn btn-primary" id="email" type="button" onclick="toggleEmail()">Edit</button>
+                                <button style="display:none;" class="btn btn-primary" id="email_submit" name="email_submit" type="submit">Submit</button>
                             </div>
-                            <div>
-                                    <ul class="ks-cboxtags" style="padding-top:0;">
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxOne" value="Carpenter" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxOne">Carpenter</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxTwo" value="Plumber" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxTwo">Plumber</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxThree" value="Painter" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxThree">Painter</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxFour" value="Electrician" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxFour">Electrician</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxFive" value="Driver" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxFive">Driver</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxSix" value="Welder" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxSix">Welder</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxSeven" value="House Keeper" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxSeven">House Keeper</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxEight">Glass Worker</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxNine" value="Midwife" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxNine">Midwife</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Old Password</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                    </form>
+                    <form method = "post" action="update.php">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Old Password</label>
+                            <div class="input-group">
+                            <input type="password" class="form-control" id="password_input"
+                                aria-describedby="emailHelp" name="old_pass" value="<?php echo $password_input_value?>" required disabled/>
+                                <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
+                                
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">New Password</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">New Password</label>
+                            <div class="input-group">
+                            <input type="password" class="form-control" id="new_password"
+                                aria-describedby="emailHelp" name="new_pass" value="<?php echo $password_new_value?>" required disabled/>
+                                
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="title" required/>
-                                    <button class="btn btn-primary" id="button-search" type="button">Edit</button>
-                                </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
+                            <div class="input-group">
+                            <input type="password" class="form-control" id="confirm_password"
+                                aria-describedby="emailHelp" name="confirm_pass" value="<?php echo $password_confirm_value?>" required disabled/>
+                                
                             </div>
-                            <div class="text-center"><button type="submit" class="btn btn-primary" name="submit">Submit</button></div>
-                        </form>
+                        </div>
+                        <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="password_submit">Submit</button></div>
+                        
+                    </form>
+                    <?php
+                            }
+                    ?>
                         </div>
                     </div>
 
@@ -438,7 +454,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script>
+        <!-- <script>
             function deRequire(elClass) {
             el = document.getElementsByClassName(elClass);
 
@@ -459,7 +475,88 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
             }
-        </script>
+        </script> -->
 
+        <script>
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function(){
+                    var output = document.getElementById('preview');
+                    output.src = reader.result;
+                    output.style.display = 'block';
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+            function toggleName() {
+                const x = document.getElementById("name");
+                const y = document.getElementById("name_submit");
+                const z = document.getElementById("fname_input");
+                const a = document.getElementById("lname_input");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+                a.disabled = !a.disabled;
+            }
+
+            function toggleBio() {
+                const x = document.getElementById("bio");
+                const y = document.getElementById("bio_submit");
+                const z = document.getElementById("bio_input");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+            }
+
+            function toggleEmail() {
+                const x = document.getElementById("email");
+                const y = document.getElementById("email_submit");
+                const z = document.getElementById("email_input");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+            }
+
+            function togglePassword() {
+                const x = document.getElementById("password");
+                const y = document.getElementById("password_submit");
+                const z = document.getElementById("password_input");
+                const a = document.getElementById("new_password");
+                const b = document.getElementById("confirm_password");
+                
+                x.style.display = (x.style.display === "none") ? "block" : "none";
+                y.style.display = (y.style.display === "none") ? "block" : "none";
+                z.disabled = !z.disabled;
+                a.disabled = !a.disabled;
+                b.disabled = !b.disabled;
+            }
+
+            <?php
+                if (!empty($password_input_value)) {
+                    echo "togglePassword();";
+                } else {
+                    $password_input_value = "";
+                }
+            ?>
+            
+            
+        
+        </script>
+        <script>
+            const button = document.querySelector('.close-danger');
+            button.addEventListener('click', closeAlert, false);
+
+            const close = document.querySelector('.close-success');
+            close.addEventListener('click', closeAlert, false)
+            
+            function closeAlert(){
+                const closeDanger = document.querySelector('.alert');
+                closeDanger.classList.add('close');
+            }
+            
+    
+  </script>
     </body>
 </html>

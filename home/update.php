@@ -111,6 +111,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email_submit'])){
     $email_subject = 'Update Email';
     $code = uniqid();
     $email = $_POST["email"];
+    $folder = "home";
     if($email == $_SESSION['email']){
         header("location: account.php?status=emailduplicate");
     }else{
@@ -120,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email_submit'])){
         if($num > 0){
             header("location: account.php?status=emailpresent");
         }else{
-            $email_content = updateEmail($code,$email);
+            $email_content = updateEmail($code,$email,$folder);
             $result = composeEmail($email,$email_subject,$email_content);
             if (strpos($result, 'Mailer Error') !== false) {
                 header("location: account.php?mailer=error");

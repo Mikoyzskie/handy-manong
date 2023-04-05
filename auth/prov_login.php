@@ -22,6 +22,7 @@ if($num == 1) {
         session_start();
         $_SESSION["id"] = $row['id'];
         $_SESSION["category"]= $row['prov_category'];
+        $_SESSION["email"] = $row['prov_email'];
         header("location: ../main/timeline.php");
         
     }else{

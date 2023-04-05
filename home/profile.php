@@ -174,12 +174,7 @@ if(empty($_SESSION['id'])){
                             echo "<a href='task-create.php?assign=".$row['id']."' class='btn btn-success'>Apply</a>";
                         }
                     ?>
-                    <!-- <br>
-                    <div class="input-group" style="max-width:500px;margin:auto;">
-                        <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" style="background-color:rgba(255,255,255,0.5);color:#fff;"/>
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                    </div>
-                                <h6 class="mt-2">Service Connection</h6> -->
+                    
                     <?php
                             } 
                         };
