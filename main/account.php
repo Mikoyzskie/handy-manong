@@ -42,7 +42,7 @@ if(!empty($_GET['error']) && $_GET['error']== 'passnotmatch'){
         <meta name="author" content="" />
         <title>Handy Manong</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
@@ -149,7 +149,32 @@ if(!empty($_GET['error']) && $_GET['error']== 'passnotmatch'){
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
+
+        <style>
+            header{
+                background-image:url(../assets/images/account_prov.jpg)!important;
+                background-repeat: no-repeat!important;
+                background-size: cover!important;
+                background-position: 50% 80%!important;
+                position: relative;
+            }
+            header div.overlay{
+                position: absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                background-color: rgba(0,0,0,0.5);
+                content: "";
+
+            }
+            header div.container *{
+                position: relative;
+            }
+        </style>
+
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
+            <div class="overlay"></div>
             <div class="container">
                 <div class="text-center my-5">
 
@@ -402,8 +427,8 @@ if(!empty($_GET['error']) && $_GET['error']== 'passnotmatch'){
                         <div class="card-body">
                         <form role="form" action="tasks.php" method="post">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="search" required/>
-                                <button class="btn btn-primary" id="button-search" type="submit">Go!</button>
+                                <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="query" required/>
+                                <button class="btn btn-primary" id="button-search" name="submit" type="submit">Go!</button>
                             </div>
                         </form>
                         </div>

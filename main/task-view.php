@@ -38,7 +38,30 @@ if(empty($_SESSION['id'])){
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
+        <style>
+            header{
+                background-image:url(../assets/images/prov_banner.jpg)!important;
+                background-repeat: no-repeat!important;
+                background-size: cover!important;
+                background-position: 50% 80%!important;
+                position: relative;
+            }
+            header div.overlay{
+                position: absolute;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                background-color: rgba(0,0,0,0.5);
+                content: "";
+
+            }
+            header div.container *{
+                position: relative;
+            }
+        </style>
         <header class="mt-5 py-5 bg-light border-bottom mb-4 text-white">
+        <div class="overlay"></div>
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Try Service <em>Connection</em> instead?</h1>
@@ -101,6 +124,7 @@ if(empty($_SESSION['id'])){
                                         echo "Description:";
                                         echo "<p class=\"card-text ps-4\">".nl2br($row['task_desc'])."</p>"; /* fix formating do not remove spacing */
                                         echo "<p>Location: ".$row['task_location']."</p>";
+                                        echo "<p>Salary Rate: Php ".$row['rate']."</p>";
                                         if($row['task_provider']==0){
 
                                         }else{
