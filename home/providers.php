@@ -89,7 +89,7 @@ if(empty($_SESSION['id'])){
                     </style>
                     <!-- Nested row for non-featured blog posts-->
                     <!-- <h2 class="card-title">Providers</h2> -->
-                    <div class="row row-cols-1 row-cols-md-2 mb-5" style="overflow-x: hidden;overflow-y: auto;height:600px;">
+                    <div class="row row-cols-1 row-cols-md-2 mb-5">
                         <?php   
                         
                             if(isset($_POST["search"]) || isset($_GET['pages_no'])):
@@ -105,7 +105,7 @@ if(empty($_SESSION['id'])){
                                     $search = $_POST['search'];
                                 }
                                     
-                                $total_records_per_page = 6;
+                                $total_records_per_page = 4;
                                 $offset = ($page_no-1) * $total_records_per_page;
                                 $previous_page = $page_no - 1;
                                 $next_page = $page_no + 1;

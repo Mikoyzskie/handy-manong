@@ -31,11 +31,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }else{
         if(empty($_GET['assign'])){
             $id = NULL;
+            $status = "Available";
         }else{
             $id = $_GET['assign'];
+            $status = "Requested";
         }
         $finder = $_SESSION["id"];
-        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`, `rate`) VALUES ('$finder','$category','$title','$description','$location','$id',$rate)";
+        $sql = "INSERT INTO `tbl_task` ( `task_finder`, `task_category`, `task_title`, `task_desc`, `task_location`, `task_provider`, `rate`,`task_status`) VALUES ('$finder','$category','$title','$description','$location','$id',$rate,'$status')";
         $result = mysqli_query($conn, $sql);
         $inserted_row = $conn->insert_id;
         if(!empty($_GET['assign'])){

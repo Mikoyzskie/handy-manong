@@ -169,6 +169,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Requested'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
@@ -184,7 +186,7 @@ if(empty($_SESSION['id'])){
                     echo "</div>";
                     /* Nested row for non-featured blog posts */
                     echo "<h2 class=\"card-title\">All Tasks</h2>";
-                    echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\" style=\"overflow-x: hidden;overflow-y: auto;height:600px;\">";
+                    echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\">";
                         
                     require_once "../includes/connect.php";
                     
@@ -194,7 +196,7 @@ if(empty($_SESSION['id'])){
                         $page_no = 1;
                     }
                         
-                    $total_records_per_page = 4;
+                    $total_records_per_page = 6;
                     $offset = ($page_no-1) * $total_records_per_page;
                     $previous_page = $page_no - 1;
                     $next_page = $page_no + 1;
@@ -230,6 +232,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Requested'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
@@ -322,44 +326,57 @@ if(empty($_SESSION['id'])){
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">
-                    <!-- Search widget-->
+                    <!--widget-->
                     
-                    <!-- Categories widget-->
+                    <style>
+                        .avatar{
+                            display: flex;
+                            flex-direction:row;
+                            justify-content:space-between;
+                            align-items:center;
+                        }
+                        div.avatar img{
+                            border-radius:50%;
+                        }
+                    </style>
                     <div class="card mb-4">
                         <div class="card-header">Connects</div>
-                        <!-- <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
+                        <div class="card-body">
+                                <?php
+                                    $id = $_SESSION["id"];
+                                    $sql = "SELECT * FROM finder_request INNER JOIN tbl_task ON tbl_task.id = finder_request.task WHERE finder_request.assign = $id AND `task_status` = 'Requested'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $num = mysqli_num_rows($result);
+                                    if($num == 0) {
+
+                                    }else{
+                                        while($row = mysqli_fetch_array($result)){
+                                            $finder = $row['finder'];
+                                            $query = "SELECT * FROM tbl_finder WHERE finder_id = $finder";
+                                            $results = mysqli_query($conn, $query);
+                                            $rows = mysqli_fetch_array($results)
+                                ?>
+                                    <div class="my-2">
+                                        
+                                        <div class="avatar"><img src="../assets/images/<?php echo $rows['avatar']?>" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['finder_name']?></h5>
+                                        <br>
+                                        <div class="btn-wrap">
+                                            
+                                            <a class="btn btn-primary" href="task-view.php?tid=<?php echo $row['task']?>">View Task</a>
+                                            
+                                        </div>
+                                       
+                                        </div>
+                                         
+                                    </div>
+                                    
+                            <?php
+                                        }
+                                    }
+                                ?>
+                        </div>
+                        
                     </div>
-                    <!-- Side widget-->
                     
                 </div>
             </div>

@@ -395,51 +395,55 @@ if(empty($_SESSION['id'])){
                 <div class="col-lg-4">
                     <!-- Search widget-->
                     
-                    <!-- Categories widget-->
+                    <style>
+                        .avatar{
+                            display: flex;
+                            flex-direction:row;
+                            justify-content:space-between;
+                            align-items:center;
+                        }
+                        div.avatar img{
+                            border-radius:50%;
+                        }
+                    </style>
                     <div class="card mb-4">
                         <div class="card-header">Connects</div>
                         <div class="card-body">
-                            <!-- <div class="row">
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-4">
-                                    <ul class="list-unstyled mb-0">
-                                    <form action="tasks.php" method="post">
-                                        <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                    </form>
-                                    </ul>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <!-- <div class="card mb-4">
-                        <div class="card-header">Can't Decide From Service Connection? &#128549</div>
-                        <div class="card-body">Create your own job posting and let service providers bid for your project &#128077
-                            <br><br>
-                        <a class="btn btn-success" href="task-create.php">Create Now →</a>
+                                <?php
+                                    $id = $_SESSION["id"];
+                                    $sql = "SELECT * FROM finder_request INNER JOIN tbl_task ON tbl_task.id = finder_request.task WHERE finder_request.assign = $id AND `task_status` = 'Requested'";
+                                    $result = mysqli_query($conn, $sql);
+                                    $num = mysqli_num_rows($result);
+                                    if($num == 0) {
+
+                                    }else{
+                                        while($row = mysqli_fetch_array($result)){
+                                            $finder = $row['finder'];
+                                            $query = "SELECT * FROM tbl_finder WHERE finder_id = $finder";
+                                            $results = mysqli_query($conn, $query);
+                                            $rows = mysqli_fetch_array($results)
+                                ?>
+                                    <div class="my-2">
+                                        
+                                        <div class="avatar"><img src="../assets/images/<?php echo $rows['avatar']?>" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['finder_name']?></h5>
+                                        <br>
+                                        <div class="btn-wrap">
+                                            
+                                            <a class="btn btn-primary" href="task-view.php?tid=<?php echo $row['task']?>">View Task</a>
+                                            
+                                        </div>
+                                       
+                                        </div>
+                                         
+                                    </div>
+                                    
+                            <?php
+                                        }
+                                    }
+                                ?>
                         </div>
                         
-                    </div> -->
-                </div>
+                    </div>
             </div>
         </div>
         <!-- Footer-->

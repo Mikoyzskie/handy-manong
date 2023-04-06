@@ -90,6 +90,8 @@ if(empty($_SESSION['id'])){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
+                                        }elseif($row['task_status']=='Requested'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "Status: <p class=\"badge rounded-pill bg-danger\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Done'){
@@ -166,6 +168,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Requested'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Done'){
@@ -240,7 +244,7 @@ if(empty($_SESSION['id'])){
                         <div class="card-body">
                                 <?php
                                     $id = $_GET["tid"];
-                                    $sql = "SELECT * FROM request WHERE task_id = $id AND `status` = 'Available';";
+                                    $sql = "SELECT * FROM request WHERE task_id = $id AND `status` = 'Pending';";
                                     $result = mysqli_query($conn, $sql);
                                     $num = mysqli_num_rows($result);
                                     if($num == 0) {
