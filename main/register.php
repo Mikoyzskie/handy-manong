@@ -305,20 +305,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <!-- <div class="form-check form-check-info text-left mb-0">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                      <label class="font-weight-normal text-dark mb-0" for="flexCheckDefault">
-                        I agree the <a href="javascript:;" class="text-dark font-weight-bold">Terms and Conditions</a>.
-                      </label>
-                    </div> -->
+                                        
                                         <div class="text-center">
                                             <button type="submit" name="submit" class="btn btn-dark w-100 mb-3">Sign up</button>
-                                            <!-- <button type="button" class="btn btn-white btn-icon w-100 mb-3">
-                        <span class="btn-inner--icon me-1">
-                          <img class="w-5" src="../assets/img/logos/google-logo.svg" alt="google-logo" />
-                        </span>
-                        <span class="btn-inner--text">Sign up with Google</span>
-                      </button> -->
+                                            
+                      
                                         </div>
                                     </form>
                                 </div>
