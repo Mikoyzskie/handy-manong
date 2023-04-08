@@ -1,0 +1,56 @@
+div.finder-pill{
+    background-image: url(../assets/img/finder.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+div.finder-pill:hover{
+    background-size:200%;
+}
+
+div.provider-pill{
+    background-image: url(../assets/img/profile_prov.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+div.provider-pill:hover{
+    background-size:200%;
+}
+
+div.task-pill{
+    background-image: url(../assets/img/provider_banner.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+div.task-pill:hover{
+    background-size:200%;
+}
+
+div.admin-pill{
+    background-image: url(../assets/img/admin.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+div.admin-pill:hover{
+    background-size:200%;
+}
+
+div.overlay{
+    background-color: rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+div.overlay-foot{
+    background-color: rgba(0,0,0,0.7);
+    overflow: hidden;
+}
