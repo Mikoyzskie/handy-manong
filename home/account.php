@@ -225,150 +225,102 @@ $exists=false;
                             <!-- <div class="small text-muted">January 1, 2022</div> -->
                             <h2 class="card-title">Update Profile</h2>
                             <hr>
-                            <style>
-                        .profile{
-                            height: 120px;
-                            width: 120px;
-                            background-color:#212529;
-                            margin:auto;
-                            border-radius:50%;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            position:relative;
-                        }
-                        .profile img{
-                            width:auto;
-                            height:110px;
-                            border-radius:50%;
                             
-                        }
-                        .profile span{
-                            position:absolute;
-                            bottom:0;
-                            right: 5px;
-                            background-color:#fff;
-                            color:#000;
-                            border-radius:50%;
-                            height: 30px;
-                            width: 30px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            background-color:#212529;
-                            color:#fff;
-                        }
-                        .custom-file-upload:hover{
-                            cursor:pointer;
-                        }
-                        input[type="file"] {
-                            display: none;
-                        }
-                        .profile-form{
-                            display:flex;
-                            flex-direction:column;
-                            justify-content:center;
-                        }
-                        .profile-form button{
-                            width: fit-content;
-                            align-self: center;
-                        }
-                    </style>
-                    <form name="avatarForm" class="profile-form" action="update.php" method="post" enctype="multipart/form-data">
-                        <div class="profile">
-                        <?php
-                            require_once "../includes/connect.php";
-                            
-                            if(empty($_GET['uid'])){
-                                $id = $_SESSION["id"];
-                                $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
-                            }else{
-                                $id = $_GET['uid'];
-                                $sql = "SELECT * FROM tbl_provider WHERE id = $id";
-                            }
-                            $result = mysqli_query($conn, $sql);
+                            <form name="avatarForm" class="profile-form" action="update.php" method="post" enctype="multipart/form-data">
+                                <div class="profile">
+                                <?php
+                                    require_once "../includes/connect.php";
+                                    
+                                    if(empty($_GET['uid'])){
+                                        $id = $_SESSION["id"];
+                                        $sql = "SELECT * FROM tbl_finder WHERE finder_id = $id";
+                                    }else{
+                                        $id = $_GET['uid'];
+                                        $sql = "SELECT * FROM tbl_provider WHERE id = $id";
+                                    }
+                                    $result = mysqli_query($conn, $sql);
 
-                            $num = mysqli_num_rows($result);
-                            if(empty($num)){
-                                header("location: ../auth/signin.php?error=loginrequired");
-                            }
-                            else{
-                                $row = mysqli_fetch_array($result);
-                                if(empty($row['avatar'])):
-                            
-                        ?>
-                            
-                                <img id="preview" src="../assets/images/avatar.jpg" alt="Preview Image" srcset="">
-                            <?php
-                                else:
-                            ?>
-                                <img id="preview" src="../assets/images/uploads/<?php echo $row['avatar']?>" alt="Preview Image" srcset="">
-                            <?php
-                                endif;
-                            ?>
-                            <span>
-                                <label class="custom-file-upload"><i class="fa-solid fa-pen"></i><label>
-                                <input id="file-upload" name="image" type="file" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)" required/>
-                            </span>
-                        
-                        </div>
-                        <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
-                    </form>
+                                    $num = mysqli_num_rows($result);
+                                    if(empty($num)){
+                                        header("location: ../auth/signin.php?error=loginrequired");
+                                    }
+                                    else{
+                                        $row = mysqli_fetch_array($result);
+                                        if(empty($row['avatar'])):
+                                    
+                                ?>
+                                    
+                                        <img id="preview" src="../assets/images/avatar.jpg" alt="Preview Image" srcset="">
+                                    <?php
+                                        else:
+                                    ?>
+                                        <img id="preview" src="../assets/images/uploads/<?php echo $row['avatar']?>" alt="Preview Image" srcset="">
+                                    <?php
+                                        endif;
+                                    ?>
+                                    <span>
+                                        <label class="custom-file-upload"><i class="fa-solid fa-pen"></i><label>
+                                        <input id="file-upload" name="image" type="file" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)" required/>
+                                    </span>
+                                
+                                </div>
+                                <button type="submit" name="avatarSubmit" class="btn btn-primary my-3">Update Profile</button>
+                            </form>
                     
-                        <form method = "post" action="update.php">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Name</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" name="name" id="name_input"
-                                    aria-describedby="emailHelp" required value="<?php echo $row['finder_name']?>" disabled/>
-                                    <button class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
-                                    <button style="display:none;" class="btn btn-primary" id="name_submit" name="name_submit" type="submit">Submit</button>
+                            <form method = "post" action="update.php">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                                    <div class="input-group">
+                                    <input type="text" class="form-control" name="name" id="name_input"
+                                        aria-describedby="emailHelp" required value="<?php echo $row['finder_name']?>" disabled/>
+                                        <button class="btn btn-primary" id="name" type="button" onclick="toggleName()">Edit</button>
+                                        <button style="display:none;" class="btn btn-primary" id="name_submit" name="name_submit" type="submit">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        <form method = "post" action="update.php">
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Email</label>
-                                <div class="input-group">
-                                <input type="text" class="form-control" id="email_input"
-                                    aria-describedby="emailHelp" name="email" required value="<?php echo $row['finder_email']?>" disabled/>
-                                    <button class="btn btn-primary" id="email" type="button" onclick="toggleEmail()">Edit</button>
-                                    <button style="display:none;" class="btn btn-primary" id="email_submit" name="email_submit" type="submit">Submit</button>
+                            </form>
+                            <form method = "post" action="update.php">
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Email</label>
+                                    <div class="input-group">
+                                    <input type="text" class="form-control" id="email_input"
+                                        aria-describedby="emailHelp" name="email" required value="<?php echo $row['finder_email']?>" disabled/>
+                                        <button class="btn btn-primary" id="email" type="button" onclick="toggleEmail()">Edit</button>
+                                        <button style="display:none;" class="btn btn-primary" id="email_submit" name="email_submit" type="submit">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        <form method = "post" action="update.php">
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Old Password</label>
-                                <div class="input-group">
-                                <input type="password" class="form-control" id="password_input"
-                                    aria-describedby="emailHelp" name="old_pass" value="<?php echo $password_input_value?>" required disabled/>
-                                    <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
-                                    
+                            </form>
+                            <form method = "post" action="update.php">
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Old Password</label>
+                                    <div class="input-group">
+                                    <input type="password" class="form-control" id="password_input"
+                                        aria-describedby="emailHelp" name="old_pass" value="<?php echo $password_input_value?>" required disabled/>
+                                        <button class="btn btn-primary" id="password" type="button" onclick="togglePassword()">Edit</button>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">New Password</label>
-                                <div class="input-group">
-                                <input type="password" class="form-control" id="new_password"
-                                    aria-describedby="emailHelp" name="new_pass" value="<?php echo $password_new_value?>" required disabled/>
-                                    
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">New Password</label>
+                                    <div class="input-group">
+                                    <input type="password" class="form-control" id="new_password"
+                                        aria-describedby="emailHelp" name="new_pass" value="<?php echo $password_new_value?>" required disabled/>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
-                                <div class="input-group">
-                                <input type="password" class="form-control" id="confirm_password"
-                                    aria-describedby="emailHelp" name="confirm_pass" value="<?php echo $password_confirm_value?>" required disabled/>
-                                    
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Confirm Password`</label>
+                                    <div class="input-group">
+                                    <input type="password" class="form-control" id="confirm_password"
+                                        aria-describedby="emailHelp" name="confirm_pass" value="<?php echo $password_confirm_value?>" required disabled/>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="password_submit">Submit</button></div>
-                            
-                        </form>
-                        <?php
-                                }
-                        ?>
+                                <div class="text-center"><button style="display:none; margin:auto;" id="password_submit"  type="submit" class="btn btn-primary" name="password_submit">Submit</button></div>
+                                
+                            </form>
+                            <?php
+                                    }
+                            ?>
                     </div>
                 </div>
             </div>

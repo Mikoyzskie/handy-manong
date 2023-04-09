@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
     const findertablesSimple = document.getElementById('findertablesSimple');
     if (findertablesSimple) {
-        new simpleDatatable.DataTable(findertablesSimple);
+        new simpleDatatables.DataTable(findertablesSimple);
     }
     
 });
