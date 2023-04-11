@@ -2,6 +2,7 @@
     include "../includes/connect.php";
     include "header.php";
     include "side.php";
+    
 ?>
             <div id="layoutSidenav_content">
                 <main>
@@ -141,52 +142,45 @@
                             </div>
                             <!-- Side widgets-->
                             <div class="col-lg-4">
-                                <!-- Search widget-->
-                                <div class="card mb-4">
-                                    <div class="card-header">Find Task</div>
-                                    <div class="card-body">
-                                    <form role="form" action="finder.php" method="post">
-                                        <div class="input-group">
-                                            <input class="form-control" type="text" placeholder="Search..." aria-label="Search..." aria-describedby="button-search" name="search" required/>
-                                            <button class="btn btn-primary" id="button-search" type="submit" name="submit">Go!</button>
-                                        </div>
-                                    </form>
-                                    </div>
+                                    
+                                <div>
+                                    <h5>Contributors</h5>
                                 </div>
-                                <!-- Categories widget-->
-                                <div class="card mb-4">
-                                    <div class="card-header">Categories</div>
-                                    <div class="card-body">
-                                    <div class="row">
-                                            <div class="col-sm-4">
-                                                <ul class="list-unstyled mb-0">
-                                                <form action="providers.php" method="post">
-                                                    <li><input type="submit" value="Carpenter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Plumber"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Painter"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                </form>
-                                                </ul>
+                                <div class="card mb-5">
+                                    
+                                        <div class="card-body avatar__container">                                          
+                                            <div class="avatar__circle mb-3">
+
                                             </div>
-                                            <div class="col-sm-4">
-                                                <ul class="list-unstyled mb-0">
-                                                <form action="providers.php" method="post">
-                                                    <li><input type="submit" value="Electrician"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Driver"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Welder"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                </form>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <ul class="list-unstyled mb-0">
-                                                <form action="providers.php" method="post">
-                                                    <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                    <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                                </form>
-                                                </ul>
+                                            <div class="details_display">
+                                                <h3 class="name__contributor">Myk Escala</h3>
+                                                <p class="text-light">escalamykkenneth@gmail.com</p>
                                             </div>
                                         </div>
-                                    </div>
+                                </div>
+                                <div class="card mb-5">
+                                    
+                                        <div class="card-body avatar__container">                                          
+                                            <div class="avatar__circle mb-3">
+
+                                            </div>
+                                            <div class="details_display">
+                                                <h3 class="name__contributor">Myk Escala</h3>
+                                                <p class="text-light">escalamykkenneth@gmail.com</p>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="card mb-5">
+                                    
+                                        <div class="card-body avatar__container">                                          
+                                            <div class="avatar__circle mb-3">
+
+                                            </div>
+                                            <div class="details_display">
+                                                <h3 class="name__contributor">Myk Escala</h3>
+                                                <p class="text-light">escalamykkenneth@gmail.com</p>
+                                            </div>
+                                        </div>
                                 </div>
                                 
                             </div>

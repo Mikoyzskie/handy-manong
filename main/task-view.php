@@ -186,7 +186,7 @@ if(empty($_SESSION['id'])){
                         <?php
                             require_once "../includes/connect.php";
                             $id = $_GET['tid'];
-                            $category = $_SESSION['category'];
+                            $category = $_SESSION["category"];
                             $sql = "SELECT * FROM `tbl_task` WHERE id <> $id AND `task_finder` = ".$_SESSION['id']." AND `task_category`= '".$category."' LIMIT 4";
                             $result = mysqli_query($conn, $sql);
                             $num = mysqli_num_rows($result); 
@@ -231,26 +231,32 @@ if(empty($_SESSION['id'])){
                         <div class="card-header">Chatter</div>
                         <div class="card-body" style="overflow-x: hidden;overflow-y: auto;height:300px;">
                         <?php 
-                        require_once "../includes/connect.php";
+                        include "../includes/connect.php";
                         $id = $_GET['tid'];
-                        $sql = "SELECT * FROM `messaging` JOIN tbl_finder ON messaging.user_id = tbl_finder.finder_id WHERE task_id = $id  ORDER BY messaging.id ASC";
+                        $sql = "SELECT * FROM `messaging` WHERE task_id = $id  ORDER BY id ASC";
                         $result = mysqli_query($conn, $sql);
                         $num = mysqli_num_rows($result);
-                        if($num == 0) {
+
+                        
+
+
+                        if($num = 0) {
                             
                         }else{
                             while($row = mysqli_fetch_array($result)){
-                                if($row['user_type']=="finder"){
-
-                                    
-                                    echo "<p>From <a href=\"#\">".$row['finder_name']."</a>: ".$row['msg_content']."</p>";
-                                }
-                                else{
-                                    $provider = $row['user_id'];
-                                    $query = "SELECT * FROM tbl_provider WHERE id = $provider";
-                                    $results = mysqli_query($conn, $query);
+                                $type = $row['user_type'];
+                                $message = $row['msg_content'];
+                                $user = $row['user_id'];
+                                if($type == "finder"){
+                                    $sql = "SELECT * FROM tbl_finder WHERE finder_id = $user";
+                                    $results = mysqli_query($conn, $sql);
                                     $rows = mysqli_fetch_array($results);
-                                    echo "<p>From <a href=\"#\">".$rows['prov_firstname']." ".$rows['prov_lastname']."</a>: ".$row['msg_content']."</p>";
+                                    echo "<p>From <a href='profile.php?uid=$user'>".$rows['finder_name']."</a>: $message</p>";
+                                }else{
+                                    $sql = "SELECT * FROM tbl_provider WHERE id = $user";
+                                    $results = mysqli_query($conn, $sql);
+                                    $rows = mysqli_fetch_array($results);
+                                    echo "<p>From <span>".$rows['prov_firstname']." ".$rows['prov_lastname']."</span>: $message</p>";
                                 }
                             }
                         }

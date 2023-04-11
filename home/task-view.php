@@ -204,17 +204,19 @@ if(empty($_SESSION['id'])){
                             
                         }else{
                             while($row = mysqli_fetch_array($result)){
-                                if($row['user_type']=="finder"){
-
-                                    
-                                    echo "<p>From <a href=\"#\">".$row['finder_name']."</a>: ".$row['msg_content']."</p>";
-                                }
-                                else{
-                                    $provider = $row['user_id'];
-                                    $query = "SELECT * FROM tbl_provider WHERE id = $provider";
-                                    $results = mysqli_query($conn, $query);
+                                $type = $row['user_type'];
+                                $message = $row['msg_content'];
+                                $user = $row['user_id'];
+                                if($type == "finder"){
+                                    $sql = "SELECT * FROM tbl_finder WHERE finder_id = $user";
+                                    $results = mysqli_query($conn, $sql);
                                     $rows = mysqli_fetch_array($results);
-                                    echo "<p>From <a href=\"#\">".$rows['prov_firstname']." ".$rows['prov_lastname']."</a>: ".$row['msg_content']."</p>";
+                                    echo "<p>From <span>".$rows['finder_name']."</span>: $message</p>";
+                                }else{
+                                    $sql = "SELECT * FROM tbl_provider WHERE id = $user";
+                                    $results = mysqli_query($conn, $sql);
+                                    $rows = mysqli_fetch_array($results);
+                                    echo "<p>From <a href='profile.php?uid=$user'>".$rows['prov_firstname']." ".$rows['prov_lastname']."</a>: $message</p>";
                                 }
                             }
                         }

@@ -427,8 +427,8 @@ function composeEmail($finder_email,$email_subject,$email_content){
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'caipower09@gmail.com';
-        $mail->Password   = 'qzoikjynlcrphwzp';
+        $mail->Username   = 'handymanong1@gmail.com';
+        $mail->Password   = 'pozjefxeptljachs';
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
     

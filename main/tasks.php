@@ -241,8 +241,8 @@ if(empty($_SESSION['id'])){
                     echo "<h2 class=\"card-title mb-5\">Available Tasks For You</h2>";
                     echo "<div class=\"row row-cols-1 row-cols-md-2 mb-5\">";
                         
-                            require_once "../includes/connect.php";
-                            $category = $_SESSION["category"];
+                            include "../includes/connect.php";
+                            
                             if (isset($_GET['page_no']) && $_GET['page_no']!="") {
                                 $page_no = $_GET['page_no'];
                             }else {
@@ -254,7 +254,7 @@ if(empty($_SESSION['id'])){
                             $previous_page = $page_no - 1;
                             $next_page = $page_no + 1;
                             $adjacents = "2"; 
-    
+                            $category = $_SESSION['category'];
                             $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
@@ -291,7 +291,7 @@ if(empty($_SESSION['id'])){
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
-                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?tid=".$row['id']."\">Learn more →</a>"; /* add task id to this button to full view */
+                                        echo "<a class=\"btn btn-primary\" href=\"task-view.php?tid=".$row['id']."&category=".$row['task_category']."\">Learn more →</a>"; /* add task id to this button to full view */
                                         echo "</div>";
                                         echo "</div>";
                                         echo "</div>";
