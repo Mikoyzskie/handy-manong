@@ -216,7 +216,7 @@ if(!empty($_GET['status']) && $_GET['status']=="nameupdated"){
                         $result = mysqli_query($conn, $sql);
 
                         $num = mysqli_num_rows($result);
-                        if(empty($num)){
+                        if($num == 0){
                             header("location: profile.php?error=nouser");
                         }
                         else{
@@ -261,7 +261,7 @@ if(!empty($_GET['status']) && $_GET['status']=="nameupdated"){
                     
                     <?php
                             } 
-                        };
+                        }
                     ?>
                 </div>
             </div>

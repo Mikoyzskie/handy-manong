@@ -88,6 +88,8 @@ if(empty($_SESSION['id'])){
                                         echo "<p>by: ".$row['finder_name']."</p>"; /* union with table finder to get name */
                                         if($row['task_status']=='Available'){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Requested'){
@@ -119,18 +121,49 @@ if(empty($_SESSION['id'])){
                                         
                                         if($row['task_status']=='Assigned'){
                                             
+                                        }elseif($row['task_status']=='Working'){
+                                            
                                         }else{
-                                            echo "<a class=\"btn btn-primary\" href=\"#!\">Update</a>"; /* add update function */
+                                            echo "<a class=\"btn btn-primary\" data-bs-toggle='modal' data-bs-target='#createFinder'>Update</a>"; /* add update function */
                                             echo "<a class=\"btn btn-danger mx-2\" href=\"delete.php?tid=$id\">Delete</a>";
                                         }
-                                    }
-
                                     
-                                }
-                                
                             ?>
-                            
-                            
+                        <!-- Modal Finder Create -->
+                        <div class="modal fade" id="createFinder" tabindex="-1" aria-labelledby="createFinderLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center modal-lg">
+                                <div class="modal-content w-75">
+                                    <div class="modal-body p-4">
+                                    <h2>Update Task</h2>
+                                    <hr>
+                                    <h3 class='card-title mb-3'><?php echo $row['task_title']?></h3>
+                                    <form role="form" method="post" action="update.php">
+                                        <label>Description</label>
+                                        <div class="mb-3">
+                                        <textarea name="description" style="width:100%;" required><?php echo nl2br($row['task_desc'])?></textarea>
+                                        </div>
+                                        <label>Location</label>
+                                        <div class="mb-3">
+                                        <input type="text" class="form-control" value="<?php echo $row['task_location']?>" placeholder="Enter task location" aria-label="Email" aria-describedby="email-addon" name="location" required>
+                                        </div>
+                                        <label>Salary</label>
+                                        <div class="mb-3">
+                                        <input type="number" class="form-control" value="<?php echo $row['rate']?>" placeholder="Enter salary" aria-label="Password" aria-describedby="password-addon" name="salary" required>
+                                        </div>
+                                        <input type="hidden" name = "taskid" value="<?php echo $row['id']?>"/>
+                                        
+                                        <div class="text-center">
+                                        <button type="submit" name = "task_submit" class="btn btn-primary w-100 mt-4 mb-3">Update</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                    }
+                        ?>
                         </div>
                     </div>
                     <h2 class="card-title">Related Tasks</h2>
@@ -168,6 +201,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Requested'){
                                             echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
@@ -184,8 +219,15 @@ if(empty($_SESSION['id'])){
                                         echo "</div>";
                                         echo "</div>";
                                     }
-                                }
+                                }  
                         ?>
+
+
+                        
+
+
+                        
+
                     </div>
                 </div>
                 <!-- Side widgets-->
@@ -221,6 +263,9 @@ if(empty($_SESSION['id'])){
                             }
                         }
                         ?>
+
+
+
                         </div>
                         <form role="form" method="post" action="messaging.php?tid=<?php echo $_GET['tid']?>">
                             <div class="input-group">

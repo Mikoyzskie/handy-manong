@@ -1,5 +1,5 @@
-<!-- Modal Finder Create -->
-<div class="modal fade" id="createFinder" tabindex="-1" aria-labelledby="createFinderLabel" aria-hidden="true">
+        <!-- Modal Finder Create -->
+        <div class="modal fade" id="createFinder" tabindex="-1" aria-labelledby="createFinderLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center modal-lg">
                 <div class="modal-content w-75">
                     <div class="modal-body p-4">

@@ -155,3 +155,20 @@ if(!empty($_GET['unicode']) || !empty($_GET['userid'])){
         header("location: account.php?status=invalid");
     }
 }
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['task_submit'])){
+    $description = $_POST['description'];
+    $location = $_POST['location'];
+    $salary = $_POST['salary'];
+    $id = $_POST['taskid'];
+
+    $query = "UPDATE tbl_task SET `task_desc` = '$description',`task_location` = '$location', `rate` = $salary WHERE id = $id";
+    $results = mysqli_query($conn, $query);
+    if ($results) {
+        header("Location: finder.php");
+        die();
+    }
+    else{
+        header("Location: finder.php?error=invalid");
+    }
+}

@@ -110,6 +110,8 @@ if(empty($_SESSION['id'])){
                                             echo "Status: <p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "Status: <p class=\"badge rounded-pill bg-danger\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Done'){
@@ -150,6 +152,15 @@ if(empty($_SESSION['id'])){
                                             echo "<a class='btn btn-success' style='margin-right:10px;' href='request.php?action=accept&tid=$id'>Accept</a>";
                                             
                                             echo "<a class='btn btn-warning' href='request.php?action=deny&tid=$id'>Deny</a>";
+                                        }elseif($row['task_status']=='Assigned'){
+                                            
+                                            echo "<a class='btn btn-warning' href='update.php?id=$id'>In Progress</a>";
+                                        }elseif($row['task_status']=='Working'){
+                                            
+                                            echo "<a class='btn btn-success' href='update.php?tid=$id&action=done'>Done</a>";
+                                        }elseif($row['task_status']=='Done'){
+                                            
+                                            
                                         }else{
                                             echo "<a class='btn btn-success' href='request.php?action=apply&tid=$id'>Apply</a>";
                                         }
@@ -157,8 +168,9 @@ if(empty($_SESSION['id'])){
                                     }else{
                                         $row = mysqli_fetch_array($result);
                                         if($row['status']=='Assigned'){
-                                            echo "<a class='btn btn-warning' href='#'>In Progress</a>";
-                                        }elseif($row['status']=='Rejected'){
+                                            
+                                            echo "<a class='btn btn-warning' href='update.php?id=$id'>In Progress</a>";
+                                        }else if($row['status']=='Rejected'){
                                             echo "<a class='btn btn-secondary' href='#' disabled>Application Denied</a>";
                                         }else{
                                             echo "<a class=\"btn btn-danger\" href='request.php?action=cancel&tid=$id'>Cancel</a>";
@@ -204,6 +216,8 @@ if(empty($_SESSION['id'])){
 
                                         if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Rejected'){

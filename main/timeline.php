@@ -167,6 +167,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Requested'){
@@ -230,6 +232,8 @@ if(empty($_SESSION['id'])){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Rejected'){
                                             echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Requested'){

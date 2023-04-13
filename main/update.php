@@ -184,3 +184,36 @@ if(!empty($_GET['unicode']) || !empty($_GET['userid'])){
         header("location: account.php?status=invalid");
     }
 }
+
+if(!empty($_GET['id'])){
+    $id = $_GET['id'];
+    $sql = "UPDATE tbl_task SET `task_status` = 'Working' WHERE id = $id";
+    $results = mysqli_query($conn, $sql);
+    $query = "DELETE FROM request WHERE task_id = $id";
+    $result = mysqli_query($conn, $query);
+    if ($results && $result) {
+        header("Location: timeline.php");
+        die();
+    }
+    else{
+        header("Location: timeline.php?error=invalid");
+    }
+}
+
+if(!empty($_GET['tid']) || !empty($_GET['action'])){
+    if($_GET['action'] == 'done'){
+        $id = $_GET['tid'];
+        $sql = "UPDATE tbl_task SET `task_status` = 'Done' WHERE id = $id";
+        $results = mysqli_query($conn, $sql);
+        if ($results) {
+            header("Location: timeline.php");
+            die();
+        }
+        else{
+            header("Location: timeline.php?error=sqlerror");
+        }
+    }else{
+        header("Location: timeline.php?error=invalid");
+    }
+    
+}
