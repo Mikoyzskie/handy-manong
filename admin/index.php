@@ -204,8 +204,8 @@ include "side.php";
                                                                 <p><?php echo nl2br($row['task_desc'])?></p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                                
+                                                                <button type="button" class="btn btn-danger">Delete Task</button>
                                                             </div>
                                                         </div>
                                                     </div>

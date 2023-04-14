@@ -1,10 +1,10 @@
         <!-- Modal Finder Create -->
         <div class="modal fade" id="createFinder" tabindex="-1" aria-labelledby="createFinderLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center modal-lg">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center modal-lg">
                 <div class="modal-content w-75">
                     <div class="modal-body p-4">
                     <h2 class='card-title mb-3'>Create Finder Account</h2>
-                    <form role="form" method="post" action="signup.php">
+                    <form role="form" method="post" action="auth.php">
                         <label>Name</label>
                         <div class="mb-3">
                         <input type="text" class="form-control" value="" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
@@ -23,7 +23,7 @@
                         </div>
                         
                         <div class="text-center">
-                        <button type="submit" class="btn btn-dark w-100 mt-4 mb-3">Sign up</button>
+                        <button type="submit" name="finder_submit" class="btn btn-dark w-100 mt-4 mb-3">New Finder</button>
                         </div>
                     </form>
                     </div>
@@ -36,7 +36,7 @@
             <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center modal-xl">
                 <div class="modal-content w-75">
                     <div class="modal-body p-4">
-                    <h2 class='card-title mb-3'>Create Finder Account</h2>
+                    <h2 class='card-title mb-3'>Create Provider Account</h2>
                         <form role="form" method="post" action="register.php">
                                 <label>First Name</label>
                                 <div class="mb-3">
@@ -114,7 +114,7 @@
                                 </div>
                                 
                                 <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-dark w-100 mb-3">Sign up</button>
+                                    <button type="submit" name="submit" class="btn btn-dark w-100 mb-3">New Provider</button>
                                 </div>
                             </form>
                     </div>

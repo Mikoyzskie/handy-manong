@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -122,3 +125,61 @@
                 </li>
             </ul>
         </nav>
+
+
+        <style>
+        div.alert{
+            position: absolute!important;
+            top: 20px!important;
+            right: 20px!important;
+            z-index: 2000!important;
+        }
+        div.alert.close{
+            display:none;
+        }
+        div.alert-success.close{
+            display:none;
+        }
+        button.close-danger{
+            border: 2px solid #8C2F25;
+            color: #8C2F25;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+        button.close-success{
+            border: 2px solid #3E7423;
+            color: #3E7423;
+            background: transparent;
+            margin-left: 40px;
+            border-radius: 5px;
+        }
+    </style>
+  <?php
+    $showAlert = false;
+    $showError = false;
+    if($showAlert) {
+    
+        echo ' <div class="alert alert-success 
+            alert-dismissible fade show" role="alert">
+    
+            <strong>Success!</strong> Email Verification Sent! 
+            <button type="button" onclick = "closeAlert();" class="close-success">
+            x
+        </button> 
+        </div> '; 
+    }
+    
+    if($showError) {
+    
+        echo ' <div class="alert alert-danger 
+            alert-dismissible fade show" role="alert"> 
+        <strong>Error!</strong> '. $showError.'
+    
+       <button type="button" class="close-danger">
+            x
+        </button>
+     </div> '; 
+   }
+   
+  ?>
