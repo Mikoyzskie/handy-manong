@@ -31,13 +31,46 @@
             </div>
         </div>
 
+        <!-- Modal Finder Create -->
+        <div class="modal fade" id="createAdmin" tabindex="-1" aria-labelledby="createAdminLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center modal-lg">
+                <div class="modal-content w-75">
+                    <div class="modal-body p-4">
+                    <h2 class='card-title mb-3'>Create Admin Account</h2>
+                    <form role="form" method="post" action="auth.php">
+                        <label>User</label>
+                        <div class="mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
+                        </div>
+                        <label>Email Address</label>
+                        <div class="mb-3">
+                        <input type="email" class="form-control" value="" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon" name="email" required>
+                        </div>
+                        <label>Password</label>
+                        <div class="mb-3">
+                        <input type="password" class="form-control" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                        </div>
+                        <label>Confirm Password</label>
+                        <div class="mb-3">
+                        <input type="password" class="form-control" value="" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
+                        </div>
+                        
+                        <div class="text-center">
+                        <button type="submit" name="admin_submit" class="btn btn-dark w-100 mt-4 mb-3">New Admin</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal Provider Create -->
         <div class="modal fade" id="createProvider" tabindex="-1" aria-labelledby="createProviderLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center modal-xl">
                 <div class="modal-content w-75">
                     <div class="modal-body p-4">
                     <h2 class='card-title mb-3'>Create Provider Account</h2>
-                        <form role="form" method="post" action="register.php">
+                        <form role="form" method="post" action="auth.php">
                                 <label>First Name</label>
                                 <div class="mb-3">
                                     <input type="text" class="form-control" placeholder="Enter your name"
@@ -105,16 +138,13 @@
                                             <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxNine" value="Midwife" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxNine">Midwife</label>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                                 </div>
                                 
                                 <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-dark w-100 mb-3">New Provider</button>
+                                    <button type="submit" name="provider_submit" class="btn btn-dark w-100 mb-3">New Provider</button>
                                 </div>
                             </form>
                     </div>
@@ -148,7 +178,7 @@
                             </a>
                             <div class="collapse" id="collapseFinders" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="finder.php">Tables</a>
+                                    <a class="nav-link" href="finder.php">Table</a>
                                     <a class="nav-link btn" data-bs-toggle="modal" data-bs-target="#createFinder" style="border:none!important;">Create</a>
                                 </nav>
                             </div>
@@ -159,7 +189,7 @@
                             </a>
                             <div class="collapse" id="collapseProviders" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="provider.php">Tables</a>
+                                    <a class="nav-link" href="provider.php">Table</a>
                                     <a class="nav-link btn" data-bs-toggle="modal" data-bs-target="#createProvider" style="border:none!important;">Create</a>
                                 </nav>
                             </div>
@@ -170,32 +200,21 @@
                             </a>
                             <div class="collapse" id="collapseAdmin" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="admin.php">Tables</a>
-                                    <a class="nav-link" href="create.php">Create</a>
+                                    <a class="nav-link" href="admin.php">Table</a>
+                                    <a class="nav-link btn" data-bs-toggle="modal" data-bs-target="#createAdmin" style="border:none!important;">Create</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            <a class="nav-link" href="settings.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
                                 Account Settings
                             </a>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Profile
-                            </a>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="tables.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
+                            
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        <?php echo $_SESSION['user']?>
                     </div>
                 </nav>
             </div>

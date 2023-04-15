@@ -6,78 +6,85 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Administrators</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
+                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Admins</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                                .
-                            </div>
-                        </div>
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                Administrators
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>id</th>
+                                            <th>User</th>
+                                            <th>Email</th>
+                                            <th>Avatar</th>                                           
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>id</th>
+                                            <th>User</th>
+                                            <th>Email</th>
+                                            <th>Avatar</th>
                                         </tr>
                                     </tfoot>
+                                    <?php
+                                            include "../includes/connect.php";
+                                            $sql = "SELECT * FROM `admin`";
+                                            $results = mysqli_query($conn, $sql);
+                                            
+                                        ?>
+
                                     <tbody>
+                                        <?php while($row = mysqli_fetch_array($results)):?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                            <?php $id = $row['id']?>
+                                            <td><?php echo $row['id']?></td>
+                                            <td><?php echo $row['user']?></td>
+                                            <td><?php echo $row['email']?></td>
+                                            <td>
+                                                <!-- Button to trigger the modal -->
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $id?>">View</button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="viewModal<?php echo $id?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center">
+                                                        <div class="modal-content w-75">
+                                                            <div class="modal-body p-4">
+                                                                <img src="../assets/images/<?php if(empty($row['avatar'])){
+                                                                        echo 'avatar.jpg';
+                                                                    }else{
+                                                                        echo 'uploads/'.$row['avatar'];
+                                                                    }
+                                                                
+                                                                ?>" alt="avatar" class="rounded-circle position-absolute top-0 start-50 translate-middle" style="height:120px;"/>
+                                                                <form>
+                                                                    <div>
+                                                                        <h5 class="pt-5 my-3"><?php echo $row['user']?></h5>
+
+                                                                        <p><?php echo $row['email']?></p>
+                                                                        
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
-                                        
+                                        <?php endwhile;?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-    </body>
-</html>
+                <?php include "footer.php";?>        

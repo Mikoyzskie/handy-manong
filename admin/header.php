@@ -1,4 +1,24 @@
+<?php
+session_start();
 
+if (isset($_SESSION["old_input_value"])) {
+    $password_input_value = $_SESSION["old_input_value"];
+    unset($_SESSION["old_input_value"]);
+    $password_new_value = $_SESSION["new_input_value"];
+    unset($_SESSION["new_input_value"]);
+    $password_confirm_value = $_SESSION["confirm_input_value"];
+    unset($_SESSION["confirm_input_value"]);
+} else {
+    $password_input_value = "";
+    $password_new_value = "";
+    $password_confirm_value = "";
+}
+
+
+if(empty($_SESSION['id'])){
+    header("location: login.php?error=loginrequired");
+}
+?>
 
 
 <!DOCTYPE html>
@@ -15,6 +35,7 @@
         <link href="css/main.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
     </head>
     <style>
         ul.ks-cboxtags {
@@ -117,10 +138,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><a class="dropdown-item" href="settings.php">Settings</a></li>
+                        
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>

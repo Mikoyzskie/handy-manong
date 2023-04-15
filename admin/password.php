@@ -6,14 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin</title>
+        <title>Password Reset - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body>
     <style>
         body{
-            background-image: url(assets/img/profile_prov.jpg);
+            background-image: url(assets/img/forgot.jpg);
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -22,39 +21,30 @@
             background-color: rgba(0, 0, 0, 0.7);
         }
     </style>
+    <body>
         <div id="layoutAuthentication" class="overlay">
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
-                                <style>
-                                    .transparent{
-                                        background-color: rgba(255,255,255,0.6);
-                                    }
-                                </style>
-                                <div class="card shadow-lg border-0 rounded-lg mt-5 transparent">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
+                                        <form method="post" action="password.php">
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
                                                 <label for="inputEmail">Email address</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                           
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small text-dark" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                                <a class="small" href="login.php">Return to login</a>
+                                                <button type="submit" name="submit" class="btn btn-primary">Reset Password</a>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html" class="text-dark">Need an account? Sign up!</a></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

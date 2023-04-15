@@ -428,14 +428,14 @@ function composeEmail($finder_email,$email_subject,$email_content){
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'handymanong1@gmail.com';
-        $mail->Password   = 'pozjefxeptljachs';
+        $mail->Password   = 'slsgmiamvnooscpo';
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
     
         // Recipients
-        $mail->setFrom('caipower09@gmail.com', 'Handy Manong');
+        $mail->setFrom('handymanong1@gmail.com', 'Handy Manong');
         $email = filter_var($finder_email, FILTER_SANITIZE_EMAIL);
-        $mail->addAddress($email, 'Finder');
+        $mail->addAddress($email, 'User');
     
         // Content
         $mail->isHTML(true);

@@ -345,10 +345,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
-                                        <li>
-                                            <input type="checkbox" class='acb' id="checkboxNine" value="Midwife" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxNine">Midwife</label>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>

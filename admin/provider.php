@@ -6,10 +6,11 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Providers</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Finders</li>
+                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Providers</li>
                         </ol>
                         <div class="row">
                             <style>
@@ -83,7 +84,7 @@
                                         <span><i class="fa-solid fa-users"></i></i></span>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between overlay-foot">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="admin.php">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -131,7 +132,7 @@
                                             <td><?php echo $row['prov_firstname'].' '.$row['prov_lastname']?></td>
                                             <td><?php echo $row['prov_email']?></td>
                                             <td>
-                                                <?php if($row['code'] = 'verified' && !empty($row['code'])):?>
+                                                <?php if($row['code'] == 'verified' && !empty($row['code'])):?>
                                                     <p class="badge rounded-pill bg-success">Verified</p>
                                                 <?php else:?>
                                                     <p class="badge rounded-pill bg-warning text-dark">Pending</p>
@@ -148,7 +149,7 @@
                                             </td>
                                             <td class="centered">
                                                 <!-- Button to trigger the modal -->
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $id?>">View</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $id?>">Update</button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="viewModal<?php echo $id?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -164,23 +165,27 @@
                                                                 ?>" alt="avatar" class="rounded-circle position-absolute top-0 start-50 translate-middle h-50" />
                                                                 <form>
                                                                     <div>
-                                                                        <h5 class="pt-5 my-3">Maria Doe</h5>
+                                                                        <h5 class="pt-5 my-3"><?php echo $row['prov_firstname'].' '.$row['prov_lastname']?> </h5>
 
                                                                         <!-- password input -->
-                                                                        <div class="form-outline mb-4">
-                                                                            <input type="password" id="password1" class="form-control" />
-                                                                            <label class="form-label" for="password1">Password</label>
-                                                                        </div>
+                                                                        <p><?php echo $row['prov_bio']?></p>
 
                                                                         <!-- Submit button -->
-                                                                        <button type="submit" class="btn btn-primary">Login</button>
+                                                                        <button type="submit" class="btn btn-link text-decoration-none">
+                                                                            <a class="fw-bold text-danger text-end text-decoration-none" href="update.php?action=delete&user=provider&id=<?php echo $id?>">Delete</a>
+                                                                        </button>
+                                                                        <?php if($row['code'] != 'verified'):?>
+                                                                        <button type="submit" class="btn btn-success">
+                                                                            <a class="text-decoration-none text-white" href="update.php?action=verify&user=provider&id=<?php echo $id?>">Verify</a>
+                                                                        </button>
+                                                                        <?php endif;?>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-danger">Delete</button>
+                                                
                                             </td>
                                         </tr>
                                         <?php endwhile;?>
@@ -190,25 +195,4 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Handy <strong>Manong</strong> 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-        
-    </body>
-</html>
+<?php include "footer.php";?>    

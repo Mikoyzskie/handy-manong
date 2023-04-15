@@ -205,7 +205,9 @@ include "side.php";
                                                             </div>
                                                             <div class="modal-footer">
                                                                 
-                                                                <button type="button" class="btn btn-danger">Delete Task</button>
+                                                                <button type="button" class="btn btn-danger text-decoration-none">
+                                                                    <a class="text-decoration-none text-white" href="update.php?action=taskdelete&id=<?php echo $row['id']?>">Delete Task</a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -7,7 +7,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Finders</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                             <li class="breadcrumb-item text-muted">Users</li>
@@ -105,8 +105,8 @@
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Task Count</th>
-                                            <th>Avatar</th>
                                             <th>Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -134,7 +134,7 @@
                                             <td><?php echo $row['finder_name']?></td>
                                             <td><?php echo $row['finder_email']?></td>
                                             <td>
-                                                <?php if($row['unicode'] = 'verified' && !empty($row['unicode'])):?>
+                                                <?php if($row['unicode'] == 'verified' && !empty($row['unicode'])):?>
                                                     <p class="badge rounded-pill bg-success">Verified</p>
                                                 <?php else:?>
                                                     <p class="badge rounded-pill bg-warning">Pending</p>
@@ -151,7 +151,7 @@
                                             </td>
                                             <td class="centered">
                                                 <!-- Button to trigger the modal -->
-                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $id?>">View</button>
+                                                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewModal<?php echo $id?>">Update</button>
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="viewModal<?php echo $id?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -164,19 +164,18 @@
                                                                         echo 'uploads/'.$row['avatar'];
                                                                     }
                                                                 
-                                                                ?>" alt="avatar" class="rounded-circle position-absolute top-0 start-50 translate-middle h-100" />
+                                                                ?>" alt="avatar" class="rounded-circle position-absolute top-0 start-50 translate-middle" style="height:120px;"/>
                                                                 <form>
                                                                     <div>
                                                                         <h5 class="pt-5 my-3"><?php echo $row['finder_name']?></h5>
 
-                                                                        <!-- password input -->
-                                                                        <!-- <div class="form-outline mb-4">
-                                                                            <input type="password" id="password1" class="form-control" />
-                                                                            <label class="form-label" for="password1">Password</label>
-                                                                        </div> -->
-
-                                                                        <!-- Submit button -->
-                                                                        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
+                                                                        
+                                                                        <button type="submit" class="btn btn-link text-decoration-none">
+                                                                            <a class="fw-bold text-danger text-end text-decoration-none" href="update.php?action=delete&user=finder&id=<?php echo $id?>">Delete</a>
+                                                                        </button>
+                                                                        <?php if($row['unicode'] != 'verified'):?>
+                                                                        <button type="submit" class="btn btn-success">Verify</button>
+                                                                        <?php endif;?>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -185,7 +184,7 @@
                                                 </div>
                                                 
                                             </td>
-                                            <td><button class="btn btn-primary">Update</button></td>
+                                            
                                         </tr>
                                         <?php endwhile;?>
                                     </tbody>
@@ -194,25 +193,4 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Handy <strong>Manong</strong> 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-        
-    </body>
-</html>
+<?php include "footer.php";?>         
