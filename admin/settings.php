@@ -191,6 +191,25 @@ div.avatar__circle{
     border-radius: 50px;
     z-index: 10;
 }
+
+div.first{
+    background-image: url(assets/img/2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.second{
+    background-image: url(assets/img/1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+div.third{
+    background-image: url(assets/img/3.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 div.details_display{
     display: flex;
     flex-direction: column;
@@ -224,36 +243,35 @@ div.avatar__container:hover > div.details_display{
                                 <div class="card mb-5">
                                     
                                         <div class="card-body avatar__container">                                          
-                                            <div class="avatar__circle mb-3">
-
+                                            <div class="avatar__circle first mb-3">
                                             </div>
                                             <div class="details_display">
                                                 <h3 class="name__contributor">Sheila Sabellano</h3>
-                                                <p class="text-light">ssabellano@gmail.com</p>
+                                                <p class="text-light">sabellanosheilamay@gmail.com</p>
                                             </div>
                                         </div>
                                 </div>
                                 <div class="card mb-5">
                                     
                                         <div class="card-body avatar__container">                                          
-                                            <div class="avatar__circle mb-3">
+                                            <div class="avatar__circle second mb-3">
 
                                             </div>
                                             <div class="details_display">
                                                 <h3 class="name__contributor">Lovely Villa</h3>
-                                                <p class="text-light">lvilla@gmail.com</p>
+                                                <p class="text-light">missloveeelly@gmail.com</p>
                                             </div>
                                         </div>
                                 </div>
                                 <div class="card mb-5">
                                     
                                         <div class="card-body avatar__container">                                          
-                                            <div class="avatar__circle mb-3">
+                                            <div class="avatar__circle third mb-3">
 
                                             </div>
                                             <div class="details_display">
-                                                <h3 class="name__contributor">Myk Escala</h3>
-                                                <p class="text-light">escalamykkenneth@gmail.com</p>
+                                                <h3 class="name__contributor">Clarise Pajarito</h3>
+                                                <p class="text-light">pajaritoclarise30@gmail.com</p>
                                             </div>
                                         </div>
                                 </div>

@@ -50,9 +50,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin</title>
+        <title>Login - Handy Manong</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="icon" type="image/x-icon" href="../assets/images/hard-hat.png" />
     </head>
     <body>
     <style>
@@ -91,7 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                             </div>
                                            
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small text-dark" href="password.html">Forgot Password?</a>
+                                                <a class="small text-dark" href="forgot.php">Forgot Password?</a>
                                                 <button name="submit" type="submit" class="btn btn-primary">Login</button>
                                             </div>
                                         </form>
