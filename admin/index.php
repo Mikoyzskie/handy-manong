@@ -163,6 +163,8 @@ include "side.php";
                                                             echo "<p class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</p>";
                                                         }elseif($row['task_status']=='Assigned'){
                                                             echo "<p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
+                                                        }elseif($row['task_status']=='Working'){
+                                                            echo "<p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                                         }elseif($row['task_status']=='Rejected'){
                                                             echo "<p class=\"badge rounded-pill bg-danger\">".$row['task_status']."</p>";
                                                         }elseif($row['task_status']=='Done'){
@@ -387,5 +389,28 @@ include "side.php";
         </script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+        <script>
+            function deRequire(elClass) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                    atLeastOneChecked = true;
+                    console.log('true');
+                }
+            }
+
+            if (atLeastOneChecked === true) {
+                    for (i = 0; i < el.length; i++) {
+                        el[i].required = false;
+                    }
+                } else {
+                    for (i = 0; i < el.length; i++) {
+                    el[i].required = true;
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

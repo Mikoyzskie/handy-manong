@@ -1,4 +1,13 @@
-                <footer class="py-4 bg-light mt-auto">
+<?php 
+session_start();
+if(empty($_SESSION['id'])){
+    header("location: login.php?error=loginrequired");
+}else{
+    
+}
+?>
+
+    <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Handy <strong>Manong</strong> 2023</div>

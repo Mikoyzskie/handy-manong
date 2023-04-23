@@ -9,7 +9,7 @@
                     <div class="container px-4">
                         <h1 class="mt-4">Account Settings</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                             <li class="breadcrumb-item active">Addons</li>
                             <li class="breadcrumb-item active">Settings</li>
                         </ol>
@@ -83,7 +83,7 @@
 
                                             $num = mysqli_num_rows($result);
                                             if(empty($num)){
-                                                header("location: ../auth/signin.php?error=loginrequired");
+                                                header("location: login.php?error=loginrequired");
                                             }
                                             else{
                                                 $row = mysqli_fetch_array($result);

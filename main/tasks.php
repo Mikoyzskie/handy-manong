@@ -255,7 +255,27 @@ if(empty($_SESSION['id'])){
                             $next_page = $page_no + 1;
                             $adjacents = "2"; 
                             $category = $_SESSION['category'];
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC");
+                            $arr = explode(',',$category);
+                            $likeCat = "";
+                            $x = 1;
+                            echo $likeCat;
+                            if(sizeof($arr) == 1){
+                                foreach($arr as $i){
+                                    $likeCat = "'$i'";
+                                }
+                            }else{
+                                foreach($arr as $i){
+                                    if(sizeof($arr) == $x){
+                                        $likeCat = $likeCat."'$i'";
+                                    }
+                                    else{
+                                        $likeCat = $likeCat."'$i' OR task_category LIKE ";
+                                    }
+                                    $x = $x + 1;
+                                }
+                            }
+                            
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_status='Available' AND task_category like $likeCat ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
@@ -263,7 +283,7 @@ if(empty($_SESSION['id'])){
 
                             $id = $_SESSION["id"];
                             
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' AND task_status = 'Available' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_status='Available' AND task_category like $likeCat ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -287,7 +307,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                                header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";

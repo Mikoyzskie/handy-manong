@@ -1,3 +1,12 @@
+<?php 
+session_start();
+if(empty($_SESSION['id'])){
+    header("location: login.php?error=loginrequired");
+}else{
+    
+}
+?>      
+        
         <!-- Modal Finder Create -->
         <div class="modal fade" id="createFinder" tabindex="-1" aria-labelledby="createFinderLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered d-flex justify-content-center modal-lg">
