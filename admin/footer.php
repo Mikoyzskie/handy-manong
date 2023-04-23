@@ -1,11 +1,4 @@
-<?php 
-session_start();
-if(empty($_SESSION['id'])){
-    header("location: login.php?error=loginrequired");
-}else{
-    
-}
-?>
+
 
     <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

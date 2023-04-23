@@ -22,10 +22,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['avatarSubmit'])) {
         }
         if ($_FILES["image"]["error"] == UPLOAD_ERR_OK) {
             $target_dir = "../assets/images/uploads/";
-            $target_file = $target_dir . basename($_FILES["image"]["name"]);
-            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+
+            $newimage = $_FILES["file"]["name"];
             $new_avatar = basename($_FILES["image"]["name"]);
-            $query = "UPDATE tbl_provider SET `avatar` = '$new_avatar' WHERE id = $id";
+            $extension = pathinfo($new_avatar,PATHINFO_EXTENSION);
+            $rename = 'upload'.date('Ymd').uniqid();
+
+            $target_file = $target_dir . $rename.'.'. $extension;
+            move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+            
+            $new_name = $rename.'.'.$extension;
+            $query = "UPDATE tbl_provider SET `avatar` = '$new_name' WHERE id = $id";
             $results = mysqli_query($conn, $query);
             if ($results) {
                 header("Location: profile.php");

@@ -144,7 +144,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";
@@ -265,7 +265,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                         $date=date_create($row['task_date']);
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
@@ -318,6 +318,8 @@ if(empty($_SESSION['id'])){
 
                                         if($row['task_status']=='Available'){
                                             echo "<span class=\"badge rounded-pill bg-warning text-dark\">".$row['task_status']."</span>";
+                                        }elseif($row['task_status']=='Working'){
+                                            echo "Status: <p class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</p>";
                                         }elseif($row['task_status']=='Assigned'){
                                             echo "<span class=\"badge rounded-pill bg-info text-dark\">".$row['task_status']."</span>";
                                         }elseif($row['task_status']=='Rejected'){
@@ -327,7 +329,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">Php ".$row['rate']."</p>";

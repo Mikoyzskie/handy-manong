@@ -225,7 +225,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
@@ -314,7 +314,16 @@ if(empty($_SESSION['id'])){
                                 ?>
                                     <div class="my-2">
                                         
-                                        <div class="avatar"><img src="../assets/images/<?php echo $rows['avatar']?>" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['finder_name']?></h5>
+                                        <div class="avatar">
+                                        <?php if(empty($rows['avatar'])):?>
+                                            <img src="../assets/images/avatar.jpg" alt="" height="50" width="50">
+                                        <?php else:?>
+                                            <img src="../assets/images/uploads/<?php echo $rows['avatar']?>" alt="" height="50" width="50">
+                                        <?php endif;?>
+                                        
+                                        
+                                        
+                                        <h5 class="name"><?php echo $rows['finder_name']?></h5>
                                         <br>
                                         <div class="btn-wrap">
                                             

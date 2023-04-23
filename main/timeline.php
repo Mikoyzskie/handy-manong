@@ -107,7 +107,7 @@ if(empty($_SESSION['id'])){
                             $id = $_SESSION["id"];
                             $search = $_POST['search'];
                             $category = $_SESSION["category"];
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category = like '%$category%' AND task_provider = $id ORDER BY id DESC"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_provider = $id ORDER BY id DESC"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -131,7 +131,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
@@ -154,7 +154,7 @@ if(empty($_SESSION['id'])){
                                 require_once "../includes/connect.php";
                                 $id = $_SESSION["id"];
                                 $category = $_SESSION["category"];
-                                $sql = "SELECT * FROM `tbl_task` WHERE task_category LIKE '%$category%' AND task_provider = $id ORDER BY id DESC LIMIT 1 "; /* add where clause here */
+                                $sql = "SELECT * FROM `tbl_task` WHERE task_provider = $id ORDER BY id DESC LIMIT 1 "; /* add where clause here */
                                 $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -176,7 +176,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                         $date=date_create($row['task_date']);
                                         echo "<div class=\"small text-muted\">".date_format($date,"F d, Y")."</div>";
@@ -241,7 +241,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
@@ -362,7 +362,13 @@ if(empty($_SESSION['id'])){
                                 ?>
                                     <div class="my-2">
                                         
-                                        <div class="avatar"><img src="../assets/images/<?php echo $rows['avatar']?>" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['finder_name']?></h5>
+                                        <div class="avatar">
+                                        <?php if(empty($rows['avatar'])):?>
+                                            <img src="../assets/images/avatar.jpg" alt="" height="50" width="50">
+                                        <?php else:?>
+                                            <img src="../assets/images/uploads/<?php echo $rows['avatar']?>" alt="" height="50" width="50">
+                                        <?php endif;?>
+                                        <h5 class="name"><?php echo $rows['finder_name']?></h5>
                                         <br>
                                         <div class="btn-wrap">
                                             

@@ -574,7 +574,16 @@ if(!empty($_GET['status']) && $_GET['status']=="nameupdated"){
                                 ?>
                                     <div class="my-2">
                                         
-                                        <div class="avatar"><img src="../assets/images/<?php echo $rows['avatar']?>" alt="" height="50" width="50"><h5 class="name"><?php echo $rows['finder_name']?></h5>
+                                        <div class="avatar">
+                                        <?php if(empty($rows['avatar'])):?>
+                                            <img src="../assets/images/avatar.jpg" alt="" height="50" width="50">
+                                        <?php else:?>
+                                            <img src="../assets/images/uploads/<?php echo $rows['avatar']?>" alt="" height="50" width="50">
+                                        <?php endif;?>
+                                        
+                                        
+                                        
+                                        <h5 class="name"><?php echo $rows['finder_name']?></h5>
                                         <br>
                                         <div class="btn-wrap">
                                             
