@@ -267,7 +267,7 @@ if(empty($_SESSION['id'])){
 
 
                         </div>
-                        <form role="form" method="post" action="messaging.php?tid=<?php echo $_GET['tid']?>">
+                        <form role="form" method="post" action="messaging.php?tid=<?php echo $_GET['tid']?>&<?php echo $_GET['category']?>">
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="Enter Message..." aria-label="Search..." aria-describedby="button-search" name="chat" required autocomplete="off"/>
                                 <button class="btn btn-primary" id="button-search" type="submit" name="send"><img src="../assets/images/paper-plane.png" height="12" alt="" srcset=""></button>
@@ -356,7 +356,7 @@ if(empty($_SESSION['id'])){
                                     <form action="search.php" method="post">
                                         <li><input type="submit" value="House Keeper"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
                                         <li><input type="submit" value="Glass Worker"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
-                                        <li><input type="submit" value="Midwife"  name="search" style="all:unset;color:#0D6EFD;cursor: pointer;"></li>
+                                        
                                     </form>
                                     </ul>
                                 </div>

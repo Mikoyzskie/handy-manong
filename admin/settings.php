@@ -225,14 +225,14 @@ div.details_display{
     padding: 20px;
     
     border-radius: calc(0.375rem - 1px);
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.3s linear;
-}
-div.avatar__container:hover > div.details_display{
     visibility: visible;
     opacity: 1;
+    transition: visibility 0s, opacity 0.3s linear;
 }
+/* div.avatar__container:hover > div.details_display{
+    visibility: visible;
+    opacity: 1;
+} */
 </style>
                             
                             <div class="col-lg-4">
