@@ -179,3 +179,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['task_submit'])){
         header("Location: finder.php?error=invalid");
     }
 }
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['rate_submit'])){
+    $radioVal = $_POST["rating"];
+    $tid = $_GET['tid'];
+    if(!empty($tid)){
+        $query = "UPDATE tbl_task SET `ratings` = $radioVal WHERE id = $tid";
+        $results = mysqli_query($conn, $query);
+        if ($results) {
+            header("Location: finder.php");
+            die();
+        }
+        else{
+            header("Location: finder.php?error=invalid");
+        }
+    }else{
+        header("Location: finder.php?error=noid");
+    }
+    
+}
