@@ -172,7 +172,7 @@ include "side.php";
                                                         }elseif($row['task_status']=='Requested'){
                                                             echo "<p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                                         }else{
-                                                            
+                                                            echo "<p class=\"badge rounded-pill bg-danger\">".$row['task_status']."</p>";
                                                         }
                                                     ?>
                                                 </td>
@@ -206,7 +206,14 @@ include "side.php";
                                                                 <p><?php echo nl2br($row['task_desc'])?></p>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                
+                                                                <?php
+                                                                    $isValid = $row['task_status'];
+                                                                    if($isValid == "For Validation"):
+                                                                ?>
+                                                                <button type="button" class="btn btn-success text-decoration-none">
+                                                                    <a class="text-decoration-none text-white" href="update.php?action=taskvalidate&id=<?php echo $row['id']?>">Validate Task</a>
+                                                                </button>
+                                                                <?php endif;?>
                                                                 <button type="button" class="btn btn-danger text-decoration-none">
                                                                     <a class="text-decoration-none text-white" href="update.php?action=taskdelete&id=<?php echo $row['id']?>">Delete Task</a>
                                                                 </button>

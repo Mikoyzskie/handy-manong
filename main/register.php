@@ -249,7 +249,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                         <label>Password</label>
                                         <div class="mb-3">
-                                            <input type="password" class="form-control" placeholder="Create a password"
+                                            <input type="password" minlength="6" class="form-control" placeholder="Create a password"
                                                 aria-label="Password" aria-describedby="password-addon" name="password"
                                                 required value="<?php echo $password?>">
                                         </div>
@@ -257,7 +257,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="mb-3">
                                             <input type="password" class="form-control"
                                                 placeholder="Confirm your password" aria-label="Password"
-                                                aria-describedby="password-addon" name="cpassword" required value="<?php echo $cpassword?>">
+                                                aria-describedby="password-addon" minlength="6" name="cpassword" required value="<?php echo $cpassword?>">
                                         </div>
                                         <div class="row justify-content-center">
                                             <label>I am a...</label>

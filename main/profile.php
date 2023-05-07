@@ -295,6 +295,10 @@ if(!empty($_GET['status']) && $_GET['status']=="nameupdated"){
                                     $rower = mysqli_fetch_array($result_total);
 
                                     $rounded  = number_format((float)$rower['AVG(ratings)'], 1, '.', '');
+
+                                    $total_rate = "SELECT * FROM tbl_task WHERE task_provider = $id AND task_status = 'Done' AND ratings IS NOT NULL";
+                                    $rate_total = mysqli_query($conn, $total_rate);
+                                    $count_rate = mysqli_num_rows($rate_total);
                                 ?>
                                     <div class="card mb-4">
                                         <div class="card-body">
@@ -310,8 +314,8 @@ if(!empty($_GET['status']) && $_GET['status']=="nameupdated"){
                                                     <p class="stats-description">Tasks Completed</p>
                                                 </div>
                                                 <div class="stats-item">
-                                                    <h2 class="stats-count"><?php echo $rounded;?></h2>
-                                                    <p class="stats-description">Rating </p>
+                                                    <h2 class="stats-count"><?php echo $rounded;?>/5</h2>
+                                                    <p class="stats-description">Average Rating(<?php echo $count_rate?> Overall) </p>
                                                 </div>
                                             </div>
                                         </div>

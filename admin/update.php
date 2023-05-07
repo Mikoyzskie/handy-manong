@@ -205,6 +205,20 @@ if(!empty($_GET['action'])){
         }else{
             header("location:index.php?error=invalid");
         }
+    }elseif($_GET['action'] == 'taskvalidate'){
+        if(!empty($_GET['id'])){
+            $id = $_GET['id'];
+            $sql = "UPDATE `tbl_task` SET `task_status` = 'Available' WHERE `id` = $id";
+            $result = mysqli_query($conn, $sql);
+
+            if($result){
+                header("location:index.php?validate=success");
+            }else{
+                header("location:index.php?error=invalid");
+            }
+        }else{
+            header("location:index.php?error=invalid");
+        }
     }
 }else{
     header("location:index.php?error=invalid");

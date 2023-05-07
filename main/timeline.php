@@ -213,7 +213,7 @@ if(empty($_SESSION['id'])){
 
                             $id = $_SESSION["id"];
                             $category = $_SESSION["category"];
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_category like '%$category%' AND task_provider = $id ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_provider = $id ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -343,6 +343,7 @@ if(empty($_SESSION['id'])){
                             border-radius:50%;
                         }
                     </style>
+                    
                     <div class="card mb-4">
                         <div class="card-header">Connects</div>
                         <div class="card-body">

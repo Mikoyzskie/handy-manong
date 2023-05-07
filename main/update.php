@@ -194,7 +194,8 @@ if(!empty($_GET['unicode']) || !empty($_GET['userid'])){
 
 if(!empty($_GET['id'])){
     $id = $_GET['id'];
-    $sql = "UPDATE tbl_task SET `task_status` = 'Working' WHERE id = $id";
+    $starting = date("Y-m-d");
+    $sql = "UPDATE tbl_task SET `task_status` = 'Working',`start_date` = '$starting' WHERE id = $id";
     $results = mysqli_query($conn, $sql);
     $query = "DELETE FROM request WHERE task_id = $id";
     $result = mysqli_query($conn, $query);

@@ -139,13 +139,13 @@ if(empty($_SESSION['id'])){
                                     $x = $x + 1;
                                 }
                             }
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$likeCat%' AND task_status = 'Available' ORDER BY id DESC");
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$likeCat%' AND task_status = 'Available'  AND task_status != 'Working' ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
                             $second_last = $total_no_of_pages - 1; // total page minus 1
 
-                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$likeCat%' AND task_status = 'Available' ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE ((task_title LIKE '%$search%') OR (task_desc LIKE '%$search%')) AND task_category like '%$likeCat%' AND task_status = 'Available' AND task_status != 'Working'  ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -169,7 +169,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
@@ -295,7 +295,7 @@ if(empty($_SESSION['id'])){
                                 }
                             }
                             
-                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_status='Available' AND task_category like $likeCat ORDER BY id DESC");
+                            $result_count = mysqli_query($conn,"SELECT COUNT(*) As total_records FROM `tbl_task` WHERE task_status = 'Available' ORDER BY id DESC");
                             $total_records = mysqli_fetch_array($result_count);
                             $total_records = $total_records['total_records'];
                             $total_no_of_pages = ceil($total_records / $total_records_per_page);
@@ -303,7 +303,7 @@ if(empty($_SESSION['id'])){
 
                             $id = $_SESSION["id"];
                             
-                            $sql = "SELECT * FROM `tbl_task` WHERE task_status='Available' AND task_category like $likeCat ORDER BY id DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
+                            $sql = "SELECT * FROM `tbl_task` WHERE task_status = 'Available' ORDER BY `id` DESC LIMIT $offset, $total_records_per_page"; /* add where clause here */
                             $result = mysqli_query($conn, $sql);
 
                                 $num = mysqli_num_rows($result); 
@@ -327,7 +327,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";
@@ -417,19 +417,7 @@ if(empty($_SESSION['id'])){
                 <?php
                     }
                 ?>
-                    <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav> -->
+                    
                 </div>
                 <!-- Side widgets-->
                 <div class="col-lg-4">

@@ -119,12 +119,18 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Requested'){
                                             echo "Status: <p class=\"badge rounded-pill bg-primary\">".$row['task_status']."</p>";
                                         }else{
-                                            header("location: finder.php?error=undefine");
+                                            echo "Status: <p class=\"badge rounded-pill bg-danger\">".$row['task_status']."</p>";
                                         }
 
                                         $date=date_create($row['task_date']);
+                                        
+                                        echo "<p>Date Posted: <span class=\"small text-muted\">".date_format($date,"F d, Y")."</span></p>";
+                                        if(empty($row['start_date'])){
 
-                                        echo "<p>Date Posted: <span class=\"small text-muted\">".date_format($date,"F d, Y")."</span></p>"; /* fix date format */
+                                        }else{
+                                            $starting=date_create($row['start_date']);
+                                            echo "<p>Date Started: <span class=\"small text-muted\">".date_format($starting,"F d, Y")."</span></p>"; /* fix date format */
+                                        }
                                         echo "Description:";
                                         echo "<p class=\"card-text ps-4\">".nl2br($row['task_desc'])."</p>"; /* fix formating do not remove spacing */
                                         echo "<p>Location: ".$row['task_location']."</p>";
@@ -225,7 +231,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
                                         }else{
-                                            echo "<span class=\"badge rounded-pill bg-success\">".$row['task_status']."</span>";
+                                            echo "<span class=\"badge rounded-pill bg-danger\">".$row['task_status']."</span>";
                                         }
                                                     
                                         echo "<p class=\"card-text related\">".$row['task_desc']."</p>";

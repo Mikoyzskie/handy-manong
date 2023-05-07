@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }else{
         if(empty($_GET['assign'])){
             $id = NULL;
-            $status = "Available";
+            $status = "For Validation";
         }else{
             $id = $_GET['assign'];
             $status = "Requested";
