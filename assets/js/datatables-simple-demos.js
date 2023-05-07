@@ -1,0 +1,19 @@
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+    // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+    const datatablesSimple = document.getElementById('datatablesSimples');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+    
+});
+
+window.addEventListener('DOMContentLoaded', event => {
+
+    const findertablesSimple = document.getElementById('findertablesSimple');
+    if (findertablesSimple) {
+        new simpleDatatables.DataTable(findertablesSimple);
+    }
+    
+});

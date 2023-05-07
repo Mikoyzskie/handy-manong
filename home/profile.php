@@ -22,6 +22,7 @@ if(empty($_SESSION['id'])){
         <link href="styles.css" rel="stylesheet" />
         <link href="main.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/1b7409057b.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     </head>
     <style>
     .card-text{
@@ -201,10 +202,10 @@ if(empty($_SESSION['id'])){
 
 
                             // Tasks Completed
-                            $total_task = "SELECT *,AVG(ratings) FROM tbl_task WHERE task_provider = $id AND task_status = 'Done'";
-                            $result_total = mysqli_query($conn, $total_task);
-                            $total = mysqli_num_rows($result_total);
-                            $rower = mysqli_fetch_array($result_total);
+                            $total_task = "SELECT AVG(ratings),COUNT(*) as counted FROM tbl_task WHERE task_provider = $id AND task_status = 'Done'";
+                            $results_total = mysqli_query($conn, $total_task);
+                            $total = mysqli_num_rows($results_total);
+                            $rower = mysqli_fetch_array($results_total);
 
                             $rounded  = number_format((float)$rower['AVG(ratings)'], 1, '.', '');
 
@@ -223,7 +224,7 @@ if(empty($_SESSION['id'])){
                                         <p class="stats-description">Tasks Requested</p>
                                     </div>
                                     <div class="stats-item">
-                                        <h2 class="stats-count"><?php echo $total;?></h2>
+                                        <h2 class="stats-count"><?php echo $rower['counted'];?></h2>
                                         <p class="stats-description">Tasks Completed</p>
                                     </div>
                                     <div class="stats-item">
@@ -272,39 +273,76 @@ if(empty($_SESSION['id'])){
                                 </div>
                             </div>
                         </div>
-                        <h2 class="card-title">Recent Completed Tasks</h2>
+                        <h2 class="card-title">Recently Completed Tasks</h2>
                         <hr>
                         <div class="row row-cols-1 row-cols-md-2 mb-5">
-                            
-                        <?php if($total == 0):?>
+                            <?php if($total == 0):?>
                                 <i mb-5>No related task to show.</i>
-                        <?php else:
-                            $i = 0;
-                            while($row = mysqli_fetch_array($result_total)){
-                                if($i == 4){
-                                    break;
-                                }
-
-                            ?>
-
-                                <div class="col">
-                                    <div class="card mb-4">
-                                        <div class="card-body">
+                            <?php else:?>
+                                <div class="card-body">
+                                    <table id="datatablesSimples">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Category</th>
+                                                <th>Provider</th>
+                                                <th>Posted</th>
+                                                <th>Start Date</th>
+                                                <th>Rating</th>
+                                            </tr>
+                                        </thead>
                                         
-                                            <h2 class="card-title h4"><?php echo $row['task_title']?></h2>
-                                            <div class="small text-muted"><?php echo $row['task_desc']?></div>                           
-                                        </div>
-                                    </div>
+                                        <tbody>
+                                        <?php 
+                                        $id = $_GET['uid'];
+                                        $total_task = "SELECT * FROM tbl_task WHERE task_status = 'Done' AND task_provider = $id";
+                                        $results_total = mysqli_query($conn, $total_task);
+                                        $total = mysqli_num_rows($results_total);
+                                        
+                                        while($rows = mysqli_fetch_array($results_total)):?>
+                                            <tr>
+                                                <td><?php echo $rows['task_title']?></td>
+                                                <td><?php echo $rows['task_category']?></td>
+                                                <td><?php
+                                                    $prov = $rows['task_provider'];
+                                                    $userselect = "SELECT * FROM tbl_provider WHERE id = $prov";
+                                                    $results = mysqli_query($conn, $userselect);
+                                                    $rowss = mysqli_fetch_array($results);
+                                                    echo "<p><a href='profile.php?uid=$prov'>".$rowss['prov_firstname']." ".$rowss['prov_lastname']."</a></p>";
+                                                ?></td>
+                                                <td>
+                                                    <?php
+                                                        $date=date_create($rows['task_date']);
+                                                        echo date_format($date,"F d, Y");
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        if(empty($rows['start_date'])){
+
+                                                        }else{
+                                                            $date=date_create($rows['start_date']);
+                                                            echo date_format($date,"F d, Y");
+                                                        }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php 
+                                                        if(empty($rows['ratings'])){
+                                                            echo "Not Rated";
+                                                        }else{
+                                                            echo $rows['ratings'];
+                                                        }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php endwhile;?>
+                                        </tbody>
+
+                                    </table>
                                 </div>
-                                        
-                        
-                            <?php
-                                $i = $i + 1;
-                            } 
-                    
-                            endif;
-                            ?>
-                            
+
+                            <?php endif;?>
                         </div>
                     <?php else:?>
 
@@ -400,44 +438,66 @@ if(empty($_SESSION['id'])){
                         <h2 class="card-title">Recent Completed Tasks</h2>
                         <hr>
                         <div class="row row-cols-1 row-cols-md-2 mb-5">
-                            
-                        <?php if($num == 0):?>
+                            <?php if($total == 0):?>
                                 <i mb-5>No related task to show.</i>
-                        <?php else:
-                            $i = 0;
-                            while($row = mysqli_fetch_array($result)){
-                                if($i == 4){
-                                    break;
-                                }
-                                $user = $row['task_provider'];
-                                $query = "SELECT * FROM `tbl_provider` WHERE id = $user";
-                                $provider = mysqli_query($conn, $query);
-                            ?>
-
-                                <div class="col">
-                                    <div class="card mb-4">
-                                        <div class="card-body">
+                            <?php else:?>
+                                <div class="card-body">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Category</th>
+                                                <th>Provider</th>
+                                                <th>Posted</th>
+                                                <th>Start Date</th>
+                                                <th>Rating</th>
+                                            </tr>
+                                        </thead>
                                         
-                                            <h2 class="card-title h4"><?php echo $row['task_title']?></h2>
-                                            <div class="small text-muted"><?php echo $row['task_desc']?></div>
+                                        <tbody>
+                                        <?php  while($row = mysqli_fetch_array($result)):?>
+                                            <tr>
+                                                <td><?php echo $row['task_title']?></td>
+                                                <td><?php echo $row['task_category']?></td>
+                                                <td><?php
+                                                    $prov = $row['task_provider'];
+                                                    $userselect = "SELECT * FROM tbl_provider WHERE id = $prov";
+                                                    $results = mysqli_query($conn, $userselect);
+                                                    $rows = mysqli_fetch_array($results);
+                                                    echo "<p><a href='profile.php?uid=$prov'>".$rows['prov_firstname']." ".$rows['prov_lastname']."</a></p>";
+                                                ?></td>
+                                                <td>
+                                                    <?php
+                                                        $date=date_create($row['task_date']);
+                                                        echo date_format($date,"F d, Y");
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        if(empty($row['start_date'])){
 
+                                                        }else{
+                                                            $date=date_create($row['start_date']);
+                                                            echo date_format($date,"F d, Y");
+                                                        }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php 
+                                                        if(empty($row['ratings'])){
+                                                            echo "Not Rated";
+                                                        }else{
+                                                            echo $row['ratings'];
+                                                        }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
                                         
-                                            <?php $select = mysqli_fetch_array($provider);?>
-
-                                            <p class="card-text related"><strong>Provider: </strong><?php echo $select['prov_firstname']?> <?php echo $select['prov_lastname']?></p>
-                                        
-                                        </div>
-                                    </div>
+                                    </table>
                                 </div>
-                                        
-                        
-                            <?php
-                                $i = $i + 1;
-                            } 
-                    
-                            endif;
-                            ?>
-                            
+                            <?php  endif;?>
                         </div>
                         
                     <?php endif;?>
@@ -511,6 +571,8 @@ if(empty($_SESSION['id'])){
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="../assets/js/datatables-simple-demo.js"></script>
+        <script src="../assets/js/datatables-simple-demos.js"></script>
     </body>
 </html>

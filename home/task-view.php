@@ -132,6 +132,7 @@ if(empty($_SESSION['id'])){
                                         }elseif($row['task_status']=='Done'){
                                             if(!empty($row['ratings'])){
                                                 echo "<p>Rating: ".$row['ratings']."/5</p>";
+                                                echo "<a class=\"btn btn-warning\" data-bs-toggle='modal' data-bs-target='#rate'>Re-rate</a>";
                                             }else{
                                                 echo "<a class=\"btn btn-warning\" data-bs-toggle='modal' data-bs-target='#rate'>Rate</a>";
                                             }
