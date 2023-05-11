@@ -32,6 +32,9 @@ if(empty($_SESSION['id'])){
                 line-clamp: 2; 
         -webkit-box-orient: vertical;
     }
+    a.dropdown-toggle::after{
+        display:none;
+    }
 </style>
     <body>
         <!-- Responsive navbar-->
