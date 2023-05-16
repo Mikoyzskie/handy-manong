@@ -48,11 +48,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
         if($result){
+            $newTask = "INSERT INTO `notification` () VAlUES ()";
             $showAlert = true; 
         }
     }
 
-    
 }
 
 ?>
@@ -345,7 +345,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
-                                        
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxEight" value="Others" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxEight">Others...</label>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

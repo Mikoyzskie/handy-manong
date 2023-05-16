@@ -14,9 +14,13 @@ if(empty($_SESSION['id'])){
                     <div class="modal-body p-4">
                     <h2 class='card-title mb-3'>Create Finder Account</h2>
                     <form role="form" method="post" action="auth.php">
-                        <label>Name</label>
+                        <label>First Name</label>
                         <div class="mb-3">
-                        <input type="text" class="form-control" value="" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
+                        <input type="text" class="form-control" value="" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="fname" required>
+                        </div>
+                        <label>Last Name</label>
+                        <div class="mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="lname" required>
                         </div>
                         <label>Email Address</label>
                         <div class="mb-3">
@@ -57,11 +61,11 @@ if(empty($_SESSION['id'])){
                         </div>
                         <label>Password</label>
                         <div class="mb-3">
-                        <input type="password" class="form-control" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                        <input type="password" class="form-control" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required minlength="8">
                         </div>
                         <label>Confirm Password</label>
                         <div class="mb-3">
-                        <input type="password" class="form-control" value="" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
+                        <input type="password" class="form-control" value="" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required minlength="8">
                         </div>
                         
                         <div class="text-center">
@@ -100,13 +104,13 @@ if(empty($_SESSION['id'])){
                                 <div class="mb-3">
                                     <input type="password" class="form-control" placeholder="Create a password"
                                         aria-label="Password" aria-describedby="password-addon" name="password"
-                                        required value="">
+                                        required value="" minlength="8">
                                 </div>
                                 <label>Confirm Password</label>
                                 <div class="mb-3">
                                     <input type="password" class="form-control"
                                         placeholder="Confirm your password" aria-label="Password"
-                                        aria-describedby="password-addon" name="cpassword" required value="">
+                                        aria-describedby="password-addon" name="cpassword" required value="" minlength="8">
                                 </div>
                                 <div class="row justify-content-center">
                                     <label>I am a...</label>
@@ -147,7 +151,10 @@ if(empty($_SESSION['id'])){
                                             <input type="checkbox" class='acb' id="checkboxEight" value="Glass Worker" name="category[]" onclick='deRequire("acb")' required>
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
-                                        
+                                        <li>
+                                            <input type="checkbox" class='acb' id="checkboxEight" value="Others" name="category[]" onclick='deRequire("acb")' required>
+                                            <label for="checkboxEight">Others...</label>
+                                        </li>
                                     </ul>
                                 </div>
                                 </div>

@@ -212,6 +212,7 @@ if(!empty($_GET['action'])){
             $result = mysqli_query($conn, $sql);
 
             if($result){
+                
                 header("location:index.php?validate=success");
             }else{
                 header("location:index.php?error=invalid");

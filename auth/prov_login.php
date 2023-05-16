@@ -18,7 +18,7 @@ if($num == 1) {
    
     $checkpass = password_verify($pass, $row["prov_password"]);
 
-    if($checkpass == true){
+    if($checkpass == true && $row['unicode'] == 'verified'){
         session_start();
         $_SESSION["id"] = $row['id'];
         $_SESSION["category"]= $row['prov_category'];

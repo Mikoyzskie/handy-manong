@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require "../includes/connect.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['finder_submit'])) {
-    $finder_name = $_POST["name"];
+    $finder_name = $_POST["fname"].' '.$_POST["lname"];
     $finder_email = $_POST["email"];
     $password = $_POST["password"]; 
     $cpassword = $_POST["cpassword"];

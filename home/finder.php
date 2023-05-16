@@ -49,24 +49,33 @@ if(empty($_SESSION['id'])){
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
-                        <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
+                        <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"><span class="red-visible"></span></i></a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                    <span class="badge rounded-pill bg-success text-white">Verified</span> Task is now Available.
-                                    </a>
-                                </li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                <?php
+                                    include "../includes/connect.php";
+                                    $user_id = $_SESSION['id'];
+                                    $notify = "SELECT * FROM `notification` WHERE `user_type` = 'finder' AND `user_id` = $user_id";
+                                    $result = mysqli_query($conn, $notify);
+                                    $num = mysqli_num_rows($result);
+                                    if($num == 0): 
+                                ?>
+                                    <li>
+                                        <i class="p-2">No notifications</i>
+                                    </li>
+                                <?php else:?>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <span class="badge rounded-pill bg-success text-white">Verified</span> Task is now Available.
+                                        </a>
+                                    </li>
+                                <?php endif;?>                                                              
                             </ul>
                         </li>
                         <style>
                             i.fa-solid.fa-bell{
                                 position: relative;
                             }
-                            i.fa-solid.fa-bell:after{
+                            span.red-visible{
                                 position: absolute;
                                 top:-5px;
                                 right:-5px;
@@ -560,6 +569,14 @@ if(empty($_SESSION['id'])){
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/1b7409057b.js" crossorigin="anonymous"></script>
         <!-- Core theme JS-->
-        
+        <script>
+            const redDot = document.querySelector('.red-visible');
+            const ulNotif = document.querySelectorAll('.dropdown-menu li a').length;
+            if(ulNotif === 0){
+                redDot.style.display = "none";
+            }else{
+                redDot.style.display = "block";
+            }
+        </script>
     </body>
 </html>

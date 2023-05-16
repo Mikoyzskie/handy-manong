@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database Connection.
     include '../includes/connect.php';   
     
-    $finder_name = $_POST["name"];
+    $finder_name = $_POST["fname"].' '.$_POST["lname"];
     $finder_email = $_POST["email"];
     $password = $_POST["password"]; 
     $cpassword = $_POST["cpassword"];
@@ -224,9 +224,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="card-body">
                   <form role="form" method="post" action="signup.php">
-                    <label>Name</label>
+                    <label>First Name</label>
                     <div class="mb-3">
-                      <input type="text" class="form-control" value="<?php echo $finder_name?>" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="name" required>
+                      <input type="text" class="form-control" value="<?php echo $finder_name?>" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="fname" required>
+                    </div>
+                    <label>Last Name</label>
+                    <div class="mb-3">
+                      <input type="text" class="form-control" value="<?php echo $finder_name?>" placeholder="Enter your name" aria-label="Name" aria-describedby="name-addon" name="lname" required>
                     </div>
                     <label>Email Address</label>
                     <div class="mb-3">
@@ -234,11 +238,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="password" minlength="6" class="form-control" value="<?php echo $password?>" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <input type="password" minlength="8" class="form-control" value="<?php echo $password?>" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
                     </div>
                     <label>Confirm Password</label>
                     <div class="mb-3">
-                      <input type="password" minlength="6" class="form-control" value="<?php echo $cpassword?>" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
+                      <input type="password" minlength="8" class="form-control" value="<?php echo $cpassword?>" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
                     </div>
                     
                     <div class="text-center">
