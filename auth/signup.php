@@ -238,7 +238,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="password" minlength="8" class="form-control" value="<?php echo $password?>" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <input type="password" minlength="8" class="form-control passwordToCheck" value="<?php echo $password?>" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                      <span class="passwordCheck"></span>
                     </div>
                     <label>Confirm Password</label>
                     <div class="mb-3">
@@ -246,9 +247,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     
                     <div class="text-center">
-                      <button type="submit" class="btn btn-dark w-100 mt-4 mb-3">Sign up</button>
+                      <button type="submit" class="btn btn-dark w-100 mt-4 mb-3" id ="buttonSubmit">Sign up</button>
                      
                     </div>
+                    <script>
+                        const fverifier = document.querySelector('.passwordCheck');
+                        const finputPassword = document.querySelector('.passwordToCheck');
+                        const buttonSubmit= document.getElementById('buttonSubmit');
+                        buttonSubmit.disabled = true;
+                        function hasNumber(str) {
+                            return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
+                        }
+                        const interval = setInterval(function() {
+                            if(finputPassword.value.length >= 8 && hasNumber(finputPassword.value)){
+                                fverifier.innerHTML = "Password Valid"
+                                fverifier.style.color = "green";
+                                fverifier.style.fontSize = "12px";
+                                buttonSubmit.disabled = false;
+                            }else{
+                                fverifier.innerHTML = "Must contain 8 characters, 1 number, & 1 special character";
+                                fverifier.style.color = "red";
+                                fverifier.style.fontSize = "12px";
+                                buttonSubmit.disabled = true;
+                            }
+                        }, 3000)
+                    </script> 
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">

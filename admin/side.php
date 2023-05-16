@@ -28,16 +28,39 @@ if(empty($_SESSION['id'])){
                         </div>
                         <label>Password</label>
                         <div class="mb-3">
-                        <input type="password" class="form-control" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                        <input type="password" class="form-control passwordToCheck" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                        <span class="passwordCheck"></span>
+                                         
                         </div>
+                        
                         <label>Confirm Password</label>
                         <div class="mb-3">
                         <input type="password" class="form-control" value="" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required>
                         </div>
                         
                         <div class="text-center">
-                        <button type="submit" name="finder_submit" class="btn btn-dark w-100 mt-4 mb-3">New Finder</button>
+                        <button type="submit" name="finder_submit" class="btn btn-dark w-100 mt-4 mb-3" id="buttonSubmit">New Finder</button>
                         </div>
+                        <script>
+                            const ferifier = document.querySelector('.passwordCheck');
+                            const finputPassword = document.querySelector('.passwordToCheck');
+                            const buttonSubmit= document.getElementById('buttonSubmit');
+                            buttonSubmit.disabled = true;
+                            function hasNumber(str) {
+                                return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
+                            }
+                            const interval = setInterval(function() {
+                                if(inputPassword.value.length >= 8 && hasNumber(finputPassword.value)){
+                                    fverifier.innerHTML = "Password Valid"
+                                    fverifier.style.color = "green";
+                                    buttonSubmit.disabled = false;
+                                }else{
+                                    fverifier.innerHTML = "Must contain 8 characters, 1 number, & 1 special character";
+                                    fverifier.style.color = "red";
+                                    buttonSubmit.disabled = true;
+                                }
+                            }, 3000)
+                        </script> 
                     </form>
                     </div>
                 </div>
@@ -61,16 +84,37 @@ if(empty($_SESSION['id'])){
                         </div>
                         <label>Password</label>
                         <div class="mb-3">
-                        <input type="password" class="form-control" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required minlength="8">
-                        </div>
+                        <input type="password" class="form-control adminToCheck" value="" placeholder="Create a password" aria-label="Password" aria-describedby="password-addon" name="password" required minlength="8">
+                        <span class="adminCheck"></span>    
+                    </div>
                         <label>Confirm Password</label>
                         <div class="mb-3">
                         <input type="password" class="form-control" value="" placeholder="Confirm your password" aria-label="Password" aria-describedby="password-addon" name="cpassword" required minlength="8">
                         </div>
                         
                         <div class="text-center">
-                        <button type="submit" name="admin_submit" class="btn btn-dark w-100 mt-4 mb-3">New Admin</button>
+                        <button type="submit" name="admin_submit" class="btn btn-dark w-100 mt-4 mb-3" id="adminSubmit">New Admin</button>
                         </div>
+                        <script>
+                            const averifier = document.querySelector('.adminCheck');
+                            const ainputPassword = document.querySelector('.adminToCheck');
+                            const adminSubmit= document.getElementById('adminSubmit');
+                            adminSubmit.disabled = true;
+                            function hasNumber(str) {
+                                return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
+                            }
+                            const ainterval = setInterval(function() {
+                                if(ainputPassword.value.length >= 8 && hasNumber(ainputPassword.value)){
+                                    averifier.innerHTML = "Password Valid"
+                                    averifier.style.color = "green";
+                                    adminSubmit.disabled = false;
+                                }else{
+                                    averifier.innerHTML = "Must contain 8 characters, 1 number, & 1 special character";
+                                    averifier.style.color = "red";
+                                    adminSubmit.disabled = true;
+                                }
+                            }, 3000)
+                        </script> 
                     </form>
                     </div>
                 </div>
@@ -99,12 +143,14 @@ if(empty($_SESSION['id'])){
                                     <input type="email" class="form-control"
                                         placeholder="Enter your email address" aria-label="Email"
                                         aria-describedby="email-addon" name="email" required value="">
+                                        
                                 </div>
                                 <label>Password</label>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" placeholder="Create a password"
+                                    <input type="password" class="form-control provToCheck" placeholder="Create a password"
                                         aria-label="Password" aria-describedby="password-addon" name="password"
                                         required value="" minlength="8">
+                                        <span class="provCheck"></span>   
                                 </div>
                                 <label>Confirm Password</label>
                                 <div class="mb-3">
@@ -160,14 +206,34 @@ if(empty($_SESSION['id'])){
                                 </div>
                                 
                                 <div class="text-center">
-                                    <button type="submit" name="provider_submit" class="btn btn-dark w-100 mb-3">New Provider</button>
+                                    <button type="submit" name="provider_submit" class="btn btn-dark w-100 mb-3" id="prov">New Provider</button>
                                 </div>
+                                <script>
+                                    const pverifier = document.querySelector('.provCheck');
+                                    const pinputPassword = document.querySelector('.provToCheck');
+                                    const provSubmit= document.getElementById('prov');
+                                    provSubmit.disabled = true;
+                                    function hasNumber(str) {
+                                        return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
+                                    }
+                                    const pinterval = setInterval(function() {
+                                        if(pinputPassword.value.length >= 8 && hasNumber(pinputPassword.value)){
+                                            pverifier.innerHTML = "Password Valid"
+                                            pverifier.style.color = "green";
+                                            provSubmit.disabled = false;
+                                        }else{
+                                            pverifier.innerHTML = "Must contain 8 characters, 1 number, & 1 special character";
+                                            pverifier.style.color = "red";
+                                            provSubmit.disabled = true;
+                                        }
+                                    }, 3000)
+                                </script> 
                             </form>
                     </div>
                 </div>
             </div>
         </div>
-
+        
 
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
