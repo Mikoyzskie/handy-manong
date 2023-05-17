@@ -49,28 +49,11 @@ if(empty($_SESSION['id'])){
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
-                        <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"><span class="red-visible"></span></i></a>
+                        <!-- <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"><span class="red-visible"></span></i></a>
                             <ul class="dropdown-menu">
-                                <?php
-                                    include "../includes/connect.php";
-                                    $user_id = $_SESSION['id'];
-                                    $notify = "SELECT * FROM `notification` WHERE `user_type` = 'finder' AND `user_id` = $user_id";
-                                    $result = mysqli_query($conn, $notify);
-                                    $num = mysqli_num_rows($result);
-                                    if($num == 0): 
-                                ?>
-                                    <li>
-                                        <i class="p-2">No notifications</i>
-                                    </li>
-                                <?php else:?>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="badge rounded-pill bg-success text-white">Verified</span> Task is now Available.
-                                        </a>
-                                    </li>
-                                <?php endif;?>                                                              
+                                                                                          
                             </ul>
-                        </li>
+                        </li> -->
                         <style>
                             i.fa-solid.fa-bell{
                                 position: relative;

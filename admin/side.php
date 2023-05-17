@@ -42,15 +42,15 @@ if(empty($_SESSION['id'])){
                         <button type="submit" name="finder_submit" class="btn btn-dark w-100 mt-4 mb-3" id="buttonSubmit">New Finder</button>
                         </div>
                         <script>
-                            const ferifier = document.querySelector('.passwordCheck');
+                            const fverifier = document.querySelector('.passwordCheck');
                             const finputPassword = document.querySelector('.passwordToCheck');
                             const buttonSubmit= document.getElementById('buttonSubmit');
                             buttonSubmit.disabled = true;
                             function hasNumber(str) {
                                 return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
                             }
-                            const interval = setInterval(function() {
-                                if(inputPassword.value.length >= 8 && hasNumber(finputPassword.value)){
+                            const finterval = setInterval(function() {
+                                if(finputPassword.value.length >= 8 && hasNumber(finputPassword.value)){
                                     fverifier.innerHTML = "Password Valid"
                                     fverifier.style.color = "green";
                                     buttonSubmit.disabled = false;
@@ -123,7 +123,7 @@ if(empty($_SESSION['id'])){
 
         <!-- Modal Provider Create -->
         <div class="modal fade" id="createProvider" tabindex="-1" aria-labelledby="createProviderLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center modal-xl">
+            <div class="modal-dialog modal-dialog-centered d-flex justify-content-center modal-xl">
                 <div class="modal-content w-75">
                     <div class="modal-body p-4">
                     <h2 class='card-title mb-3'>Create Provider Account</h2>
@@ -198,9 +198,20 @@ if(empty($_SESSION['id'])){
                                             <label for="checkboxEight">Glass Worker</label>
                                         </li>
                                         <li>
-                                            <input type="checkbox" class='acb' id="checkboxEight" value="Others" name="category[]" onclick='deRequire("acb")' required>
-                                            <label for="checkboxEight">Others...</label>
+                                            <input type="checkbox" class='acb' id="checkboxNine" value="Others" name="category[]" onclick='deRequire("acb")' required>
+                                            
+                                            <label for="checkboxNine">Others...</label>
                                         </li>
+                                        <input type="text" name="" id="" class="hiddenOthers">
+                                        <script>
+                                            const selectOthers = document.getElementById('checkboxNine');
+                                            const showOthers = document.querySelector('.hiddenOthers');
+                                                showOthers.style.display = "none";
+                                            function displayOthers(){
+                                                showOthers.style.display = "block";
+                                            }
+                                            selectOthers.addEventListener('click', displayOthers());
+                                        </script>
                                     </ul>
                                 </div>
                                 </div>

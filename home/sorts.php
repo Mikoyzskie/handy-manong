@@ -49,7 +49,7 @@ if(empty($_SESSION['id'])){
                         <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.php">Account Settings</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="../auth/logout.php">Logout</a></li>
-                        <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
+                        <!-- <li class="nav-item"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-bell"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Action</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -57,7 +57,7 @@ if(empty($_SESSION['id'])){
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Separated link</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <style>
                             i.fa-solid.fa-bell{
                                 position: relative;
