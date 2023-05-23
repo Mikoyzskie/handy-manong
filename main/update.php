@@ -207,21 +207,3 @@ if(!empty($_GET['id'])){
         header("Location: timeline.php?error=invalid");
     }
 }
-
-if(!empty($_GET['tid']) || !empty($_GET['action'])){
-    if($_GET['action'] == 'done'){
-        $id = $_GET['tid'];
-        $sql = "UPDATE tbl_task SET `task_status` = 'Done' WHERE id = $id";
-        $results = mysqli_query($conn, $sql);
-        if ($results) {
-            header("Location: timeline.php");
-            die();
-        }
-        else{
-            header("Location: timeline.php?error=sqlerror");
-        }
-    }else{
-        header("Location: timeline.php?error=invalid");
-    }
-    
-}

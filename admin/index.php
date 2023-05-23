@@ -364,8 +364,9 @@ include "side.php";
             $assign = "SELECT COUNT(*) as count FROM tbl_task WHERE task_status = 'Assigned'";
             $avail = "SELECT COUNT(*) as count FROM tbl_task WHERE task_status = 'Available'";
             $done = "SELECT COUNT(*) as count FROM tbl_task WHERE task_status = 'Done'";
+            $valid = "SELECT COUNT(*) as count FROM tbl_task WHERE task_status = 'For Validation'";
             $counts = array();
-            $query_array = array($request,$assign,$avail,$done);
+            $query_array = array($request,$assign,$avail,$done,$valid);
             
 
             foreach($query_array as $query){
@@ -386,10 +387,10 @@ include "side.php";
             var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ["Requested", "Assigned", "Available", "Done"],
+                labels: ["Requested", "Assigned", "Available", "Done", "For Validation"],
                 datasets: [{
                 data: [<?php echo implode(', ',$counts);?>],
-                backgroundColor: ['#007bff', '#0DCAF0', '#ffc107', '#28a745'],
+                backgroundColor: ['#007bff', '#0DCAF0', '#ffc107', '#28a745', '#ff0000'],
                 }],
             },
             });

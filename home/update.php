@@ -198,3 +198,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['rate_submit'])){
     }
     
 }
+
+if(!empty($_GET['tid']) || !empty($_GET['action'])){
+    if($_GET['action'] == 'done'){
+        $id = $_GET['tid'];
+        $sql = "UPDATE tbl_task SET `task_status` = 'Done' WHERE id = $id";
+        $results = mysqli_query($conn, $sql);
+        if ($results) {
+            header("Location: finder.php");
+            die();
+        }
+        else{
+            header("Location: finder.php?error=sqlerror");
+        }
+    }else{
+        header("Location: finder.php?error=invalid");
+    } 
+}

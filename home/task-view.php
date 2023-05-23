@@ -128,7 +128,7 @@ if(empty($_SESSION['id'])){
                                         if($row['task_status']=='Assigned'){
                                             
                                         }elseif($row['task_status']=='Working'){
-                                            
+                                            echo "<a class='btn btn-success' href='update.php?tid=$id&action=done'>Done</a>";
                                         }elseif($row['task_status']=='Done'){
                                             if(!empty($row['ratings'])){
                                                 echo "<p>Rating: ".$row['ratings']."/5</p>";
@@ -366,7 +366,7 @@ if(empty($_SESSION['id'])){
                         <?php 
                         require_once "../includes/connect.php";
                         $id = $_GET['tid'];
-                        $sql = "SELECT * FROM `messaging` JOIN tbl_finder ON messaging.user_id = tbl_finder.finder_id WHERE task_id = $id  ORDER BY messaging.id ASC";
+                        $sql = "SELECT * FROM `messaging` WHERE task_id = $id  ORDER BY messaging.id ASC";
                         $result = mysqli_query($conn, $sql);
                         $num = mysqli_num_rows($result);
                         if($num == 0) {

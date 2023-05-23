@@ -209,7 +209,7 @@ if(empty($_SESSION['id'])){
 
                             $rounded  = number_format((float)$rower['AVG(ratings)'], 1, '.', '');
 
-                            $total_rate = "SELECT * FROM tbl_task WHERE task_provider = $id AND task_status = 'Done' AND ratings IS NOT NULL";
+                            $total_rate = "SELECT * FROM tbl_task WHERE task_status = 'Done' AND task_provider = $id AND ratings IS NOT NULL";
                             $rate_total = mysqli_query($conn, $total_rate);
                             $count_rate = mysqli_num_rows($rate_total);
                             
@@ -384,7 +384,7 @@ if(empty($_SESSION['id'])){
                         </div>
 
                         <?php
-                            $rates_total = "SELECT `rate` FROM `tbl_task` WHERE task_finder = $id";
+                            $rates_total = "SELECT `rate` FROM `tbl_task` WHERE task_finder = $id AND task_status = 'Done'";
 
                             /* AND task_status = 'Done' */
                             $result_rates = mysqli_query($conn, $rates_total);

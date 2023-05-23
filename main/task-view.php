@@ -163,7 +163,7 @@ if(empty($_SESSION['id'])){
                                             echo "<a class='btn btn-warning' href='update.php?id=$id'>In Progress</a>";
                                         }elseif($row['task_status']=='Working'){
                                             
-                                            echo "<a class='btn btn-success' href='update.php?tid=$id&action=done'>Done</a>";
+                                            
                                         }elseif($row['task_status']=='Done'){
                                             
                                             
