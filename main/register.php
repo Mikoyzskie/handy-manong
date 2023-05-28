@@ -266,7 +266,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 Select category that applies.
                                             </p>
                                             <div>
-                                                <ul class="ks-cboxtags" style="padding-top:0;margin-bottom:0;">
+                                                <ul class="ks-cboxtags" style="padding-top:0;padding-left:0;padding-right:0;margin-bottom:0;">
                                                     <li>
                                                         <input type="checkbox" class="acb" id="checkboxOne" value="Carpenter" name="category[]" onclick="deRequire('acb')" required>
                                                         <label for="checkboxOne">Carpenter</label>
@@ -300,15 +300,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                                         <label for="checkboxEight">Glass Worker</label>
                                                     </li>
                                                     <li>
-                                                        <input type="checkbox" class='acb' id="checkboxEight" value="Others" name="category[]" onclick='deRequire("acb")' required>
-                                                        <label for="checkboxEight">Others...</label>
+                                                        <style>
+                                                            input.acbi{
+                                                                border-radius: 50px;
+                                                                border: 1.5px solid rgba(139, 139, 139, 0.3);
+                                                                
+                                                                padding: 8px 12px;
+                                                                font-size: 0.8125rem;
+                                                            }
+                                                            input.acbi::placeholder{
+                                                                color: rgba(139, 139, 139, 0.3);
+                                                            }
+                                                            
+                                                        </style>
+                                                        <input type="text" class='acbi' placeholder="Others..." id="otherCat" name="category[]">
+                                                        <!-- <label for="checkboxEight">Others...</label> -->
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         
                                         <div class="text-center">
-                                            <button type="submit" name="submit" class="btn btn-dark w-100 mb-3" id="buttonSubmit">Sign up</button>
+                                            <button type="submit" name="submit" class="btn btn-dark w-100 mb-3 acbii" id="buttonSubmit">Sign up</button>
                                             
                       
                                         </div>
@@ -316,7 +329,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                             const fverifier = document.querySelector('.passwordCheck');
                                             const finputPassword = document.querySelector('.passwordToCheck');
                                             const buttonSubmit= document.getElementById('buttonSubmit');
-                                            buttonSubmit.disabled = true;
+                                            
                                             function hasNumber(str) {
                                                 return /[0-9]/.test(str) && /[^A-Za-z0-9]/.test(str);
                                             }
@@ -325,12 +338,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     fverifier.innerHTML = "Password Valid"
                                                     fverifier.style.color = "green";
                                                     fverifier.style.fontSize = "12px";
-                                                    buttonSubmit.disabled = false;
+                                                    
                                                 }else{
                                                     fverifier.innerHTML = "Must contain 8 characters, 1 number, & 1 special character";
                                                     fverifier.style.color = "red";
                                                     fverifier.style.fontSize = "12px";
-                                                    buttonSubmit.disabled = true;
+                                                    
                                                 }
                                             }, 3000)
                                         </script>
@@ -367,28 +380,85 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </script>
     <script>
-            function deRequire(elClass) {
-            el = document.getElementsByClassName(elClass);
+        let checking = false;
+        function check(){
+            const otherCat = document.querySelector('#otherCat');
+            if(otherCat.value.length > 0){
+                otherCat.required = true;
+                checking = true;
+                deRequire('acb',checking);
+                console.log('not empty');
+            }else{
+                otherCat.required = false;
+                deRequire('acb');
+                console.log('empty');
+            }
+        }
+        setInterval(check, 1000);
 
+        function deRequire(elClass,checks){
+            el = document.getElementsByClassName(elClass);
             var atLeastOneChecked = false; //at least one cb is checked
             for (i = 0; i < el.length; i++) {
                 if (el[i].checked === true) {
                     atLeastOneChecked = true;
                     console.log('true');
-                }
+                }              
             }
 
-            if (atLeastOneChecked === true) {
-                    for (i = 0; i < el.length; i++) {
-                        el[i].required = false;
-                    }
-                } else {
-                    for (i = 0; i < el.length; i++) {
+            if (atLeastOneChecked === true || checks === true) {
+                for (i = 0; i < el.length; i++) {
+                    el[i].required = false;
+                }
+            } else {
+                for (i = 0; i < el.length; i++) {
                     el[i].required = true;
-                    }
                 }
             }
-        </script>
+        }
+
+        // function checker(){
+        //     if(inputStatus.value.length > 0){
+        //         // if(deRequire('acbi') === true){
+        //         //     input.disabled = false;
+        //         // }
+        //         input.disabled = false;
+                
+        //     }else{
+        //         setInterval(deRequire,1000);
+        //     }
+        // }
+        // setInterval(deRequire,1000);
+        // setInterval(checker,1000);
+        // function deRequire() {
+        
+       
+        // var atLeastOneChecked = false; //at least one cb is checked
+        // for (i = 0; i < el.length; i++) {
+        //     if (el[i].checked === true) {
+        //         atLeastOneChecked = true;
+        //         console.log('true');
+        //     }              
+        // }
+
+        //     if (atLeastOneChecked === true) {
+        //         for (i = 0; i < el.length; i++) {
+        //             input.disabled = false;
+        //             el[i].required = false;
+        //         }
+        //         clearInterval(deRequire);
+                
+        //     } else {
+        //         for (i = 0; i < el.length; i++) {
+        //             input.disabled = true;
+        //             el[i].required = true;
+        //         }
+                
+        //         checker();
+        //     }
+        // }
+        
+    </script>
 </body>
 
 </html>

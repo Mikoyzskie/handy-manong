@@ -409,7 +409,7 @@ if(empty($_SESSION['id'])){
                             $result_connects = mysqli_query($conn, $connects_total);
                             $connects = mysqli_fetch_array($result_connects);
 
-                            $transactions_total = "SELECT COUNT(*) AS 'transactions' FROM `tbl_task` WHERE task_finder = $id AND task_status != 'Available'";
+                            $transactions_total = "SELECT COUNT(*) AS 'transactions' FROM `tbl_task` WHERE task_status <> 'Available' AND task_finder = $id";
                             $result_transactions = mysqli_query($conn, $transactions_total);
                             $transactions = mysqli_fetch_array($result_transactions);
                             
